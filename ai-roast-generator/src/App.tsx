@@ -231,6 +231,10 @@ const AppContent: React.FC = () => {
             {isDarkMode ? '☀️' : '🌙'}
           </button>
           <WalletConnect />
+          <div 
+            className={`health-indicator ${xmtpHealth?.status}`}
+            title={xmtpHealth?.message}
+          />
         </div>
       </header>
 
