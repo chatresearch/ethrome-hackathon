@@ -21,7 +21,9 @@ export function useS3Upload() {
             console.log(`[S3] Requesting presigned URL from ${xmtpApiUrl}/api/s3-upload-url...`);
             const presignedUrlResponse = await fetch(`${xmtpApiUrl}/api/s3-upload-url?filename=roast.png&contentType=image/png`);
             if (!presignedUrlResponse.ok) {
-                throw new Error(`Failed to get presigned URL: ${presignedUrlResponse.status}`);
+                const errorText = await presignedUrlResponse.text();
+                console.error(`[S3] Presigned URL request failed: ${presignedUrlResponse.status}`, errorText);
+                throw new Error(`Failed to get presigned URL: ${presignedUrlResponse.status} - ${errorText.substring(0, 100)}`);
             }
             const { uploadUrl, expiresIn } = await presignedUrlResponse.json();
             console.log(`[S3] Got presigned URL, expires in ${expiresIn}s`);
