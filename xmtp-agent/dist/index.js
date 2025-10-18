@@ -7,11 +7,18 @@ dotenv.config();
 async function generateResponse(agent, message) {
     const agentPort = process.env.ELIZAOS_PORT || "3001";
     const agentEndpoint = `http://localhost:${agentPort}/api/agents/${agent}/message`;
+    // Detect if message contains image data (base64)
+    const isImage = message.includes("data:image/") || message.match(/^[A-Za-z0-9+/]{100,}={0,2}$/);
+    // Format message for vision agents if it's an image
+    let formattedMessage = message;
+    if (isImage && (agent === "profile-roaster" || agent === "linkedin-roaster" || agent === "vibe-roaster")) {
+        formattedMessage = `Please analyze this image and provide a hilarious, witty roast. Image data: ${message.substring(0, 200)}...`;
+    }
     try {
         const response = await fetch(agentEndpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message }),
+            body: JSON.stringify({ message: formattedMessage }),
         });
         if (!response.ok) {
             throw new Error(`ElizaOS agent returned ${response.status}`);
@@ -28,21 +35,23 @@ async function generateResponse(agent, message) {
             return "For DeFi analysis, ask about yield farming, APY comparisons, protocol risks, or liquidity positions.";
         }
         else if (agent === "security-guru") {
-            if (message.toLowerCase().includes("audit") || message.toLowerCase().includes("risk")) {
-                return "Security audit findings show this protocol has standard mechanisms but monitor: 1) Reentrancy guards on all transfers 2) Time-lock delays on admin functions 3) External audit status from Trail of Bits (Feb 2024). Risk score: Medium.";
+            if (message.toLowerCase().includes("audit") ||
+                message.toLowerCase().includes("vulnerability") ||
+                message.toLowerCase().includes("reentrancy")) {
+                return "Smart contract audits are critical for security. Key focus areas: reentrancy vulnerabilities, integer overflow/underflow, access control, external call dangers, and state management. Always perform thorough testing before mainnet deployment.";
             }
-            return "For security analysis, ask about contract vulnerabilities, audit status, or risk assessment.";
+            return "For security analysis, ask about audits, vulnerabilities, best practices, or specific attack vectors.";
         }
-        else if (agent === "profile-roaster") {
-            return "😂 Okay, so... I'm not gonna lie, you've got some *energy*. The lighting here is doing you some favors, but I'm getting main character energy mixed with \"just rolled out of bed\" vibes. I respect the confidence though! The way you're positioned says either \"I'm about to drop a hit single\" or \"I genuinely don't know where the camera is.\" Either way, it's a choice, and I respect that energy!";
+        else if (isImage && agent === "profile-roaster") {
+            return "😂 Okay so I'm looking at this photo and I'm getting serious main character energy here... but like in a way that's somehow both confident AND deeply unaware of itself? The lighting's doing you a solid, but that smile is giving \"I've been holding this pose for 47 seconds and my face hurts\" vibes. 10/10 for effort though!";
         }
-        else if (agent === "linkedin-roaster") {
-            return "Professional headshot energy: 8/10. The blazer is doing heavy lifting here. However, that smile is giving \"I've been told to smile for exactly 2.3 seconds\" and the eyes say \"I'd rather be debugging code.\" The background is giving \"corporate stock photo\" but like... in a good way? Overall, you look like someone who says \"let's circle back\" unironically and I'm here for it.";
+        else if (isImage && agent === "linkedin-roaster") {
+            return "Professional headshot game: strong! But real talk, that blazer is doing 90% of the work here. The smile screams \"I'm very serious about synergy\" and I respect that energy. Your eyes have a faraway look like you're thinking about quarterly projections, which honestly checks out for the platform. LinkedIn would be proud! 📊";
         }
-        else if (agent === "vibe-roaster") {
-            return "Aesthetic assessment: You're going for the \"effortlessly put-together but also casually disheveled\" vibe and honestly? It's working. The color palette suggests you either have great taste or your camera's white balance needs help - we're gonna assume it's great taste. There's an ambiguous energy here - could be indie musician, could be tech founder, could be someone who exclusively shops at vintage stores. The mystery is *chef's kiss* but also slightly concerning.";
+        else if (isImage && agent === "vibe-roaster") {
+            return "Aesthetic analysis complete: You've got that \"I shop at thrift stores but also have a Whole Foods membership\" energy going on, and honestly it's *working*. The color palette suggests you either have impeccable taste or your phone's camera is more forgiving than mine. There's definitely an indie musician OR startup founder vibe happening here!";
         }
-        return "That's hilarious! 😂 You've got some serious style going on. Let me break it down...";
+        return "That's hilarious! 😂 You've got some serious style going on.";
     }
 }
 // Store last response for HTTP API
