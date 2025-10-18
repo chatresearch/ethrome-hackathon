@@ -27,11 +27,15 @@ async function generateResponse(agent, message) {
             }
             return "For DeFi analysis, ask about yield farming, APY comparisons, protocol risks, or liquidity positions.";
         }
-        else {
+        else if (agent === "security-guru") {
             if (message.toLowerCase().includes("audit") || message.toLowerCase().includes("risk")) {
                 return "Security audit findings show this protocol has standard mechanisms but monitor: 1) Reentrancy guards on all transfers 2) Time-lock delays on admin functions 3) External audit status from Trail of Bits (Feb 2024). Risk score: Medium.";
             }
             return "For security analysis, ask about contract vulnerabilities, audit status, or risk assessment.";
+        }
+        else {
+            // Roaster agents
+            return "That's hilarious! 😂 You've got some serious style going on. Let me break it down...";
         }
     }
 }

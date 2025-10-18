@@ -66,8 +66,18 @@ export async function resolveAgentCapabilities(agentName) {
 }
 export async function routeByCapabilities(message) {
     const lowerMsg = message.toLowerCase();
-    // Roasting keywords
-    if (lowerMsg.includes("roast") || lowerMsg.includes("image") || lowerMsg.includes("photo")) {
+    // Check for explicit agent request format: [REQUEST TO agentname]
+    const explicitRequestMatch = message.match(/\[REQUEST TO (\w+-\w+)\]/i);
+    if (explicitRequestMatch) {
+        const requestedAgent = explicitRequestMatch[1].toLowerCase();
+        const validAgents = ["defi-wizard", "security-guru", "profile-roaster", "linkedin-roaster", "vibe-roaster"];
+        if (validAgents.includes(requestedAgent)) {
+            console.log(`[Router] Explicit request detected: ${requestedAgent}`);
+            return requestedAgent;
+        }
+    }
+    // Roasting keywords (check first, highest priority)
+    if (lowerMsg.includes("roast") || lowerMsg.includes("image") || lowerMsg.includes("photo") || lowerMsg.includes("selfie")) {
         if (lowerMsg.includes("linkedin") || lowerMsg.includes("professional") || lowerMsg.includes("headshot")) {
             return "linkedin-roaster";
         }
