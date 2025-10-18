@@ -7,7 +7,7 @@ import { ResultsDisplay } from './components/ResultsDisplay';
 import { Leaderboard } from './components/Leaderboard';
 import { WalletConnect } from './components/WalletConnect';
 import { useXMTP } from './hooks/useXMTP';
-import { useAgentPayment } from './hooks/useAgentPayment';
+import { useAgentPayment, fetchAgentPrice } from './hooks/useAgentPayment';
 import { wagmiConfig } from './hooks/wagmiConfig';
 import { recordVote } from './lib/scoring';
 import './styles/App.css';
@@ -47,7 +47,32 @@ const AppContent: React.FC = () => {
     return saved ? JSON.parse(saved) : false;
   });
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [livePrices, setLivePrices] = useState<Record<string, string>>(AGENT_PRICES);
   const userId = getCurrentUserId();
+
+  // Fetch live agent prices from contract on mount
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const prices: Record<string, string> = {};
+        const agents = ['profile-roaster', 'linkedin-roaster', 'vibe-roaster', 'defi-wizard', 'security-guru'];
+        
+        for (const agent of agents) {
+          const agentFqn = `${agent}.aiconfig.eth`;
+          const price = await fetchAgentPrice(agentFqn);
+          prices[agent] = price;
+        }
+        
+        setLivePrices(prices);
+        console.log('Live prices fetched:', prices);
+      } catch (error) {
+        console.error('Failed to fetch live prices:', error);
+        // Keep using hardcoded fallback prices
+      }
+    };
+
+    fetchPrices();
+  }, []);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -70,7 +95,7 @@ const AppContent: React.FC = () => {
       // First, process payment on-chain
       if (isConnected && isCorrectNetwork) {
         const agentName = agent || 'profile-roaster';
-        const price = AGENT_PRICES[agentName] || '0.00001';
+        const price = livePrices[agentName] || AGENT_PRICES[agentName] || '0.00001';
         
         console.log(`Processing payment for ${agentName} (${price} ETH)...`);
         const paymentResult = await queryAgentWithPayment(agentName, price);
@@ -186,7 +211,7 @@ const AppContent: React.FC = () => {
           {xmtpError && <div className="error-banner">{xmtpError}</div>}
           {paymentError && <div className="error-banner">{paymentError}</div>}
           <div className="pricing-info">
-            <span className="cost-badge">💰 0.00001 ETH per roast</span>
+            <span className="cost-badge">💰 {livePrices['profile-roaster'] || '0.00001'} ETH per roast</span>
           </div>
         </section>
 

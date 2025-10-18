@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useAccount, useChainId } from 'wagmi';
-import { parseEther } from 'viem';
+import { parseEther, formatEther } from 'viem';
 const AGENT_REGISTRY_ADDRESS = '0xFBeE7f501704A9AA629Ae2D0aE6FB30989571Bd0';
 const BASE_SEPOLIA_CHAIN_ID = 84532;
 export function useAgentPayment() {
@@ -56,20 +56,53 @@ export function useAgentPayment() {
         isCorrectNetwork: chainId === BASE_SEPOLIA_CHAIN_ID,
     };
 }
+// Helper to fetch agent price from contract
+export async function fetchAgentPrice(agentName) {
+    try {
+        const response = await fetch('https://sepolia.base.org', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                jsonrpc: '2.0',
+                method: 'eth_call',
+                params: [
+                    {
+                        to: AGENT_REGISTRY_ADDRESS,
+                        data: encodeGetAgent(agentName),
+                    },
+                    'latest',
+                ],
+                id: 1,
+            }),
+        });
+        const result = await response.json();
+        if (result.result) {
+            // Parse the returned struct to get queryPrice (second field after owner)
+            // Struct: owner (20 bytes) + ensName (32 bytes offset) + queryPrice (32 bytes) + ...
+            const queryPriceHex = '0x' + result.result.slice(130, 194);
+            return formatEther(BigInt(queryPriceHex));
+        }
+    }
+    catch (error) {
+        console.error('Error fetching agent price:', error);
+    }
+    return '0.00001'; // Fallback
+}
 function encodeQueryAgent(agentName) {
-    // Encode the queryAgent function call
     const functionSignature = '0x17a7e67e'; // keccak256('queryAgent(string)')
     const encodedName = encodeString(agentName);
     return functionSignature + encodedName.slice(2);
 }
+function encodeGetAgent(agentName) {
+    const functionSignature = 'bde52cb2'; // keccak256('getAgent(string)').slice(0, 8)
+    const encodedName = encodeString(agentName);
+    return '0x' + functionSignature + encodedName.slice(2);
+}
 function encodeString(str) {
     const bytes = new TextEncoder().encode(str);
     const hex = Array.from(bytes, (byte) => ('0' + byte.toString(16)).slice(-2)).join('');
-    // Pad offset (32 bytes)
     const offset = '0000000000000000000000000000000000000000000000000000000000000020';
-    // Pad length
     const length = ('0000000000000000000000000000000000000000000000000000000000' + bytes.length.toString(16)).slice(-64);
-    // Pad string data
     const padded = (hex + '0'.repeat(64)).slice(0, Math.ceil(bytes.length / 32) * 64);
     return offset + length + padded;
 }

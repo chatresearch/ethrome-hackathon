@@ -8,7 +8,7 @@ import { ResultsDisplay } from './components/ResultsDisplay';
 import { Leaderboard } from './components/Leaderboard';
 import { WalletConnect } from './components/WalletConnect';
 import { useXMTP } from './hooks/useXMTP';
-import { useAgentPayment } from './hooks/useAgentPayment';
+import { useAgentPayment, fetchAgentPrice } from './hooks/useAgentPayment';
 import { wagmiConfig } from './hooks/wagmiConfig';
 import { recordVote } from './lib/scoring';
 import './styles/App.css';
@@ -38,7 +38,29 @@ const AppContent = () => {
         return saved ? JSON.parse(saved) : false;
     });
     const [uploadedImage, setUploadedImage] = useState(null);
+    const [livePrices, setLivePrices] = useState(AGENT_PRICES);
     const userId = getCurrentUserId();
+    // Fetch live agent prices from contract on mount
+    useEffect(() => {
+        const fetchPrices = async () => {
+            try {
+                const prices = {};
+                const agents = ['profile-roaster', 'linkedin-roaster', 'vibe-roaster', 'defi-wizard', 'security-guru'];
+                for (const agent of agents) {
+                    const agentFqn = `${agent}.aiconfig.eth`;
+                    const price = await fetchAgentPrice(agentFqn);
+                    prices[agent] = price;
+                }
+                setLivePrices(prices);
+                console.log('Live prices fetched:', prices);
+            }
+            catch (error) {
+                console.error('Failed to fetch live prices:', error);
+                // Keep using hardcoded fallback prices
+            }
+        };
+        fetchPrices();
+    }, []);
     useEffect(() => {
         if (isDarkMode) {
             document.documentElement.classList.add('dark-mode');
@@ -58,7 +80,7 @@ const AppContent = () => {
             // First, process payment on-chain
             if (isConnected && isCorrectNetwork) {
                 const agentName = agent || 'profile-roaster';
-                const price = AGENT_PRICES[agentName] || '0.00001';
+                const price = livePrices[agentName] || AGENT_PRICES[agentName] || '0.00001';
                 console.log(`Processing payment for ${agentName} (${price} ETH)...`);
                 const paymentResult = await queryAgentWithPayment(agentName, price);
                 if (!paymentResult.success) {
@@ -126,7 +148,7 @@ const AppContent = () => {
                                     { name: 'profile-roaster', description: 'Dating Profile Roast' },
                                     { name: 'linkedin-roaster', description: 'LinkedIn Headshot Roast' },
                                     { name: 'vibe-roaster', description: 'Aesthetic & Vibe Roast' }
-                                ] }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError }), _jsx("div", { className: "pricing-info", children: _jsx("span", { className: "cost-badge", children: "\uD83D\uDCB0 0.00001 ETH per roast" }) })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] })] }));
+                                ] }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError }), _jsx("div", { className: "pricing-info", children: _jsxs("span", { className: "cost-badge", children: ["\uD83D\uDCB0 ", livePrices['profile-roaster'] || '0.00001', " ETH per roast"] }) })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] })] }));
 };
 export const App = () => {
     const queryClient = new QueryClient();

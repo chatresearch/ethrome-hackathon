@@ -10,5 +10,6 @@ export declare function useAgentPayment(): {
     isConnected: boolean;
     isCorrectNetwork: boolean;
 };
+export declare function fetchAgentPrice(agentName: string): Promise<string>;
 export {};
 //# sourceMappingURL=useAgentPayment.d.ts.map
