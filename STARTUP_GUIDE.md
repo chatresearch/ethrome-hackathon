@@ -108,7 +108,7 @@ XMTP_ENV=production
 ### Terminal 4: Protocol Council Miniapp
 
 ```bash
-cd protocol-council-miniapp
+cd ai-roast-generator
 npm run dev  # Port 5174
 ```
 

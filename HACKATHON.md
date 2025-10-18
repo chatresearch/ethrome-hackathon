@@ -193,7 +193,7 @@ Files: /xmtp-agent/src/
 - Include capability metadata in responses
 
 **Priority 2: Miniapp Foundation**
-Files: /protocol-council-miniapp/ (new)
+Files: /ai-roast-generator/ (new)
 - QueryBuilder component (protocol input)
 - useXMTP hook (send/receive messages)
 - ResultsDisplay component (show agent responses)
@@ -281,9 +281,9 @@ Files: /protocol-council-miniapp/ (new)
 - xmtp-agent/.env (configuration)
 
 **Miniapp (TO CREATE):**
-- protocol-council-miniapp/src/components/
-- protocol-council-miniapp/src/hooks/
-- protocol-council-miniapp/src/lib/
+- ai-roast-generator/src/components/
+- ai-roast-generator/src/hooks/
+- ai-roast-generator/src/lib/
 
 ---
 
@@ -327,10 +327,10 @@ XMTP_DB_ENCRYPTION_KEY=0x...
 SEPOLIA_RPC=https://eth-sepolia.g.alchemy.com/v2/YOUR_KEY
 ```
 
-**Miniapp (protocol-council-miniapp/.env):**
+**Miniapp (ai-roast-generator/.env):**
 ```
-# Uses fallback mock responses if XMTP agent unavailable
-# API proxy configured in vite.config.ts
+# Uses XMTP agent for backend queries
+# Environment variables set via Vercel dashboard
 ```
 
 **BuidlGuidl Frontend (eth-ai-asa/.env):**
