@@ -471,6 +471,48 @@ body {
   cursor: not-allowed;
 }
 
+.test-btn {
+  padding: 10px 20px;
+  background: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-right: 10px;
+}
+
+.test-btn:hover:not(:disabled) {
+  background: #7c3aed;
+}
+
+.test-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.test-result {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.test-result.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.test-result.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+  border: 1px solid var(--error);
+}
+
 .error {
   color: var(--error);
   font-size: 0.9rem;
