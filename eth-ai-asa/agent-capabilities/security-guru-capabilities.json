@@ -1,0 +1,234 @@
+{
+  "schema": "https://a2a-protocol.org/schema/v1",
+  "agent": {
+    "name": "Security Guru",
+    "ensName": "security-guru.aiconfig.eth",
+    "description": "Smart contract security expert specializing in vulnerability detection, audit recommendations, and security best practices",
+    "type": "eliza-os",
+    "version": "1.0.0",
+    "author": "ballew.eth",
+    "license": "MIT"
+  },
+  "capabilities": [
+    {
+      "id": "vulnerability-scan",
+      "name": "Vulnerability Analysis",
+      "description": "Analyze smart contract code for common vulnerabilities and security issues",
+      "category": "security",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "contractCode": {
+            "type": "string",
+            "description": "Solidity contract code to analyze"
+          },
+          "contractAddress": {
+            "type": "string",
+            "description": "Deployed contract address (alternative to code)",
+            "pattern": "^0x[a-fA-F0-9]{40}$"
+          },
+          "network": {
+            "type": "string",
+            "description": "Network where contract is deployed",
+            "enum": ["mainnet", "sepolia", "base", "base-sepolia", "arbitrum", "optimism"]
+          },
+          "focusAreas": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "reentrancy",
+                "access-control",
+                "integer-overflow",
+                "front-running",
+                "denial-of-service",
+                "price-manipulation"
+              ]
+            },
+            "description": "Specific vulnerability types to focus on"
+          }
+        },
+        "oneOf": [
+          {
+            "required": ["contractCode"]
+          },
+          {
+            "required": ["contractAddress", "network"]
+          }
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "vulnerabilities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "type": "string",
+                  "enum": ["critical", "high", "medium", "low", "info"]
+                },
+                "type": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "recommendation": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "securityScore": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    {
+      "id": "audit-checklist",
+      "name": "Security Audit Checklist",
+      "description": "Generate a comprehensive security audit checklist for a smart contract project",
+      "category": "security",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectType": {
+            "type": "string",
+            "enum": ["defi", "nft", "dao", "token", "bridge", "oracle"],
+            "description": "Type of blockchain project"
+          },
+          "complexity": {
+            "type": "string",
+            "enum": ["simple", "moderate", "complex"],
+            "description": "Project complexity level"
+          },
+          "hasExternalCalls": {
+            "type": "boolean",
+            "description": "Whether contracts make external calls"
+          }
+        },
+        "required": ["projectType"]
+      }
+    },
+    {
+      "id": "best-practices",
+      "name": "Security Best Practices",
+      "description": "Provide security best practices and recommendations for smart contract development",
+      "category": "security",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "enum": [
+              "access-control",
+              "upgradability",
+              "oracle-integration",
+              "testing",
+              "deployment",
+              "monitoring"
+            ],
+            "description": "Specific security topic"
+          },
+          "framework": {
+            "type": "string",
+            "enum": ["hardhat", "foundry", "truffle"],
+            "description": "Development framework being used"
+          }
+        }
+      }
+    },
+    {
+      "id": "red-team-scenarios",
+      "name": "Red Team Attack Scenarios",
+      "description": "Generate potential attack scenarios for security testing",
+      "category": "security",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "contractType": {
+            "type": "string",
+            "description": "Type of contract (e.g., ERC20, DEX, Lending Pool)"
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Key features of the contract"
+          },
+          "attackVectors": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "economic-attacks",
+                "technical-exploits",
+                "social-engineering",
+                "governance-attacks"
+              ]
+            }
+          }
+        },
+        "required": ["contractType"]
+      }
+    },
+    {
+      "id": "code-review",
+      "name": "Code Review",
+      "description": "Perform a detailed code review focusing on security and best practices",
+      "category": "security",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "codeSnippet": {
+            "type": "string",
+            "description": "Code snippet to review"
+          },
+          "language": {
+            "type": "string",
+            "enum": ["solidity", "vyper"],
+            "default": "solidity"
+          },
+          "context": {
+            "type": "string",
+            "description": "Additional context about the code's purpose"
+          }
+        },
+        "required": ["codeSnippet"]
+      }
+    }
+  ],
+  "pricing": {
+    "model": "per-query",
+    "amount": "0.0015",
+    "currency": "ETH",
+    "network": "base-sepolia"
+  },
+  "endpoints": {
+    "query": "https://api.youragents.com/security-guru/query",
+    "health": "https://api.youragents.com/security-guru/health"
+  },
+  "metadata": {
+    "createdAt": "2025-01-17T00:00:00Z",
+    "updatedAt": "2025-01-17T00:00:00Z",
+    "tags": ["security", "audit", "vulnerability", "smart-contracts", "red-team"],
+    "language": "en",
+    "rateLimit": {
+      "requests": 50,
+      "period": "hour"
+    },
+    "disclaimer": "This agent provides general security guidance. Always conduct professional audits before deploying to mainnet."
+  }
+}
+
+
+
