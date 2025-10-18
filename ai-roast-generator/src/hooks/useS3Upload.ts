@@ -21,7 +21,7 @@ export function useS3Upload() {
       // Get presigned URL from Vercel API route (not XMTP)
       console.log(`[S3] Requesting presigned URL from Vercel API...`);
       
-      const presignedUrlResponse = await fetch(`/api/s3-presigned-url?filename=roast.png&contentType=image/png`, {
+      const presignedUrlResponse = await fetch(`/api/s3-presigned-url?filename=image-${Date.now()}.png&contentType=image/png`, {
         headers: {
           'Content-Type': 'application/json',
         },
