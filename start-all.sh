@@ -84,6 +84,7 @@ start_elizaos() {
 start_xmtp() {
   echo -e "${BLUE}[3/4] Starting XMTP Agent on port $XMTP_PORT${NC}"
   cd "$PROJECT_ROOT/xmtp-agent"
+  unset AWS_PROFILE
   HTTP_PORT=$XMTP_PORT ELIZAOS_PORT=$ELIZAOS_PORT npm run dev > /tmp/xmtp.log 2>&1 &
   XMTP_PID=$!
   sleep 4
