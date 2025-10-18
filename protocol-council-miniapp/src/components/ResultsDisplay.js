@@ -23,7 +23,13 @@ export const ResultsDisplay = ({ results }) => {
             return '💰';
         if (agentName.includes('security'))
             return '🔒';
-        return '🤖';
+        if (agentName.includes('profile'))
+            return '💕';
+        if (agentName.includes('linkedin'))
+            return '💼';
+        if (agentName.includes('vibe'))
+            return '✨';
+        return '😈';
     };
     if (results.length === 0) {
         return _jsx("div", { className: "results-empty", children: "Submit a query to see agent analysis" });

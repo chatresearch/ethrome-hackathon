@@ -34,7 +34,10 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results }) => {
   const getAgentIcon = (agentName: string): string => {
     if (agentName.includes('defi')) return '💰';
     if (agentName.includes('security')) return '🔒';
-    return '🤖';
+    if (agentName.includes('profile')) return '💕';
+    if (agentName.includes('linkedin')) return '💼';
+    if (agentName.includes('vibe')) return '✨';
+    return '😈';
   };
 
   if (results.length === 0) {

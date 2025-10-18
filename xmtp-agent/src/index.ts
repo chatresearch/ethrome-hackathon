@@ -1,7 +1,7 @@
 import { Agent } from "@xmtp/agent-sdk";
 import * as dotenv from "dotenv";
 import * as http from "http";
-import { routeByCapabilities, formatResponseWithCapabilities } from "./ens-resolver.js";
+import { routeByCapabilities, formatResponseWithCapabilities, resolveAgentCapabilities } from "./ens-resolver.js";
 
 dotenv.config();
 
@@ -160,11 +160,8 @@ function startHttpServer() {
 // Helper to extract capabilities
 async function extractCapabilities(agentType: AgentType): Promise<string[]> {
   try {
-    const capabilities = await formatResponseWithCapabilities(agentType, "");
-    // Simple extraction - in real app would parse better
-    return agentType === "defi-wizard" 
-      ? ["Yield Analysis", "Protocol Risk Assessment", "APY Comparison"]
-      : ["Contract Audit", "Vulnerability Detection", "Security Review"];
+    const capabilities = await resolveAgentCapabilities(agentType);
+    return capabilities?.capabilities || [];
   } catch {
     return [];
   }
