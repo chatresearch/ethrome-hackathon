@@ -1,0 +1,132 @@
+
+---
+alwaysApply: true
+---
+
+# Testing Requirements for eth-ai-asa
+
+## Smart Contract Changes
+
+After ANY changes to `packages/foundry/contracts/` or `packages/foundry/script/`, you MUST:
+
+1. **Run the full test suite:**
+   ```bash
+   cd packages/foundry && forge test -v
+   ```
+
+2. **Verify all tests pass** before completing the task
+   - Expected: "19 passed; 0 failed"
+   - If any tests fail, fix the code immediately
+
+3. **Check gas usage** in the test output
+   - Look for unusually high gas costs
+   - Consider optimizations if gas > 500k for a single operation
+
+## Frontend Changes
+
+After changes to `packages/nextjs/`, verify:
+
+1. **No linting errors:**
+   ```bash
+   cd packages/nextjs && yarn next:lint
+   ```
+
+2. **The dev server still runs:**
+   ```bash
+   yarn dev
+   ```
+
+3. **Page loads without errors** (http://localhost:3001/agents)
+
+## ElizaOS Agent Changes
+
+After ANY changes to `agent-marketplace/src/` (character files, plugins, etc.), you MUST:
+
+1. **Run unit tests for agents:**
+   ```bash
+   cd agent-marketplace && bun test src/__tests__/defi-wizard.test.ts src/__tests__/security-guru.test.ts
+   ```
+
+2. **Verify all tests pass** before completing the task
+   - Expected: "25 pass, 0 fail" with 100% coverage
+   - Tests validate: name, fields, prompts, topics, plugins, message examples, styles
+
+3. **Rebuild the project:**
+   ```bash
+   cd agent-marketplace && npm run build
+   ```
+
+4. **Verify agents still load correctly:**
+   - Run `npm start` and check that both agents initialize
+   - Expected output: "Started 2/2 project agents" (or more if adding agents)
+   - Both agents should respond to test queries in the UI
+
+5. **Optional: Run E2E integration tests** (slower, ~2-5 minutes):
+   ```bash
+   npm start  # in one terminal
+   npx cypress run --spec "src/__tests__/cypress/e2e/multi-agent.cy.ts"  # in another
+   ```
+
+### Character File Requirements
+
+When modifying agent character files (TypeScript or JSON), ensure:
+- ✅ Must be **TypeScript files (.ts)** not JSON - JSON files don't load properly
+- ✅ Export the character with correct name (`export const characterName: Character`)
+- ✅ Include `messageExamples` with domain-specific examples
+- ✅ Include `@elizaos/plugin-bootstrap` in plugins list
+- ✅ Include `@elizaos/plugin-sql` and `@elizaos/plugin-openai` at minimum
+- ✅ System prompt should be domain-specific, not generic
+- ✅ Topics and bio should match agent expertise
+
+## General Rules
+
+- ❌ **Never skip tests** - They validate agent and contract behavior
+- ✅ **Always run tests** after changes to agents or contracts
+- ✅ **Read the test output** - Look for failures or regressions
+- ✅ **Fix failures immediately** - Don't move on until tests pass
+- ✅ **Use TypeScript for character files** - Not JSON or JavaScript
+
+## Test Command Reference
+
+```bash
+# ElizaOS Agent Tests
+cd agent-marketplace
+
+# Unit tests only (fast - ~20ms)
+bun test src/__tests__/defi-wizard.test.ts src/__tests__/security-guru.test.ts
+
+# Build the project
+npm run build
+
+# Start the server
+npm start
+
+# E2E tests (slower - ~2-5 minutes)
+npx cypress run --spec "src/__tests__/cypress/e2e/multi-agent.cy.ts"
+npx cypress open  # Interactive mode
+
+# Smart Contract Tests
+cd packages/foundry && forge test -v
+
+# Quick test (no verbose output)
+forge test
+
+# Run specific test
+forge test --match test_QueryAgent_Success
+
+# Run with detailed trace
+forge test -vv
+
+# Watch mode (auto-rerun on changes)
+forge test --watch
+```
+
+## Documentation
+
+For more details, see:
+- `agent-marketplace/src/__tests__/defi-wizard.test.ts` - DeFi agent unit tests
+- `agent-marketplace/src/__tests__/security-guru.test.ts` - Security agent unit tests
+- `agent-marketplace/src/__tests__/cypress/e2e/multi-agent.cy.ts` - E2E integration tests
+- `TESTING.md` - Complete testing guide
+- `QUICKSTART.md` - Project overview
+- `packages/foundry/test/AgentRegistry.t.sol` - Smart contract test implementations

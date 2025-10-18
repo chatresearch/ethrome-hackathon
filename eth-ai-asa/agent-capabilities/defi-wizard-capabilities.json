@@ -1,0 +1,166 @@
+{
+  "schema": "https://a2a-protocol.org/schema/v1",
+  "agent": {
+    "name": "DeFi Wizard",
+    "ensName": "defi-wizard.aiconfig.eth",
+    "description": "Expert DeFi strategy and yield optimization advisor with deep knowledge of protocols, risks, and opportunities across multiple chains",
+    "type": "eliza-os",
+    "version": "1.0.0",
+    "author": "ballew.eth",
+    "license": "MIT"
+  },
+  "capabilities": [
+    {
+      "id": "yield-analysis",
+      "name": "Yield Opportunity Analysis",
+      "description": "Analyze DeFi protocols to identify the best yield opportunities based on risk tolerance and investment amount",
+      "category": "defi",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "protocols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of DeFi protocols to analyze (e.g., Aave, Compound, Uniswap)"
+          },
+          "investmentAmount": {
+            "type": "number",
+            "description": "Amount in USD to invest"
+          },
+          "riskTolerance": {
+            "type": "string",
+            "enum": ["low", "medium", "high"],
+            "description": "Risk tolerance level"
+          },
+          "chains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Blockchain networks to consider (e.g., Ethereum, Base, Arbitrum)"
+          }
+        },
+        "required": ["riskTolerance"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "recommendations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "protocol": {
+                  "type": "string"
+                },
+                "apy": {
+                  "type": "number"
+                },
+                "riskLevel": {
+                  "type": "string"
+                },
+                "strategy": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "protocol-comparison",
+      "name": "Protocol Comparison",
+      "description": "Compare multiple DeFi protocols across key metrics like TVL, APY, security, and fees",
+      "category": "defi",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "protocols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Protocols to compare",
+            "minItems": 2
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["tvl", "apy", "security", "fees", "liquidity", "audits"]
+            },
+            "description": "Metrics to compare"
+          }
+        },
+        "required": ["protocols"]
+      }
+    },
+    {
+      "id": "gas-optimization",
+      "name": "Gas Optimization Advice",
+      "description": "Provide strategies to minimize gas costs for DeFi transactions",
+      "category": "defi",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "transactionType": {
+            "type": "string",
+            "enum": ["swap", "liquidity", "lending", "staking"],
+            "description": "Type of DeFi transaction"
+          },
+          "chain": {
+            "type": "string",
+            "description": "Blockchain network"
+          }
+        },
+        "required": ["transactionType", "chain"]
+      }
+    },
+    {
+      "id": "risk-assessment",
+      "name": "DeFi Risk Assessment",
+      "description": "Assess risks associated with a specific DeFi protocol or strategy",
+      "category": "defi",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "protocol": {
+            "type": "string",
+            "description": "DeFi protocol name"
+          },
+          "strategy": {
+            "type": "string",
+            "description": "Specific strategy or pool"
+          }
+        },
+        "required": ["protocol"]
+      }
+    }
+  ],
+  "pricing": {
+    "model": "per-query",
+    "amount": "0.001",
+    "currency": "ETH",
+    "network": "base-sepolia"
+  },
+  "endpoints": {
+    "query": "https://api.youragents.com/defi-wizard/query",
+    "health": "https://api.youragents.com/defi-wizard/health"
+  },
+  "metadata": {
+    "createdAt": "2025-01-17T00:00:00Z",
+    "updatedAt": "2025-01-17T00:00:00Z",
+    "tags": ["defi", "yield", "strategy", "risk-analysis"],
+    "language": "en",
+    "rateLimit": {
+      "requests": 100,
+      "period": "hour"
+    }
+  }
+}
+
+
+
