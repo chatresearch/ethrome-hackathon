@@ -45,9 +45,16 @@ cd "$PROJECT_ROOT/ai-roast-generator"
 
 # Remove old value
 vercel env rm VITE_REACT_APP_XMTP_API --yes 2>/dev/null || true
+vercel env rm REACT_APP_XMTP_API --yes 2>/dev/null || true
+
 
 # Add new value
 echo "$NGROK_URL" | vercel env add VITE_REACT_APP_XMTP_API production 2>/dev/null || {
+  echo -e "${RED}❌ Failed to set Vercel env var${NC}"
+  exit 1
+}
+
+echo "$NGROK_URL" | vercel env add REACT_APP_XMTP_API production 2>/dev/null || {
   echo -e "${RED}❌ Failed to set Vercel env var${NC}"
   exit 1
 }

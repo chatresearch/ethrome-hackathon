@@ -29,6 +29,51 @@ const getCurrentUserId = () => {
     }
     return userId;
 };
+// Check environment variables and backend connectivity on preload
+async function checkBackendConnectivity() {
+    // @ts-ignore
+    const viteReactAppUrl = import.meta.env.VITE_REACT_APP_XMTP_API;
+    // @ts-ignore
+    const viteUrl = import.meta.env.VITE_XMTP_API;
+    const reactAppUrl = typeof process !== 'undefined' ? process.env.REACT_APP_XMTP_API : undefined;
+    const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+    const localBackendUrl = 'http://127.0.0.1:3003';
+    const urlsToCheck = [
+        { name: 'VITE_REACT_APP_XMTP_API', url: viteReactAppUrl },
+        { name: 'VITE_XMTP_API', url: viteUrl },
+        { name: 'REACT_APP_XMTP_API', url: reactAppUrl },
+        { name: 'Local Backend', url: isProduction ? undefined : localBackendUrl },
+    ];
+    console.log('[Preload] Checking backend connectivity...');
+    for (const { name, url } of urlsToCheck) {
+        if (!url) {
+            console.log(`[Preload] ${name}: not configured`);
+            continue;
+        }
+        try {
+            const response = await fetch(`${url}/api/health`, {
+                method: 'GET',
+                signal: AbortSignal.timeout(3000),
+            });
+            if (response.ok) {
+                console.log(`[Preload] ✅ ${name}: ${url} is reachable`);
+            }
+            else {
+                console.warn(`[Preload] ⚠️ ${name}: ${url} returned ${response.status}`);
+            }
+        }
+        catch (error) {
+            const msg = error instanceof Error ? error.message : String(error);
+            console.warn(`[Preload] ❌ ${name}: ${url} - ${msg}`);
+        }
+    }
+}
+// Run preload check when app starts
+if (typeof window !== 'undefined') {
+    window.addEventListener('load', checkBackendConnectivity);
+    // Also run immediately
+    checkBackendConnectivity().catch(console.error);
+}
 const AppContent = () => {
     const { sendMessage, error: xmtpError } = useXMTP();
     const { queryAgentWithPayment, loading: paymentLoading, error: paymentError, isConnected, isCorrectNetwork } = useAgentPayment();
