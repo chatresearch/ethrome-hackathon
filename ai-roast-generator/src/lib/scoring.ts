@@ -17,8 +17,8 @@ export interface LeaderboardEntry extends UserStats {
   rank: number;
 }
 
-const STORAGE_KEY = 'protocol-council-votes';
-const USERS_KEY = 'protocol-council-users';
+const STORAGE_KEY = 'ai-roast-generator-votes';
+const USERS_KEY = 'ai-roast-generator-users';
 
 export function recordVote(userId: string, vote: VoteData): void {
   const votes = getVotes();
