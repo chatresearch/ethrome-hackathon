@@ -9,6 +9,21 @@ export function useS3Upload() {
       setError(null);
       setUploading(true);
 
+      // Detect image type from base64 header
+      let contentType = 'image/png';
+      let extension = 'png';
+      
+      if (imageBase64.includes('image/jpeg') || imageBase64.includes('/9j/')) {
+        contentType = 'image/jpeg';
+        extension = 'jpg';
+      } else if (imageBase64.includes('image/gif')) {
+        contentType = 'image/gif';
+        extension = 'gif';
+      } else if (imageBase64.includes('image/webp')) {
+        contentType = 'image/webp';
+        extension = 'webp';
+      }
+
       // Convert base64 to Blob
       const base64Data = imageBase64.split(',')[1] || imageBase64;
       const binaryString = atob(base64Data);
@@ -16,12 +31,12 @@ export function useS3Upload() {
       for (let i = 0; i < binaryString.length; i++) {
         bytes[i] = binaryString.charCodeAt(i);
       }
-      const blob = new Blob([bytes], { type: 'image/png' });
+      const blob = new Blob([bytes], { type: contentType });
 
       // Get presigned URL from Vercel API route (not XMTP)
       console.log(`[S3] Requesting presigned URL from Vercel API...`);
       
-      const presignedUrlResponse = await fetch(`/api/s3-presigned-url?filename=image-${Date.now()}.png&contentType=image/png`, {
+      const presignedUrlResponse = await fetch(`/api/s3-presigned-url?filename=image-${Date.now()}.${extension}&contentType=${encodeURIComponent(contentType)}`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -40,7 +55,7 @@ export function useS3Upload() {
       const s3Response = await fetch(uploadUrl, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'image/png',
+          'Content-Type': contentType,
         },
         body: blob,
       });
