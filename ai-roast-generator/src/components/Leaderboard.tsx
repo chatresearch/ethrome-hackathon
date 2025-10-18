@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getLeaderboard, LeaderboardEntry, getTopRoasts, RoastData } from '../lib/scoring';
+import { getTopRoasts, RoastData } from '../lib/scoring';
 
 export const Leaderboard: React.FC<{ refreshTrigger?: number }> = ({ refreshTrigger = 0 }) => {
   const [entries, setEntries] = useState<RoastData[]>([]);

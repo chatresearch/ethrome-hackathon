@@ -14,6 +14,7 @@ import { recordVote } from './lib/scoring';
 import './styles/App.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import { useHealthCheck } from './hooks/useHealthCheck';
+import { Confetti } from './components/Confetti';
 
 interface AgentResponse {
   agent: string;
@@ -54,6 +55,8 @@ const AppContent: React.FC = () => {
   const [s3ImageUrl, setS3ImageUrl] = useState<string | null>(null);
   const [livePrices, setLivePrices] = useState<Record<string, string>>(AGENT_PRICES);
   const [agentAvatars, setAgentAvatars] = useState<Record<string, string>>({});
+  const [isAnimatedTagline, setIsAnimatedTagline] = useState(false);
+  const [confettiTrigger, setConfettiTrigger] = useState(0);
   const userId = getCurrentUserId();
 
   // Fetch live agent prices and avatars on mount
@@ -111,6 +114,21 @@ const AppContent: React.FC = () => {
 
     fetchData();
   }, []);
+
+  // Animate tagline every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimatedTagline(prev => !prev);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Trigger confetti when first result appears
+  useEffect(() => {
+    if (results.length > 0) {
+      setConfettiTrigger(prev => prev + 1);
+    }
+  }, [results.length]);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -217,9 +235,18 @@ const AppContent: React.FC = () => {
   return (
     <div className="app">
       <header className="header">
-        <div className="header-content">
-          <h1>AI Roast Generator</h1>
-          <p>Upload a selfie and get savage AI roasts 😈</p>
+        <div className="banner">
+          <img 
+            src="https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/roaster-banner.png"
+            alt="AI Roast Generator"
+            className="banner-image"
+          />
+          <div className="banner-overlay">
+            <h1>AI Roast Generator</h1>
+            <p className="animated-tagline">
+              {isAnimatedTagline ? "Let's see what you're working with 😅" : "Ready to get roasted? 🔥"}
+            </p>
+          </div>
         </div>
         <div className="header-controls">
           <button 
@@ -311,6 +338,7 @@ const AppContent: React.FC = () => {
           <Leaderboard refreshTrigger={leaderboardRefresh} />
         </section>
       </main>
+      <Confetti trigger={confettiTrigger} />
     </div>
   );
 };
