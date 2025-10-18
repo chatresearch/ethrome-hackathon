@@ -1,0 +1,15 @@
+{
+  "name": "AI Roast Generator",
+  "description": "Upload a selfie and get savage AI roasts 🔥. Multiple AI agents roast your appearance, vibe, dating profile, or LinkedIn headshot.",
+  "logo": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/profile-roaster.png",
+  "icon": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/profile-roaster.png",
+  "homeUrl": "https://ai-roast-generator.vercel.app/",
+  "splashImageUrl": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/profile-roaster.png",
+  "webhookUrl": "https://ai-roast-generator.vercel.app/api/webhook",
+  "version": "1.0.0",
+  "chainId": 8453,
+  "keywords": ["ai", "agents", "roast", "social", "fun", "base", "elizaos"],
+  "categories": ["social", "games", "ai"],
+  "openGraphImage": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/profile-roaster.png",
+  "shortDescription": "Roast Generator: AI-powered humor for your selfies 🔥"
+}
