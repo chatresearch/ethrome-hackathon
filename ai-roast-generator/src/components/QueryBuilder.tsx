@@ -19,10 +19,32 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
   agentAvatars = {},
   agentPrices = {}
 }) => {
-  const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
+  const [selectedAgents, setSelectedAgents] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const toggleAgent = (agentName: string) => {
+    const newSelected = new Set(selectedAgents);
+    if (newSelected.has(agentName)) {
+      newSelected.delete(agentName);
+    } else {
+      newSelected.add(agentName);
+    }
+    setSelectedAgents(newSelected);
+  };
+
+  const calculateCost = (): string => {
+    if (selectedAgents.size === 0) return '0.00000';
+    let total = 0;
+    selectedAgents.forEach(agent => {
+      const price = agentPrices[agent];
+      if (price) {
+        total += parseFloat(price);
+      }
+    });
+    return total.toFixed(5);
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -64,38 +86,42 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
     }
 
     try {
-      await onSubmit(preview, selectedAgent || undefined);
-      // Don't clear preview, let user see what was roasted
+      // Submit with all selected agents (comma-separated) or undefined for all
+      const agentsParam = selectedAgents.size === 0 ? undefined : Array.from(selectedAgents).join(',');
+      await onSubmit(preview, agentsParam);
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       setError(message);
     }
   };
 
+  const totalCost = calculateCost();
+  const agentCount = selectedAgents.size;
+
   return (
     <form onSubmit={handleSubmit} className="query-builder">
       <div className="query-controls">
         <div className="agent-selector-wrapper">
           <label className="agent-label">
-            Choose Roaster (optional):
+            Choose Roasters (select one or more):
           </label>
           
           {/* Agent Chooser Grid */}
           <div className="agent-chooser">
             <div 
-              className={`agent-option ${selectedAgent === null ? 'active' : ''}`}
-              onClick={() => setSelectedAgent(null)}
+              className={`agent-option ${agentCount === 0 ? 'active' : ''}`}
+              onClick={() => setSelectedAgents(new Set())}
               title="All roasters will roast your image"
             >
               <div className="agent-option-icon">🎲</div>
-              <div className="agent-option-text">All Roasters</div>
+              <div className="agent-option-text">Random (All)</div>
             </div>
             
             {availableAgents.map((agent) => (
               <div
                 key={agent.name}
-                className={`agent-option ${selectedAgent === agent.name ? 'active' : ''}`}
-                onClick={() => setSelectedAgent(agent.name)}
+                className={`agent-option ${selectedAgents.has(agent.name) ? 'active' : ''}`}
+                onClick={() => toggleAgent(agent.name)}
                 title={agent.description}
               >
                 {agentAvatars[agent.name] ? (
@@ -110,6 +136,15 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
               </div>
             ))}
           </div>
+          
+          {/* Cost display */}
+          {agentCount > 0 && (
+            <div className="cost-summary">
+              <p className="cost-text">
+                {agentCount} {agentCount === 1 ? 'roaster' : 'roasters'} × 0.00001 ETH = <strong>{totalCost} ETH</strong>
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -134,7 +169,7 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
         
         {preview && (
           <button type="button" onClick={handleSubmit} disabled={isLoading} className="submit-btn">
-            {isLoading ? 'Getting Roasted...' : 'Roast Me! 🔥'}
+            {isLoading ? 'Getting Roasted...' : agentCount > 0 ? `Roast me for $${(parseFloat(totalCost) * 1).toFixed(5)} 🔥` : 'Roast Me! 🔥'}
           </button>
         )}
       </div>
@@ -150,4 +185,3 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
     </form>
   );
 };
-
