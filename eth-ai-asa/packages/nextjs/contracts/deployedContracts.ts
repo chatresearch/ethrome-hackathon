@@ -5,9 +5,9 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
-  84532: {
+  31337: {
     AgentRegistry: {
-      address: "0xfbee7f501704a9aa629ae2d0ae6fb30989571bd0",
+      address: "0x0000000000000000000000000000000000000000",
       abi: [
         {
           type: "constructor",
@@ -109,6 +109,19 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "deleteAgent",
+          inputs: [
+            {
+              name: "_ensName",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
         },
         {
           type: "function",
@@ -293,6 +306,31 @@ const deployedContracts = {
         },
         {
           type: "event",
+          name: "AgentDeleted",
+          inputs: [
+            {
+              name: "ensNameHash",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+            {
+              name: "ensName",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "owner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
           name: "AgentQueried",
           inputs: [
             {
@@ -399,7 +437,442 @@ const deployedContracts = {
         },
       ],
       inheritedFunctions: {},
-      deployedOnBlock: 32477212,
+      deployedOnBlock: 1,
+    },
+  },
+  8453: {
+    AgentRegistry: {
+      address: "0xFBeE7f501704A9AA629Ae2D0aE6FB30989571Bd0",
+      abi: [
+        {
+          type: "constructor",
+          inputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "receive",
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "agentHashes",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "agents",
+          inputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          outputs: [
+            {
+              name: "owner",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "ensName",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "queryPrice",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "totalQueries",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "earnings",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "active",
+              type: "bool",
+              internalType: "bool",
+            },
+            {
+              name: "registeredAt",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "agentsByOwner",
+          inputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "deleteAgent",
+          inputs: [
+            {
+              name: "_ensName",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "getAgent",
+          inputs: [
+            {
+              name: "_ensName",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "tuple",
+              internalType: "struct AgentRegistry.Agent",
+              components: [
+                {
+                  name: "owner",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "ensName",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "queryPrice",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "totalQueries",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "earnings",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "active",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "registeredAt",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getAgentsByOwner",
+          inputs: [
+            {
+              name: "_owner",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "string[]",
+              internalType: "string[]",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getAllAgentNames",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "string[]",
+              internalType: "string[]",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getTotalAgents",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "platformOwner",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "queryAgent",
+          inputs: [
+            {
+              name: "_ensName",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "registerAgent",
+          inputs: [
+            {
+              name: "_ensName",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "_queryPrice",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "updateAgent",
+          inputs: [
+            {
+              name: "_ensName",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "_queryPrice",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "_active",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "withdrawEarnings",
+          inputs: [
+            {
+              name: "_ensName",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "event",
+          name: "AgentDeleted",
+          inputs: [
+            {
+              name: "ensNameHash",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+            {
+              name: "ensName",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "owner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "AgentQueried",
+          inputs: [
+            {
+              name: "ensNameHash",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+            {
+              name: "querier",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "pricePaid",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "AgentRegistered",
+          inputs: [
+            {
+              name: "ensNameHash",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+            {
+              name: "ensName",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "owner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "queryPrice",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "AgentUpdated",
+          inputs: [
+            {
+              name: "ensNameHash",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+            {
+              name: "queryPrice",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+            {
+              name: "active",
+              type: "bool",
+              indexed: false,
+              internalType: "bool",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "EarningsWithdrawn",
+          inputs: [
+            {
+              name: "ensNameHash",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+            {
+              name: "owner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "amount",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+      ],
+      inheritedFunctions: {},
+      deployedOnBlock: 1,
     },
   },
 } as const;

@@ -1,134 +1,80 @@
-# ENS Agent Marketplace - ENSIP-TBD-11 Reference Implementation
+# 🏗 Scaffold-ETH 2
 
-AI Agent-as-a-Service platform using ENS for decentralized agent discovery and payment.
+<h4 align="center">
+  <a href="https://docs.scaffoldeth.io">Documentation</a> |
+  <a href="https://scaffoldeth.io">Website</a>
+</h4>
 
-Built for ETHRome 2025 | Targets ENS, BuidlGuidl, and Base bounties.
+🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
 
-## What This Does
+⚙️ Built using NextJS, RainbowKit, Foundry, Wagmi, Viem, and Typescript.
 
-Agents are identified by ENS names (e.g., `defi-wizard.aiconfig.eth`). Their capabilities are stored in ENS text records. Payments are tracked on Base Sepolia. No central database needed.
+- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
+- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
+- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
+- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
+- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+
+![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+
+## Requirements
+
+Before you begin, you need to install the following tools:
+
+- [Node (>= v20.18.3)](https://nodejs.org/en/download/)
+- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
+- [Git](https://git-scm.com/downloads)
+
+## Quickstart
+
+To get started with Scaffold-ETH 2, follow the steps below:
+
+1. Install dependencies if it was skipped in CLI:
 
 ```
-ENS (Ethereum Sepolia)          AgentRegistry (Base Sepolia)      Agent Runtime
-- agent.capabilities            - Payment tracking                - ElizaOS
-- agent.endpoint                - Query counting                  - OpenAI integration
-- agent.description             - Earnings management             - Custom personalities
-```
-
-## Tech Stack
-
-- **Smart Contracts**: Solidity + Foundry
-- **Deployment**: Base Sepolia (L2)
-- **Identity**: ENS (Ethereum Sepolia)
-- **Frontend**: Next.js + Scaffold-ETH 2 + Tailwind
-- **Agent Runtime**: ElizaOS + OpenAI
-- **Standards**: ENSIP-TBD-11, A2A Protocol
-
-## Quick Start
-
-```bash
-# Clone and install
-git clone <repo-url>
-cd eth-ai-asa
+cd my-dapp-example
 yarn install
+```
 
-# Deploy contract to Base Sepolia
-cd packages/foundry
+2. Run a local network in the first terminal:
+
+```
+yarn chain
+```
+
+This command starts a local Ethereum network using Foundry. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/foundry/foundry.toml`.
+
+3. On a second terminal, deploy the test contract:
+
+```
 yarn deploy
-
-# Start frontend
-cd ../nextjs
-yarn dev
 ```
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed setup instructions.
+This command deploys a test smart contract to the local network. The contract is located in `packages/foundry/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/foundry/script` to deploy the contract to the network. You can also customize the deploy script.
 
-## ENSIP-TBD-11 Schema
+4. On a third terminal, start your NextJS app:
 
-Agent metadata uses ENS text records as the standard:
-
-| Key | Purpose | Example |
-|-----|---------|---------|
-| `agent.capabilities` | A2A capabilities JSON URL | `https://github.com/.../capabilities.json` |
-| `agent.endpoint` | Agent API endpoint | `https://api.agents.com/defi-wizard` |
-| `agent.description` | Human-readable description | "Expert DeFi strategy advisor" |
-| `agent.type` | Framework type | "eliza-os" |
-| `agent.version` | Agent version | "1.0.0" |
-
-This enables:
-1. Lookup agent ENS name
-2. Read capabilities from text records
-3. Fetch capabilities JSON
-4. Discover agent capabilities
-5. Call agent endpoint
-6. No proprietary API or central database
-
-## Smart Contract: AgentRegistry
-
-Core functions:
-
-```solidity
-registerAgent(string ensName, uint256 queryPrice)
-queryAgent(string ensName) payable
-updateAgent(string ensName, uint256 newPrice, bool active)
-withdrawEarnings(string ensName)
-deleteAgent(string ensName)
-getAgent(string ensName)
-getTotalAgents()
+```
+yarn start
 ```
 
-Key design: Payment data on-chain, metadata in ENS text records.
+Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
 
-## Demo Agents
+Run smart contract test with `yarn foundry:test`
 
-**DeFi Wizard** (`defi-wizard.aiconfig.eth`)
-- Yield opportunity analysis
-- Risk assessment
-- Protocol comparisons
-- Gas optimization
+- Edit your smart contracts in `packages/foundry/contracts`
+- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
+- Edit your deployment scripts in `packages/foundry/script`
 
-**Security Guru** (`security-guru.aiconfig.eth`)
-- Smart contract vulnerability analysis
-- Security best practices
-- Audit recommendations
-- Red team simulation
-
-## User Flow
-
-1. User visits dApp
-2. Browses agents via `getTotalAgents()`
-3. Selects agent and reads ENS text records for capabilities
-4. Pays to query agent via `queryAgent{value}()`
-5. Contract records payment and updates earnings
-6. Frontend calls agent endpoint via HTTP
-7. ElizaOS responds with AI-generated answer
-8. Result displayed to user
-
-## Testing
-
-```bash
-cd packages/foundry
-forge test -v          # Run all tests
-forge test --gas-report # Gas analysis
-```
-
-All tests passing: 24/24
 
 ## Documentation
 
-- [Deployment Guide](./DEPLOYMENT.md) - Full setup and deployment
-- [Testing Guide](./TESTING.md) - Test suite documentation
-- [Smart Contract Source](./packages/foundry/contracts/AgentRegistry.sol)
-- [ENSIP-TBD-11 Proposal](https://github.com/nxt3d/ensips/blob/ensip-ideas/ensips/ensip-TBD-11.md)
+Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
 
-## Project Files
+To know more about its features, check out our [website](https://scaffoldeth.io).
 
-- `packages/foundry/contracts/AgentRegistry.sol` - Main contract
-- `packages/foundry/script/ScriptConstants.sol` - Shared script configuration
-- `packages/foundry/script/RegisterAgents.s.sol` - Register agents on Base Sepolia
-- `packages/foundry/script/SetENSTextRecords.s.sol` - Set ENS text records on Ethereum Sepolia
-- `packages/nextjs/app/agents/page.tsx` - Agent marketplace UI
+## Contributing to Scaffold-ETH 2
 
-## License
+We welcome contributions to Scaffold-ETH 2!
 
-MIT
+Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.

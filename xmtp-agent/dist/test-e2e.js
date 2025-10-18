@@ -1,5 +1,4 @@
 import { Agent } from "@xmtp/agent-sdk";
-import { Wallet } from "ethers";
 import * as dotenv from "dotenv";
 import { routeByCapabilities, formatResponseWithCapabilities } from "./ens-resolver.js";
 dotenv.config();
@@ -16,16 +15,12 @@ function generateResponse(agent, message) {
 }
 async function runE2ETest() {
     console.log("=== XMTP Agent E2E Tests ===\n");
-    const privateKey = process.env.XMTP_WALLET_KEY;
-    if (!privateKey) {
-        console.error("✗ XMTP_WALLET_KEY not set in .env");
-        process.exit(1);
-    }
-    const signer = new Wallet(privateKey);
-    console.log(`✓ Wallet initialized: ${signer.address}\n`);
     try {
-        console.log("Starting XMTP Agent...");
-        const agent = await Agent.create(signer);
+        console.log("Starting XMTP Agent using Agent.createFromEnv()...");
+        // Use Agent.createFromEnv() instead of Agent.create(signer)
+        const agent = await Agent.createFromEnv({
+            env: process.env.XMTP_ENV || "production",
+        });
         console.log("✓ Agent connected\n");
         let messageReceived = false;
         let messageRoutedCorrectly = false;

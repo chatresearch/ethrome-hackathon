@@ -1,0 +1,120 @@
+{
+  "schema": "https://a2a-protocol.org/schema/v1",
+  "agent": {
+    "name": "Vibe Roaster",
+    "ensName": "vibe-roaster.aiconfig.eth",
+    "description": "Fashion and aesthetic expert roasting overall vibes, lifestyle choices, and design decisions with humorous precision",
+    "type": "eliza-os",
+    "version": "1.0.0",
+    "author": "ballew.eth",
+    "license": "MIT"
+  },
+  "capabilities": [
+    {
+      "id": "aesthetic-roast",
+      "name": "Aesthetic & Vibe Roast",
+      "description": "Analyze and roast overall aesthetic, fashion choices, and life choices visible in photos",
+      "category": "entertainment",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "aestheticAnalysis": {
+            "type": "string",
+            "description": "Analysis of fashion, decor, and overall aesthetic"
+          },
+          "context": {
+            "type": "string",
+            "description": "Context of the photo",
+            "enum": ["room-selfie", "outfit-photo", "environment", "mixed", "other"]
+          },
+          "era": {
+            "type": "string",
+            "description": "Fashion era detected",
+            "enum": ["2010s", "2015", "2020-now", "mix", "timeless", "confused"]
+          }
+        },
+        "required": ["aestheticAnalysis"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "roast": {
+            "type": "string",
+            "description": "Humorous critique of aesthetic and life choices"
+          },
+          "aestheticCoherence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          }
+        }
+      }
+    },
+    {
+      "id": "fashion-critique",
+      "name": "Fashion Critique",
+      "description": "Provide sarcastic commentary on fashion and outfit choices",
+      "category": "entertainment",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fashionAnalysis": {
+            "type": "string",
+            "description": "Analysis of clothing and style choices"
+          },
+          "colorScheme": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Colors in the outfit"
+          },
+          "occasion": {
+            "type": "string",
+            "description": "What the outfit is for"
+          }
+        },
+        "required": ["fashionAnalysis"]
+      }
+    },
+    {
+      "id": "interior-roast",
+      "name": "Interior Design Roast",
+      "description": "Critique interior design choices and room aesthetics",
+      "category": "entertainment",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "roomAnalysis": {
+            "type": "string",
+            "description": "Description of room design elements"
+          },
+          "designStyle": {
+            "type": "string",
+            "description": "Identified design style",
+            "enum": ["minimalist", "maximalist", "eclectic", "sterile", "chaotic", "undefined"]
+          }
+        }
+      }
+    }
+  ],
+  "pricing": {
+    "model": "per-query",
+    "amount": "0.001",
+    "currency": "ETH",
+    "network": "base-sepolia"
+  },
+  "endpoints": {
+    "query": "https://api.youragents.com/vibe-roaster/query",
+    "health": "https://api.youragents.com/vibe-roaster/health"
+  },
+  "metadata": {
+    "createdAt": "2025-01-17T00:00:00Z",
+    "updatedAt": "2025-01-17T00:00:00Z",
+    "tags": ["fashion", "aesthetic", "design", "humor", "lifestyle", "entertainment", "interior"],
+    "language": "en",
+    "rateLimit": {
+      "requests": 100,
+      "period": "hour"
+    },
+    "disclaimer": "This agent provides entertainment-focused aesthetic criticism. All commentary is meant as humorous observation, not genuine judgment."
+  }
+}

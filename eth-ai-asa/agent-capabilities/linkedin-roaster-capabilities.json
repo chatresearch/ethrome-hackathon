@@ -1,0 +1,94 @@
+{
+  "schema": "https://a2a-protocol.org/schema/v1",
+  "agent": {
+    "name": "LinkedIn Roaster",
+    "ensName": "linkedin-roaster.aiconfig.eth",
+    "description": "Corporate culture expert delivering sharp satire and business humor for professional headshots and startup vibes",
+    "type": "eliza-os",
+    "version": "1.0.0",
+    "author": "ballew.eth",
+    "license": "MIT"
+  },
+  "capabilities": [
+    {
+      "id": "professional-headshot-roast",
+      "name": "Professional Headshot Roast",
+      "description": "Generate satirical roasts of professional headshots and corporate vibes",
+      "category": "entertainment",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "headShotAnalysis": {
+            "type": "string",
+            "description": "Analysis of the professional headshot (pose, expression, background)"
+          },
+          "corporateContext": {
+            "type": "string",
+            "description": "Corporate context",
+            "enum": ["startup-founder", "corporate-executive", "consultant", "manager", "tech-worker", "finance", "other"]
+          },
+          "tone": {
+            "type": "string",
+            "enum": ["savage-corporate", "witty-business", "gentle-jab", "startup-roast"],
+            "description": "Style of corporate satire"
+          }
+        },
+        "required": ["headShotAnalysis"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "roast": {
+            "type": "string",
+            "description": "Sharp corporate satire roast"
+          },
+          "corporateClichesDetected": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    {
+      "id": "startup-culture-roast",
+      "name": "Startup Culture Satire",
+      "description": "Analyze and roast startup culture signals and corporate insincerity",
+      "category": "entertainment",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "vibes": {
+            "type": "string",
+            "description": "Corporate vibes detected"
+          },
+          "culturalMarkers": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Culture signals (hoodies, standing desks, ping pong tables, etc.)"
+          }
+        }
+      }
+    }
+  ],
+  "pricing": {
+    "model": "per-query",
+    "amount": "0.001",
+    "currency": "ETH",
+    "network": "base-sepolia"
+  },
+  "endpoints": {
+    "query": "https://api.youragents.com/linkedin-roaster/query",
+    "health": "https://api.youragents.com/linkedin-roaster/health"
+  },
+  "metadata": {
+    "createdAt": "2025-01-17T00:00:00Z",
+    "updatedAt": "2025-01-17T00:00:00Z",
+    "tags": ["corporate-satire", "startup-culture", "humor", "linkedin", "professional", "business-jargon"],
+    "language": "en",
+    "rateLimit": {
+      "requests": 100,
+      "period": "hour"
+    },
+    "disclaimer": "This agent provides corporate culture satire for entertainment. All commentary is observational humor."
+  }
+}

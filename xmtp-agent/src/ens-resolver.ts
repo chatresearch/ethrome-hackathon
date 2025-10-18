@@ -11,6 +11,9 @@ interface AgentCapabilities {
 const ENS_NAMES: Record<string, string> = {
   "defi-wizard": "defi-wizard.aiconfig.eth",
   "security-guru": "security-guru.aiconfig.eth",
+  "profile-roaster": "profile-roaster.aiconfig.eth",
+  "linkedin-roaster": "linkedin-roaster.aiconfig.eth",
+  "vibe-roaster": "vibe-roaster.aiconfig.eth",
 };
 
 const SEPOLIA_RPC = process.env.SEPOLIA_RPC || "https://eth-sepolia.g.alchemy.com/v2/7U4mbJajvpp6GzozCw6z6kMEGAqKcXkG";
@@ -54,10 +57,23 @@ export async function resolveAgentCapabilities(
 
     const capabilitiesData = await response.json() as Record<string, unknown>;
 
+    // Extract capabilities - handle both string arrays and object arrays
+    let capabilitiesArray: string[] = [];
+    if (Array.isArray(capabilitiesData.capabilities)) {
+      capabilitiesArray = capabilitiesData.capabilities
+        .map((cap: any) => {
+          if (typeof cap === 'string') return cap;
+          if (typeof cap === 'object' && cap.name) return cap.name;
+          if (typeof cap === 'object' && cap.title) return cap.title;
+          return String(cap);
+        })
+        .filter(Boolean);
+    }
+
     return {
       name: agentName,
       description: description || "No description",
-      capabilities: (Array.isArray(capabilitiesData.capabilities) ? capabilitiesData.capabilities : []) as string[],
+      capabilities: capabilitiesArray,
       type: type || "unknown",
       version: version || "1.0.0",
     };
@@ -68,38 +84,51 @@ export async function resolveAgentCapabilities(
 }
 
 export async function routeByCapabilities(message: string): Promise<string> {
-  const keywords: Record<string, string[]> = {
-    "defi-wizard": [
-      "defi",
-      "yield",
-      "farming",
-      "apy",
-      "liquidity",
-      "tvl",
-      "protocol",
-      "pool",
-    ],
-    "security-guru": [
-      "security",
-      "contract",
-      "vulnerability",
-      "audit",
-      "exploit",
-      "reentrancy",
-      "overflow",
-      "access",
-    ],
-  };
-
   const lowerMsg = message.toLowerCase();
 
-  for (const [agent, words] of Object.entries(keywords)) {
-    if (words.some((word) => lowerMsg.includes(word))) {
-      return agent;
+  // Roasting keywords
+  if (lowerMsg.includes("roast") || lowerMsg.includes("image") || lowerMsg.includes("photo")) {
+    if (lowerMsg.includes("linkedin") || lowerMsg.includes("professional") || lowerMsg.includes("headshot")) {
+      return "linkedin-roaster";
+    } else if (lowerMsg.includes("vibe") || lowerMsg.includes("aesthetic") || lowerMsg.includes("fashion")) {
+      return "vibe-roaster";
     }
+    // Default to profile roaster for general roasting
+    return "profile-roaster";
   }
 
-  return "defi-wizard";
+  // DeFi keywords
+  const defiKeywords = [
+    "defi",
+    "yield",
+    "farming",
+    "apy",
+    "liquidity",
+    "tvl",
+    "protocol",
+    "pool",
+  ];
+  if (defiKeywords.some((word) => lowerMsg.includes(word))) {
+    return "defi-wizard";
+  }
+
+  // Security keywords
+  const securityKeywords = [
+    "security",
+    "contract",
+    "vulnerability",
+    "audit",
+    "exploit",
+    "reentrancy",
+    "overflow",
+    "access",
+  ];
+  if (securityKeywords.some((word) => lowerMsg.includes(word))) {
+    return "security-guru";
+  }
+
+  // Default to profile roaster for unknown
+  return "profile-roaster";
 }
 
 export async function formatResponseWithCapabilities(
