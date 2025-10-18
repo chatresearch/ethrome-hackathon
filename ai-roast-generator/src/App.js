@@ -40,7 +40,14 @@ const AppContent = () => {
     const [leaderboardRefresh, setLeaderboardRefresh] = useState(0);
     const [isDarkMode, setIsDarkMode] = useState(() => {
         const saved = localStorage.getItem('roast-generator-dark-mode');
-        return saved ? JSON.parse(saved) : false;
+        if (saved !== null) {
+            return JSON.parse(saved);
+        }
+        // Check system preference
+        if (typeof window !== 'undefined' && window.matchMedia) {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        return false;
     });
     const [uploadedImage, setUploadedImage] = useState(null);
     const [s3ImageUrl, setS3ImageUrl] = useState(null);
