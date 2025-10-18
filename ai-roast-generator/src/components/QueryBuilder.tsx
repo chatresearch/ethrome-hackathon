@@ -22,8 +22,6 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [testLoading, setTestLoading] = useState(false);
-  const [testResult, setTestResult] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,48 +47,11 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
     reader.onload = (event) => {
       const base64 = event.target?.result as string;
       setPreview(base64);
-      setTestResult(null);
     };
     reader.onerror = () => {
       setError('Failed to read file');
     };
     reader.readAsDataURL(file);
-  };
-
-  const handleTestS3Upload = async () => {
-    if (!preview) {
-      setError('Please upload an image first');
-      return;
-    }
-
-    setTestLoading(true);
-    setTestResult(null);
-    setError(null);
-
-    try {
-      console.log('[Test] Testing S3 upload before payment...');
-      
-      const response = await fetch('/api/test-s3-upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageBase64: preview }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Upload test failed: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log('[Test] Upload test successful:', result);
-      setTestResult(`✅ ${result.message} (${result.imageSizeKB} KB)`);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      console.error('[Test] Upload test failed:', message);
-      setError(`Test failed: ${message}`);
-      setTestResult(`❌ ${message}`);
-    } finally {
-      setTestLoading(false);
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -158,34 +119,23 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
           type="file"
           accept="image/*"
           onChange={handleFileChange}
-          disabled={isLoading || testLoading}
+          disabled={isLoading}
           className="file-input"
           style={{ display: 'none' }}
         />
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          disabled={isLoading || testLoading}
+          disabled={isLoading}
           className="upload-btn"
         >
           {preview ? '📷 Change Image' : '📸 Upload Selfie'}
         </button>
         
         {preview && (
-          <>
-            <button 
-              type="button" 
-              onClick={handleTestS3Upload} 
-              disabled={isLoading || testLoading} 
-              className="test-btn"
-              title="Test S3 upload before payment"
-            >
-              {testLoading ? '🧪 Testing...' : '🧪 Test Upload (no payment)'}
-            </button>
-            <button type="button" onClick={handleSubmit} disabled={isLoading || testLoading} className="submit-btn">
-              {isLoading ? 'Getting Roasted...' : 'Roast Me! 🔥'}
-            </button>
-          </>
+          <button type="button" onClick={handleSubmit} disabled={isLoading} className="submit-btn">
+            {isLoading ? 'Getting Roasted...' : 'Roast Me! 🔥'}
+          </button>
         )}
       </div>
 
@@ -193,12 +143,6 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
         <div className="preview-container">
           <img src={preview} alt="Preview" className="preview-thumbnail" />
           <p className="preview-info">Ready to be roasted?</p>
-        </div>
-      )}
-
-      {testResult && (
-        <div className={`test-result ${testResult.startsWith('✅') ? 'success' : 'error'}`}>
-          {testResult}
         </div>
       )}
 

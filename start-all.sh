@@ -207,7 +207,7 @@ deploy_vercel() {
   
   echo -e "${GREEN}=== Vercel Deployment Complete ===${NC}"
   echo "Ngrok URL: $NGROK_URL"
-  echo "Check https://protocol-council-miniapp.vercel.app"
+  echo "Check https://ai-roast-generator.vercel.app"
 }
 
 # Function to stop BuidlGuidl
