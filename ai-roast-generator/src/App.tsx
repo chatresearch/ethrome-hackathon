@@ -13,6 +13,7 @@ import { wagmiConfig } from './hooks/wagmiConfig';
 import { recordVote } from './lib/scoring';
 import './styles/App.css';
 import '@rainbow-me/rainbowkit/styles.css';
+import { useHealthCheck } from './hooks/useHealthCheck';
 
 interface AgentResponse {
   agent: string;
@@ -40,6 +41,7 @@ const AppContent: React.FC = () => {
   const { sendMessage, error: xmtpError } = useXMTP();
   const { queryAgentWithPayment, loading: paymentLoading, error: paymentError, isConnected, isCorrectNetwork } = useAgentPayment();
   const { uploadImageToS3 } = useS3Upload();
+  const xmtpHealth = useHealthCheck();
   const [results, setResults] = useState<AgentResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [votes, setVotes] = useState<Record<number, number>>({});
