@@ -14,14 +14,11 @@ export function useS3Upload() {
                 bytes[i] = binaryString.charCodeAt(i);
             }
             const blob = new Blob([bytes], { type: 'image/png' });
-            // Get presigned URL from XMTP agent backend
-            const xmtpApiUrl = import.meta.env.VITE_REACT_APP_XMTP_API ||
-                import.meta.env.VITE_XMTP_API ||
-                'http://127.0.0.1:3003';
-            console.log(`[S3] Requesting presigned URL from ${xmtpApiUrl}/api/s3-upload-url...`);
-            const presignedUrlResponse = await fetch(`${xmtpApiUrl}/api/s3-upload-url?filename=roast.png&contentType=image/png`, {
+            // Get presigned URL from Vercel API route (not XMTP)
+            console.log(`[S3] Requesting presigned URL from Vercel API...`);
+            const presignedUrlResponse = await fetch(`/api/s3-presigned-url?filename=roast.png&contentType=image/png`, {
                 headers: {
-                    'ngrok-skip-browser-warning': 'true',
+                    'Content-Type': 'application/json',
                 },
             });
             if (!presignedUrlResponse.ok) {
@@ -30,7 +27,7 @@ export function useS3Upload() {
                 throw new Error(`Failed to get presigned URL: ${presignedUrlResponse.status} - ${errorText.substring(0, 100)}`);
             }
             const { uploadUrl, expiresIn } = await presignedUrlResponse.json();
-            console.log(`[S3] Got presigned URL, expires in ${expiresIn}s`);
+            console.log(`[S3] Got presigned URL from Vercel, expires in ${expiresIn}s`);
             // Upload to S3 using presigned URL
             console.log(`[S3] Uploading image to S3 via presigned URL...`);
             const s3Response = await fetch(uploadUrl, {
