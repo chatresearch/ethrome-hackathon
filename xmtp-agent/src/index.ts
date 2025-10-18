@@ -50,7 +50,7 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     const s3Match = message.match(/(https:\/\/[^\s]+\.s3\.[^\s]+)/);
     const imageData = imageMatch ? imageMatch[1] : (s3Match ? s3Match[1] : message);
     formattedMessage = `Please analyze this image and provide a hilarious, witty roast. Here's the image: ${imageData}`;
-    console.log(`[generateResponse] Image detected for ${agent}, sending formatted message`);
+    console.log(`[generateResponse] Image detected for ${agent}, formatted message length: ${formattedMessage.length}`);
   }
   
   try {
@@ -68,7 +68,7 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     console.log(`[generateResponse] Got response from ${agent}`);
     return data.response || data.message || "No response from agent";
   } catch (error) {
-    console.error(`[generateResponse] Error from agent, using fallback. Is image: ${isImage}`);
+    console.error(`[generateResponse] Error from agent, using fallback. Is image: ${isImage}, Error: ${error}`);
     // Fallback with realistic demo responses based on agent type and message
     if (agent === "defi-wizard") {
       if (message.toLowerCase().includes("yield") || message.toLowerCase().includes("apy")) {

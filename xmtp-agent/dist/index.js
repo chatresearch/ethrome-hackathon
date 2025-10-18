@@ -31,14 +31,15 @@ async function generateResponse(agent, message) {
     const agentPort = process.env.ELIZAOS_PORT || "3001";
     const agentEndpoint = `http://localhost:${agentPort}/api/agents/${agent}/message`;
     // Detect if message contains image data (base64) - can be anywhere in the message
-    const isImage = message.includes("data:image/") || message.includes("base64,");
+    const isImage = message.includes("data:image/") || message.includes("base64,") || message.includes(".s3.");
     console.log(`[generateResponse] Agent: ${agent}, Has image: ${isImage}`);
     // Format message for vision agents if it's an image
     let formattedMessage = message;
     if (isImage && (agent === "profile-roaster" || agent === "linkedin-roaster" || agent === "vibe-roaster")) {
-        // Extract the image part
+        // Extract the image part - could be base64 or S3 URL
         const imageMatch = message.match(/(data:image\/[^:]*;base64,[A-Za-z0-9+/=]+)/);
-        const imageData = imageMatch ? imageMatch[1] : message;
+        const s3Match = message.match(/(https:\/\/[^\s]+\.s3\.[^\s]+)/);
+        const imageData = imageMatch ? imageMatch[1] : (s3Match ? s3Match[1] : message);
         formattedMessage = `Please analyze this image and provide a hilarious, witty roast. Here's the image: ${imageData}`;
         console.log(`[generateResponse] Image detected for ${agent}, sending formatted message`);
     }
