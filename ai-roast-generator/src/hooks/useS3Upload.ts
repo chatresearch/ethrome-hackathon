@@ -1,8 +1,4 @@
 import { useState, useCallback } from 'react';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-
-const S3_BUCKET = 'irc-ai-roaster';
-const S3_REGION = 'eu-south-1';
 
 export function useS3Upload() {
   const [uploading, setUploading] = useState(false);
@@ -22,30 +18,37 @@ export function useS3Upload() {
       }
       const blob = new Blob([bytes], { type: 'image/png' });
 
-      // Generate unique filename
-      const timestamp = Date.now();
-      const random = Math.random().toString(36).substring(7);
-      const filename = `roasts/${timestamp}-${random}.png`;
+      // Get presigned URL from XMTP agent backend
+      const xmtpApiUrl = (import.meta as any).env.VITE_REACT_APP_XMTP_API || 
+                         (import.meta as any).env.VITE_XMTP_API ||
+                         'http://127.0.0.1:3003';
+      
+      console.log(`[S3] Requesting presigned URL from ${xmtpApiUrl}/api/s3-upload-url...`);
+      
+      const presignedUrlResponse = await fetch(`${xmtpApiUrl}/api/s3-upload-url?filename=roast.png&contentType=image/png`);
+      if (!presignedUrlResponse.ok) {
+        throw new Error(`Failed to get presigned URL: ${presignedUrlResponse.status}`);
+      }
+      
+      const { uploadUrl, expiresIn } = await presignedUrlResponse.json();
+      console.log(`[S3] Got presigned URL, expires in ${expiresIn}s`);
 
-      console.log(`[S3] Uploading image to ${filename}...`);
-
-      // Upload to S3 using default AWS credentials from environment
-      const s3Client = new S3Client({
-        region: S3_REGION,
+      // Upload to S3 using presigned URL
+      console.log(`[S3] Uploading image to S3 via presigned URL...`);
+      const s3Response = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'image/png',
+        },
+        body: blob,
       });
 
-      const uploadParams = {
-        Bucket: S3_BUCKET,
-        Key: filename,
-        Body: blob,
-        ContentType: 'image/png',
-      };
+      if (!s3Response.ok) {
+        throw new Error(`S3 upload failed: ${s3Response.status} ${s3Response.statusText}`);
+      }
 
-      const command = new PutObjectCommand(uploadParams);
-      await s3Client.send(command);
-
-      // Return S3 URL
-      const s3Url = `https://${S3_BUCKET}.s3.${S3_REGION}.amazonaws.com/${filename}`;
+      // Extract S3 URL from presigned URL (remove query params)
+      const s3Url = uploadUrl.split('?')[0];
       console.log(`[S3] ✅ Upload complete: ${s3Url}`);
 
       setUploading(false);

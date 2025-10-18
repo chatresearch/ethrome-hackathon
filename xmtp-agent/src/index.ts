@@ -2,10 +2,35 @@ import { Agent } from "@xmtp/agent-sdk";
 import * as dotenv from "dotenv";
 import * as http from "http";
 import { routeByCapabilities, formatResponseWithCapabilities, resolveAgentCapabilities } from "./ens-resolver.js";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 dotenv.config();
 
 type AgentType = "defi-wizard" | "security-guru" | "profile-roaster" | "linkedin-roaster" | "vibe-roaster";
+
+// Generate presigned URL for S3 upload
+async function generatePresignedUrl(filename: string, contentType: string = 'image/png'): Promise<string> {
+  try {
+    const s3Client = new S3Client({ region: 'eu-south-1' });
+    const bucket = 'irc-ai-roaster';
+    const key = `roasts/${Date.now()}-${Math.random().toString(36).substring(7)}-${filename}`;
+    
+    const command = new PutObjectCommand({
+      Bucket: bucket,
+      Key: key,
+      ContentType: contentType,
+    });
+    
+    const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1 hour expiry
+    console.log(`[S3] Generated presigned URL for ${key}`);
+    return url;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`[S3] Failed to generate presigned URL:`, message);
+    throw new Error(`Failed to generate presigned URL: ${message}`);
+  }
+}
 
 // Query real ElizaOS agents via HTTP instead of using mocks
 async function generateResponse(agent: AgentType, message: string): Promise<string> {
@@ -126,6 +151,31 @@ function startHttpServer() {
     if (req.method === "OPTIONS") {
       res.writeHead(200);
       res.end();
+      return;
+    }
+
+    // S3 Presigned URL endpoint
+    if (req.url === "/api/s3-upload-url" && req.method === "GET") {
+      try {
+        const queryParams = new URL(req.url || "", `http://${req.headers.host || 'localhost'}`);
+        const filename = queryParams.searchParams.get('filename') || 'image.png';
+        const contentType = queryParams.searchParams.get('contentType') || 'image/png';
+        
+        console.log(`[S3] Presigned URL request for ${filename}`);
+        const presignedUrl = await generatePresignedUrl(filename, contentType);
+        
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ 
+          uploadUrl: presignedUrl,
+          expiresIn: 3600 
+        }));
+      } catch (error) {
+        console.error("[S3] Error generating presigned URL:", error);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ 
+          error: error instanceof Error ? error.message : "Failed to generate presigned URL" 
+        }));
+      }
       return;
     }
 
