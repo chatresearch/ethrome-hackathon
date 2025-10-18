@@ -14,9 +14,9 @@ import { recordVote } from './lib/scoring';
 import './styles/App.css';
 import '@rainbow-me/rainbowkit/styles.css';
 const AGENT_PRICES = {
-    'profile-roaster': '0.001',
-    'linkedin-roaster': '0.001',
-    'vibe-roaster': '0.001',
+    'profile-roaster': '0.00001',
+    'linkedin-roaster': '0.00001',
+    'vibe-roaster': '0.00001',
 };
 const getCurrentUserId = () => {
     let userId = localStorage.getItem('roast-generator-user-id');
@@ -58,19 +58,29 @@ const AppContent = () => {
             // First, process payment on-chain
             if (isConnected && isCorrectNetwork) {
                 const agentName = agent || 'profile-roaster';
-                const price = AGENT_PRICES[agentName] || '0.001';
+                const price = AGENT_PRICES[agentName] || '0.00001';
                 console.log(`Processing payment for ${agentName} (${price} ETH)...`);
                 const paymentResult = await queryAgentWithPayment(agentName, price);
                 if (!paymentResult.success) {
-                    throw new Error(`Payment failed: ${paymentResult.error}`);
+                    const errorMsg = paymentResult.error || 'Unknown error';
+                    // Funny error messages
+                    if (errorMsg.toLowerCase().includes('insufficient')) {
+                        throw new Error(`💸 Oops! Your wallet is too poor for roasts. You need ${price} ETH but your account is basically a crypto beggar. Go touch grass and earn some Base coins! 😅`);
+                    }
+                    else if (errorMsg.toLowerCase().includes('network')) {
+                        throw new Error('🌍 Wrong network, buddy! Are you even on Base Sepolia? Your roasts need to be L2!');
+                    }
+                    else {
+                        throw new Error(`💥 Payment kaboom! ${errorMsg}`);
+                    }
                 }
                 console.log(`Payment confirmed! TX: ${paymentResult.txHash}`);
             }
             else if (!isConnected) {
-                throw new Error('Please connect your wallet to proceed');
+                throw new Error('🔗 Connect your wallet first, genius!');
             }
             else if (!isCorrectNetwork) {
-                throw new Error('Please switch to Base Sepolia network');
+                throw new Error('🌍 Wrong network! Switch to Base Sepolia to get roasted!');
             }
             // Then, query the agent via XMTP
             const query = agent
@@ -90,7 +100,7 @@ const AppContent = () => {
         catch (error) {
             const errorMsg = error instanceof Error ? error.message : String(error);
             console.error('Error:', errorMsg);
-            alert(`Error: ${errorMsg}`);
+            alert(`❌ ${errorMsg}`);
         }
         finally {
             setIsLoading(false);
@@ -116,7 +126,7 @@ const AppContent = () => {
                                     { name: 'profile-roaster', description: 'Dating Profile Roast' },
                                     { name: 'linkedin-roaster', description: 'LinkedIn Headshot Roast' },
                                     { name: 'vibe-roaster', description: 'Aesthetic & Vibe Roast' }
-                                ] }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError }), _jsx("div", { className: "pricing-info", children: _jsx("span", { className: "cost-badge", children: "\uD83D\uDCB0 0.001 ETH per roast" }) })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] })] }));
+                                ] }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError }), _jsx("div", { className: "pricing-info", children: _jsx("span", { className: "cost-badge", children: "\uD83D\uDCB0 0.00001 ETH per roast" }) })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] })] }));
 };
 export const App = () => {
     const queryClient = new QueryClient();

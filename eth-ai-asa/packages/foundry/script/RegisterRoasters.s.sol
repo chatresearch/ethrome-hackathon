@@ -2,61 +2,66 @@
 pragma solidity ^0.8.19;
 
 import "forge-std/Script.sol";
-
-interface IENSRegistrar {
-    function setSubnodeRecord(bytes32 node, bytes32 label, address owner, address resolver, uint64 ttl) external;
-    function setSubnodeOwner(bytes32 node, bytes32 label, address owner) external;
-}
-
-interface IENSResolver {
-    function setText(bytes32 node, string calldata key, string calldata value) external;
-}
+import "../contracts/AgentRegistry.sol";
+import "./ScriptConstants.sol";
 
 /**
- * @notice Register roaster agent subdomains on ENS Sepolia
- * @dev Run with: forge script script/RegisterRoasters.s.sol --rpc-url https://eth-sepolia.public.blastapi.io --broadcast
+ * @notice Register all agents on AgentRegistry (Base Sepolia)
+ * @dev Run with: forge script script/RegisterRoasters.s.sol --rpc-url https://sepolia.base.org --broadcast
  */
 contract RegisterRoasters is Script {
-    // ENS Sepolia addresses
-    address constant ENS_REGISTRY = 0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e;
-    address constant ENS_RESOLVER = 0x8FADE66B79cC9f707aB26799354482EB93a5B7dD;
-    
-    // aiconfig.eth namehash
-    bytes32 constant AICONFIG_NAMEHASH = 0x54d0c19d30b42b25ff3c1bea369f16aed85edf2d65be07ffd57417c62b5d3d25;
-    
-    // Labels for roasters (keccak256 hash of subdomain name)
-    bytes32 constant PROFILE_ROASTER_LABEL = keccak256(abi.encodePacked("profile-roaster"));
-    bytes32 constant LINKEDIN_ROASTER_LABEL = keccak256(abi.encodePacked("linkedin-roaster"));
-    bytes32 constant VIBE_ROASTER_LABEL = keccak256(abi.encodePacked("vibe-roaster"));
-    
     function run() external {
         vm.startBroadcast();
         
-        IENSRegistrar registrar = IENSRegistrar(ENS_REGISTRY);
-        address owner = msg.sender;
+        AgentRegistry registry = AgentRegistry(payable(ScriptConstants.AGENT_REGISTRY_BASE_SEPOLIA));
         
-        console.log("Registering roaster subdomains on ENS Sepolia...\n");
-        console.log("Deployer address:", owner);
+        console.log("Registering all agents on AgentRegistry (Base Sepolia)...");
+        console.log("Price per query:", ScriptConstants.AGENT_QUERY_PRICE / 1e16, "cents\n");
         
-        // Register profile-roaster.aiconfig.eth
-        console.log("Registering profile-roaster.aiconfig.eth...");
-        registrar.setSubnodeOwner(AICONFIG_NAMEHASH, PROFILE_ROASTER_LABEL, owner);
-        console.log("  [OK] Registered");
+        // Register DeFi Wizard
+        console.log("1. Registering defi-wizard.aiconfig.eth...");
+        try registry.registerAgent(ScriptConstants.DEFI_WIZARD_NAME, ScriptConstants.AGENT_QUERY_PRICE) {
+            console.log("   [OK] Registered\n");
+        } catch {
+            console.log("   [SKIP] Already registered\n");
+        }
         
-        // Register linkedin-roaster.aiconfig.eth
-        console.log("Registering linkedin-roaster.aiconfig.eth...");
-        registrar.setSubnodeOwner(AICONFIG_NAMEHASH, LINKEDIN_ROASTER_LABEL, owner);
-        console.log("  [OK] Registered");
+        // Register Security Guru
+        console.log("2. Registering security-guru.aiconfig.eth...");
+        try registry.registerAgent(ScriptConstants.SECURITY_GURU_NAME, ScriptConstants.AGENT_QUERY_PRICE) {
+            console.log("   [OK] Registered\n");
+        } catch {
+            console.log("   [SKIP] Already registered\n");
+        }
         
-        // Register vibe-roaster.aiconfig.eth
-        console.log("Registering vibe-roaster.aiconfig.eth...");
-        registrar.setSubnodeOwner(AICONFIG_NAMEHASH, VIBE_ROASTER_LABEL, owner);
-        console.log("  [OK] Registered");
+        // Register Profile Roaster
+        console.log("3. Registering profile-roaster.aiconfig.eth...");
+        try registry.registerAgent(ScriptConstants.PROFILE_ROASTER_NAME, ScriptConstants.AGENT_QUERY_PRICE) {
+            console.log("   [OK] Registered\n");
+        } catch {
+            console.log("   [SKIP] Already registered\n");
+        }
+        
+        // Register LinkedIn Roaster
+        console.log("4. Registering linkedin-roaster.aiconfig.eth...");
+        try registry.registerAgent(ScriptConstants.LINKEDIN_ROASTER_NAME, ScriptConstants.AGENT_QUERY_PRICE) {
+            console.log("   [OK] Registered\n");
+        } catch {
+            console.log("   [SKIP] Already registered\n");
+        }
+        
+        // Register Vibe Roaster
+        console.log("5. Registering vibe-roaster.aiconfig.eth...");
+        try registry.registerAgent(ScriptConstants.VIBE_ROASTER_NAME, ScriptConstants.AGENT_QUERY_PRICE) {
+            console.log("   [OK] Registered\n");
+        } catch {
+            console.log("   [SKIP] Already registered\n");
+        }
         
         vm.stopBroadcast();
         
-        console.log("\n=== COMPLETE ===");
-        console.log("Roaster subdomains registered!");
-        console.log("Next: Run SetENSTextRecords.s.sol to set capabilities");
+        console.log("=== COMPLETE ===");
+        console.log("All agents processed!");
+        console.log("Total agents registered:", registry.getTotalAgents());
     }
 }

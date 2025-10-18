@@ -21,9 +21,9 @@ interface AgentResponse {
 }
 
 const AGENT_PRICES: Record<string, string> = {
-  'profile-roaster': '0.001',
-  'linkedin-roaster': '0.001',
-  'vibe-roaster': '0.001',
+  'profile-roaster': '0.00001',
+  'linkedin-roaster': '0.00001',
+  'vibe-roaster': '0.00001',
 };
 
 const getCurrentUserId = () => {
@@ -70,20 +70,29 @@ const AppContent: React.FC = () => {
       // First, process payment on-chain
       if (isConnected && isCorrectNetwork) {
         const agentName = agent || 'profile-roaster';
-        const price = AGENT_PRICES[agentName] || '0.001';
+        const price = AGENT_PRICES[agentName] || '0.00001';
         
         console.log(`Processing payment for ${agentName} (${price} ETH)...`);
         const paymentResult = await queryAgentWithPayment(agentName, price);
         
         if (!paymentResult.success) {
-          throw new Error(`Payment failed: ${paymentResult.error}`);
+          const errorMsg = paymentResult.error || 'Unknown error';
+          
+          // Funny error messages
+          if (errorMsg.toLowerCase().includes('insufficient')) {
+            throw new Error(`💸 Oops! Your wallet is too poor for roasts. You need ${price} ETH but your account is basically a crypto beggar. Go touch grass and earn some Base coins! 😅`);
+          } else if (errorMsg.toLowerCase().includes('network')) {
+            throw new Error('🌍 Wrong network, buddy! Are you even on Base Sepolia? Your roasts need to be L2!');
+          } else {
+            throw new Error(`💥 Payment kaboom! ${errorMsg}`);
+          }
         }
         
         console.log(`Payment confirmed! TX: ${paymentResult.txHash}`);
       } else if (!isConnected) {
-        throw new Error('Please connect your wallet to proceed');
+        throw new Error('🔗 Connect your wallet first, genius!');
       } else if (!isCorrectNetwork) {
-        throw new Error('Please switch to Base Sepolia network');
+        throw new Error('🌍 Wrong network! Switch to Base Sepolia to get roasted!');
       }
 
       // Then, query the agent via XMTP
@@ -105,7 +114,7 @@ const AppContent: React.FC = () => {
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
       console.error('Error:', errorMsg);
-      alert(`Error: ${errorMsg}`);
+      alert(`❌ ${errorMsg}`);
     } finally {
       setIsLoading(false);
     }
@@ -177,7 +186,7 @@ const AppContent: React.FC = () => {
           {xmtpError && <div className="error-banner">{xmtpError}</div>}
           {paymentError && <div className="error-banner">{paymentError}</div>}
           <div className="pricing-info">
-            <span className="cost-badge">💰 0.001 ETH per roast</span>
+            <span className="cost-badge">💰 0.00001 ETH per roast</span>
           </div>
         </section>
 
