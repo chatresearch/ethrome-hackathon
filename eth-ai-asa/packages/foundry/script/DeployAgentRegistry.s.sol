@@ -16,4 +16,3 @@ contract DeployAgentRegistry is ScaffoldETHDeploy {
         console.log("Ready to register agents!");
     }
 }
-

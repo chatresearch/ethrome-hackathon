@@ -1,0 +1,96 @@
+{
+  "schema": "https://a2a-protocol.org/schema/v1",
+  "agent": {
+    "name": "Profile Roaster",
+    "ensName": "profile-roaster.aiconfig.eth",
+    "description": "Hilarious AI roaster specializing in witty critiques of dating profiles and selfies with entertaining observations",
+    "type": "eliza-os",
+    "version": "1.0.0",
+    "author": "ballew.eth",
+    "license": "MIT"
+  },
+  "capabilities": [
+    {
+      "id": "dating-profile-roast",
+      "name": "Dating Profile Roast",
+      "description": "Generate hilarious and witty roasts of dating profile photos",
+      "category": "entertainment",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "imageDescription": {
+            "type": "string",
+            "description": "Description of the dating profile photo"
+          },
+          "profileContext": {
+            "type": "string",
+            "description": "Context about the profile (mirror selfie, gym photo, etc.)",
+            "enum": ["mirror-selfie", "gym-photo", "bathroom-selfie", "car-selfie", "formal-photo", "group-photo", "other"]
+          },
+          "tone": {
+            "type": "string",
+            "enum": ["savage", "witty", "gentle", "hilarious"],
+            "description": "Desired roast tone"
+          }
+        },
+        "required": ["imageDescription"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "roast": {
+            "type": "string",
+            "description": "The witty roast of the dating profile"
+          },
+          "funninesScore": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10
+          }
+        }
+      }
+    },
+    {
+      "id": "selfie-critique",
+      "name": "Selfie Critique",
+      "description": "Provide entertaining commentary on selfie photos",
+      "category": "entertainment",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "selfieAnalysis": {
+            "type": "string",
+            "description": "Analysis of the selfie (pose, lighting, background)"
+          },
+          "selfieType": {
+            "type": "string",
+            "enum": ["ring-light", "bathroom", "bed", "car", "mirror", "outdoor"],
+            "description": "Type of selfie"
+          }
+        },
+        "required": ["selfieAnalysis"]
+      }
+    }
+  ],
+  "pricing": {
+    "model": "per-query",
+    "amount": "0.001",
+    "currency": "ETH",
+    "network": "base-sepolia"
+  },
+  "endpoints": {
+    "query": "https://api.youragents.com/profile-roaster/query",
+    "health": "https://api.youragents.com/profile-roaster/health"
+  },
+  "metadata": {
+    "createdAt": "2025-01-17T00:00:00Z",
+    "updatedAt": "2025-01-17T00:00:00Z",
+    "tags": ["roasting", "entertainment", "dating", "selfie", "humor", "social"],
+    "language": "en",
+    "rateLimit": {
+      "requests": 100,
+      "period": "hour"
+    },
+    "disclaimer": "This agent provides entertainment-focused roasts. All humor is meant in good fun to make users laugh at themselves."
+  }
+}

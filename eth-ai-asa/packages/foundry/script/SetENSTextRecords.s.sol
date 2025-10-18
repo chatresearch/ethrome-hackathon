@@ -42,6 +42,42 @@ contract SetENSTextRecords is Script {
             ScriptConstants.SECURITY_GURU_DESCRIPTION
         );
         
+        console.log("");
+        
+        // Set Profile Roaster records
+        _setAgentRecords(
+            resolver,
+            ScriptConstants.PROFILE_ROASTER_NAMEHASH,
+            ScriptConstants.PROFILE_ROASTER_NAME,
+            ScriptConstants.PROFILE_ROASTER_CAPABILITIES_URL,
+            ScriptConstants.PROFILE_ROASTER_ENDPOINT,
+            ScriptConstants.PROFILE_ROASTER_DESCRIPTION
+        );
+        
+        console.log("");
+        
+        // Set LinkedIn Roaster records
+        _setAgentRecords(
+            resolver,
+            ScriptConstants.LINKEDIN_ROASTER_NAMEHASH,
+            ScriptConstants.LINKEDIN_ROASTER_NAME,
+            ScriptConstants.LINKEDIN_ROASTER_CAPABILITIES_URL,
+            ScriptConstants.LINKEDIN_ROASTER_ENDPOINT,
+            ScriptConstants.LINKEDIN_ROASTER_DESCRIPTION
+        );
+        
+        console.log("");
+        
+        // Set Vibe Roaster records
+        _setAgentRecords(
+            resolver,
+            ScriptConstants.VIBE_ROASTER_NAMEHASH,
+            ScriptConstants.VIBE_ROASTER_NAME,
+            ScriptConstants.VIBE_ROASTER_CAPABILITIES_URL,
+            ScriptConstants.VIBE_ROASTER_ENDPOINT,
+            ScriptConstants.VIBE_ROASTER_DESCRIPTION
+        );
+        
         vm.stopBroadcast();
         
         console.log("\n=== COMPLETE ===");

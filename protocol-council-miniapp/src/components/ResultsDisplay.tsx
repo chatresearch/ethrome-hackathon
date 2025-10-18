@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface AgentResponse {
   agent: string;
@@ -12,27 +12,86 @@ interface ResultsDisplayProps {
 }
 
 export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results }) => {
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [expandedIdx, setExpandedIdx] = useState<Set<number>>(new Set());
+
+  const handleCopy = (text: string, idx: number) => {
+    navigator.clipboard.writeText(text);
+    setCopiedIdx(idx);
+    setTimeout(() => setCopiedIdx(null), 2000);
+  };
+
+  const toggleExpand = (idx: number) => {
+    const newExpanded = new Set(expandedIdx);
+    if (newExpanded.has(idx)) {
+      newExpanded.delete(idx);
+    } else {
+      newExpanded.add(idx);
+    }
+    setExpandedIdx(newExpanded);
+  };
+
+  const getAgentIcon = (agentName: string): string => {
+    if (agentName.includes('defi')) return '💰';
+    if (agentName.includes('security')) return '🔒';
+    return '🤖';
+  };
+
   if (results.length === 0) {
-    return <div className="results-empty">Submit a protocol to see agent analysis</div>;
+    return <div className="results-empty">Submit a query to see agent analysis</div>;
   }
 
   return (
     <div className="results-display">
       {results.map((result, idx) => (
-        <div key={idx} className="result-card">
+        <div key={idx} className="result-card" style={{ animation: `slideIn 0.3s ease-out ${idx * 50}ms both` }}>
           <div className="agent-header">
-            <h3>{result.agent.toUpperCase()}</h3>
-            <div className="capabilities">
-              {result.capabilities.map((cap, i) => (
+            <div className="agent-title">
+              <span className="agent-icon">{getAgentIcon(result.agent)}</span>
+              <h3>{result.agent.toUpperCase()}</h3>
+            </div>
+            <div className="result-actions">
+              <button
+                className="copy-btn"
+                onClick={() => handleCopy(result.response, idx)}
+                title="Copy response"
+                aria-label="Copy response to clipboard"
+              >
+                {copiedIdx === idx ? '✓ Copied!' : '📋 Copy'}
+              </button>
+            </div>
+          </div>
+
+          <div className="capabilities">
+            {result.capabilities.length > 0 ? (
+              result.capabilities.map((cap, i) => (
                 <span key={i} className="capability-badge">
                   {cap}
                 </span>
-              ))}
-            </div>
+              ))
+            ) : (
+              <span className="capability-badge">General AI Analysis</span>
+            )}
           </div>
-          <p className="response-text">{result.response}</p>
-          <div className="timestamp">
-            {new Date(result.timestamp).toLocaleTimeString()}
+
+          <div className="response-container">
+            <p className={`response-text ${expandedIdx.has(idx) ? 'expanded' : 'collapsed'}`}>
+              {result.response}
+            </p>
+            {result.response.length > 300 && (
+              <button
+                className="expand-btn"
+                onClick={() => toggleExpand(idx)}
+              >
+                {expandedIdx.has(idx) ? '↑ Show less' : '↓ Show more'}
+              </button>
+            )}
+          </div>
+
+          <div className="result-footer">
+            <time className="timestamp" dateTime={new Date(result.timestamp).toISOString()}>
+              {new Date(result.timestamp).toLocaleTimeString()} • {new Date(result.timestamp).toLocaleDateString()}
+            </time>
           </div>
         </div>
       ))}

@@ -28,13 +28,27 @@ export const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [votes, setVotes] = useState<Record<number, number>>({});
   const [leaderboardRefresh, setLeaderboardRefresh] = useState(0);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const saved = localStorage.getItem('protocol-council-dark-mode');
+    return saved ? JSON.parse(saved) : false;
+  });
   const userId = getCurrentUserId();
+
+  // Apply dark mode on mount and when toggled
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+    localStorage.setItem('protocol-council-dark-mode', JSON.stringify(isDarkMode));
+  }, [isDarkMode]);
 
   useEffect(() => {
     setLeaderboardRefresh(0);
   }, []);
 
-  const handleQuerySubmit = async (query: string) => {
+  const handleQuerySubmit = async (query: string, _selectedAgent?: string) => {
     setIsLoading(true);
     try {
       const response = await sendMessage(query);
@@ -69,16 +83,37 @@ export const App: React.FC = () => {
     setLeaderboardRefresh(prev => prev + 1);
   };
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
     <div className="app">
       <header className="header">
-        <h1>Protocol Council</h1>
-        <p>Collaborative protocol analysis with AI agents</p>
+        <div className="header-content">
+          <h1>Protocol Council</h1>
+          <p>Collaborative protocol analysis with AI agents</p>
+        </div>
+        <button 
+          className="theme-toggle" 
+          onClick={toggleDarkMode}
+          title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          aria-label="Toggle dark mode"
+        >
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
       </header>
 
       <main className="main-content">
         <section className="query-section">
-          <QueryBuilder onSubmit={handleQuerySubmit} isLoading={isLoading} />
+          <QueryBuilder 
+            onSubmit={handleQuerySubmit} 
+            isLoading={isLoading}
+            availableAgents={[
+              { name: 'defi-wizard', description: 'DeFi Protocol Analysis' },
+              { name: 'security-guru', description: 'Security Audit' }
+            ]}
+          />
           {xmtpError && <div className="error-banner">{xmtpError}</div>}
         </section>
 
@@ -91,7 +126,7 @@ export const App: React.FC = () => {
           <h2>Accuracy Voting</h2>
           <p>Vote on how accurate each agent's analysis is (1-5 scale)</p>
           {results.length === 0 ? (
-            <p style={{ color: '#9ca3af' }}>Submit a query to vote on agent responses</p>
+            <p style={{ color: 'var(--text-secondary)' }}>Submit a query to vote on agent responses</p>
           ) : (
             results.map((result, idx) => (
               <div key={idx} className="vote-card">

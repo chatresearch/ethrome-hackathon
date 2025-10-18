@@ -15,5 +15,9 @@ contract DeployScript is ScaffoldETHDeploy {
         // Deploys all your contracts sequentially
         DeployAgentRegistry deployAgentRegistry = new DeployAgentRegistry();
         deployAgentRegistry.run();
+
+        // Deploy another contract
+        // DeployMyContract myContract = new DeployMyContract();
+        // myContract.run();
     }
 }
