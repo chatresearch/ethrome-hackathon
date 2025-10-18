@@ -14,10 +14,10 @@ interface AgentResponse {
 }
 
 const getCurrentUserId = () => {
-  let userId = localStorage.getItem('protocol-council-user-id');
+  let userId = localStorage.getItem('roast-generator-user-id');
   if (!userId) {
     userId = `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem('protocol-council-user-id', userId);
+    localStorage.setItem('roast-generator-user-id', userId);
   }
   return userId;
 };
@@ -29,9 +29,10 @@ export const App: React.FC = () => {
   const [votes, setVotes] = useState<Record<number, number>>({});
   const [leaderboardRefresh, setLeaderboardRefresh] = useState(0);
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const saved = localStorage.getItem('protocol-council-dark-mode');
+    const saved = localStorage.getItem('roast-generator-dark-mode');
     return saved ? JSON.parse(saved) : false;
   });
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const userId = getCurrentUserId();
 
   // Apply dark mode on mount and when toggled
@@ -41,16 +42,21 @@ export const App: React.FC = () => {
     } else {
       document.documentElement.classList.remove('dark-mode');
     }
-    localStorage.setItem('protocol-council-dark-mode', JSON.stringify(isDarkMode));
+    localStorage.setItem('roast-generator-dark-mode', JSON.stringify(isDarkMode));
   }, [isDarkMode]);
 
   useEffect(() => {
     setLeaderboardRefresh(0);
   }, []);
 
-  const handleQuerySubmit = async (query: string, _selectedAgent?: string) => {
+  const handleImageUpload = async (imageBase64: string, selectedAgent?: string) => {
+    setUploadedImage(imageBase64);
     setIsLoading(true);
     try {
+      const query = selectedAgent
+        ? `[REQUEST TO ${selectedAgent.toUpperCase()}] Please roast this image: ${imageBase64.substring(0, 100)}...`
+        : `Roast this image: ${imageBase64.substring(0, 100)}...`;
+      
       const response = await sendMessage(query);
       
       if (response.agents) {
@@ -91,8 +97,8 @@ export const App: React.FC = () => {
     <div className="app">
       <header className="header">
         <div className="header-content">
-          <h1>Protocol Council</h1>
-          <p>Collaborative protocol analysis with AI agents</p>
+          <h1>AI Roast Generator</h1>
+          <p>Upload a selfie and get savage AI roasts 😈</p>
         </div>
         <button 
           className="theme-toggle" 
@@ -107,26 +113,34 @@ export const App: React.FC = () => {
       <main className="main-content">
         <section className="query-section">
           <QueryBuilder 
-            onSubmit={handleQuerySubmit} 
+            onSubmit={handleImageUpload} 
             isLoading={isLoading}
             availableAgents={[
-              { name: 'defi-wizard', description: 'DeFi Protocol Analysis' },
-              { name: 'security-guru', description: 'Security Audit' }
+              { name: 'profile-roaster', description: 'Dating Profile Roast' },
+              { name: 'linkedin-roaster', description: 'LinkedIn Headshot Roast' },
+              { name: 'vibe-roaster', description: 'Aesthetic & Vibe Roast' }
             ]}
           />
           {xmtpError && <div className="error-banner">{xmtpError}</div>}
         </section>
 
+        {uploadedImage && (
+          <section className="image-preview-section">
+            <h2>Your Selfie</h2>
+            <img src={uploadedImage} alt="Your selfie" className="preview-image" />
+          </section>
+        )}
+
         <section className="results-section">
-          <h2>Agent Analysis</h2>
+          <h2>The Roasts 🔥</h2>
           <ResultsDisplay results={results} />
         </section>
 
         <section className="voting-section">
-          <h2>Accuracy Voting</h2>
-          <p>Vote on how accurate each agent's analysis is (1-5 scale)</p>
+          <h2>Rate the Roasts</h2>
+          <p>Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)</p>
           {results.length === 0 ? (
-            <p style={{ color: 'var(--text-secondary)' }}>Submit a query to vote on agent responses</p>
+            <p style={{ color: 'var(--text-secondary)' }}>Upload a selfie to get roasted!</p>
           ) : (
             results.map((result, idx) => (
               <div key={idx} className="vote-card">
@@ -149,8 +163,8 @@ export const App: React.FC = () => {
         </section>
 
         <section className="leaderboard-section">
-          <h2>Leaderboard</h2>
-          <p>Top contributors by accuracy</p>
+          <h2>Funniest Roasts</h2>
+          <p>Community's favorite roasts</p>
           <Leaderboard refreshTrigger={leaderboardRefresh} />
         </section>
       </main>
