@@ -200,8 +200,8 @@ const AppContent: React.FC = () => {
 
       // Then, query the agent via XMTP with base64 for vision processing
       const query = agent
-        ? `[REQUEST TO ${agent.toUpperCase()}] Please roast this image: ${s3ImageUrl}`
-        : `Roast this image: ${s3ImageUrl}`;
+        ? `[REQUEST TO ${agent.toUpperCase()}] Please roast this image: ${s3Url}`
+        : `Roast this image: ${s3Url}`;
       
       const response = await sendMessage(query);
       

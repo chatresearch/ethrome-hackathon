@@ -40,7 +40,7 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
   // Detect if message contains image data (base64) - can be anywhere in the message
   const isImage = message.includes("data:image/") || message.includes("base64,") || message.includes(".s3.");
   
-  console.log(`[generateResponse] Agent: ${agent}, Has image: ${isImage}`);
+  console.log(`[generateResponse] Agent: ${agent}, Has image: ${isImage}, Message preview: ${message.substring(0, 100)}`);
   
   // Format message for vision agents if it's an image
   let formattedMessage = message;
