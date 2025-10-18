@@ -1,34 +1,9 @@
 import { useCallback, useState } from 'react';
-import { useAccount, useContractWrite, useNetwork } from 'wagmi';
+import { useAccount, useChainId } from 'wagmi';
 import { parseEther } from 'viem';
 
 const AGENT_REGISTRY_ADDRESS = '0xFBeE7f501704A9AA629Ae2D0aE6FB30989571Bd0';
 const BASE_SEPOLIA_CHAIN_ID = 84532;
-
-const AGENT_REGISTRY_ABI = [
-  {
-    name: 'queryAgent',
-    type: 'function',
-    inputs: [{ name: '_ensName', type: 'string' }],
-    outputs: [],
-    stateMutability: 'payable',
-  },
-  {
-    name: 'getAgent',
-    type: 'function',
-    inputs: [{ name: '_ensName', type: 'string' }],
-    outputs: [
-      { name: 'owner', type: 'address' },
-      { name: 'ensName', type: 'string' },
-      { name: 'queryPrice', type: 'uint256' },
-      { name: 'totalQueries', type: 'uint256' },
-      { name: 'earnings', type: 'uint256' },
-      { name: 'active', type: 'bool' },
-      { name: 'registeredAt', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-  },
-] as const;
 
 interface AgentPaymentResult {
   success: boolean;
@@ -38,7 +13,7 @@ interface AgentPaymentResult {
 
 export function useAgentPayment() {
   const { address, isConnected } = useAccount();
-  const { chain } = useNetwork();
+  const chainId = useChainId();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -52,8 +27,8 @@ export function useAgentPayment() {
           throw new Error('Wallet not connected');
         }
 
-        if (chain?.id !== BASE_SEPOLIA_CHAIN_ID) {
-          throw new Error(`Please switch to Base Sepolia network (current: ${chain?.name})`);
+        if (chainId !== BASE_SEPOLIA_CHAIN_ID) {
+          throw new Error(`Please switch to Base Sepolia network (current chain: ${chainId})`);
         }
 
         // Get agent price from contract
@@ -87,7 +62,7 @@ export function useAgentPayment() {
         };
       }
     },
-    [isConnected, chain, address]
+    [isConnected, chainId, address]
   );
 
   return {
@@ -95,7 +70,7 @@ export function useAgentPayment() {
     loading,
     error,
     isConnected,
-    isCorrectNetwork: chain?.id === BASE_SEPOLIA_CHAIN_ID,
+    isCorrectNetwork: chainId === BASE_SEPOLIA_CHAIN_ID,
   };
 }
 
