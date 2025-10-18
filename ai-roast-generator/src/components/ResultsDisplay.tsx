@@ -22,6 +22,27 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
     setTimeout(() => setCopiedIdx(null), 2000);
   };
 
+  const handleShare = (agentName: string, roastText: string, idx: number) => {
+    const shortRoast = roastText.substring(0, 200);
+    const shareText = `Just got roasted by ${agentName}! 🔥\n\n"${shortRoast}..."\n\nGet your own roast at AI Roast Generator`;
+    
+    handleCopy(shareText + (s3ImageUrl ? `\n\n${s3ImageUrl}` : ''), idx);
+  };
+
+  const handleTwitterShare = (agentName: string, roastText: string) => {
+    const shortRoast = roastText.substring(0, 150);
+    const text = `Just got roasted by ${agentName}! 🔥\n"${shortRoast}..."\nTry AI Roast Generator`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}${s3ImageUrl ? `&url=${encodeURIComponent(s3ImageUrl)}` : ''}`;
+    window.open(url, 'twitter-share', 'width=550,height=420');
+  };
+
+  const handleFarcasterShare = (agentName: string, roastText: string) => {
+    const shortRoast = roastText.substring(0, 150);
+    const text = `Just got roasted by ${agentName}! 🔥\n"${shortRoast}..."\n\nTry AI Roast Generator`;
+    const url = `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}${s3ImageUrl ? `&embeds[]=${encodeURIComponent(s3ImageUrl)}` : ''}`;
+    window.open(url, 'farcaster-share', 'width=550,height=420');
+  };
+
   const toggleExpand = (idx: number) => {
     const newExpanded = new Set(expandedIdx);
     if (newExpanded.has(idx)) {
@@ -64,19 +85,32 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
                 {copiedIdx === idx ? '✓ Copied!' : '📋 Copy'}
               </button>
               {s3ImageUrl && (
-                <button
-                  className="share-btn"
-                  onClick={() => {
-                    const shareText = `Check out this roast! 🔥 ${s3ImageUrl}`;
-                    navigator.clipboard.writeText(shareText);
-                    setCopiedIdx(idx);
-                    setTimeout(() => setCopiedIdx(null), 2000);
-                  }}
-                  title="Copy shareable link"
-                  aria-label="Copy shareable link"
-                >
-                  {copiedIdx === idx ? '✓ Copied!' : '🔗 Share'}
-                </button>
+                <>
+                  <button
+                    className="share-btn"
+                    onClick={() => handleTwitterShare(result.agent, result.response)}
+                    title="Share on Twitter/X"
+                    aria-label="Share on Twitter"
+                  >
+                    𝕏 Tweet
+                  </button>
+                  <button
+                    className="share-btn"
+                    onClick={() => handleFarcasterShare(result.agent, result.response)}
+                    title="Share on Farcaster"
+                    aria-label="Share on Farcaster"
+                  >
+                    🎭 Cast
+                  </button>
+                  <button
+                    className="share-btn"
+                    onClick={() => handleShare(result.agent, result.response, idx)}
+                    title="Copy shareable text"
+                    aria-label="Copy shareable text"
+                  >
+                    {copiedIdx === idx ? '✓ Copied!' : '🔗 Share'}
+                  </button>
+                </>
               )}
             </div>
           </div>
