@@ -9,24 +9,38 @@ This includes:
 - App name and description
 - Logo and icon URLs (from GitHub)
 - Home URL pointing to Vercel deployment
-- Metadata (keywords, categories, chain ID)
+- Account association structure (for signing)
+- Metadata (keywords, categories)
 
 ### 2. 🔐 Sign the Manifest (Required)
-To register the app, you need to sign the manifest with your Farcaster account.
 
-**Option A: Use Farcaster Account Association Tool**
-1. Go to: https://miniapps.farcaster.xyz/
-2. Upload/paste the manifest
-3. Sign with your Farcaster wallet
-4. Copy the signed manifest
+**Use the Official Farcaster Manifest Tool:**
 
-**Option B: Manual Signing (If you have private key)**
-```bash
-# Install farcaster-js or use ethers.js to sign
-npm install --save farcaster-js
+1. Go to: https://dev.warpcast.com/account-associations
+2. Follow these steps:
+   - **Option A: Sign with Existing Farcaster Account**
+     - Sign in to Warpcast with your account
+     - Select "Mini App" as the app type
+     - Enter your domain: `ai-roast-generator.vercel.app`
+     - The tool will generate the signed account association JSON
 
-# Then sign the manifest...
-```
+   - **Option B: Manual Signing (Advanced)**
+     - Use Farcaster's CLI or SDK to sign the manifest
+     - This requires your private key (not recommended)
+
+3. Copy the generated `accountAssociation` object (header, payload, signature)
+
+4. Replace the placeholder values in `.well-known/farcaster.json`:
+   ```json
+   {
+     "accountAssociation": {
+       "header": "[paste_generated_header]",
+       "payload": "[paste_generated_payload]",
+       "signature": "[paste_generated_signature]"
+     },
+     ...
+   }
+   ```
 
 ### 3. 🚀 Deploy Manifest
 Once signed, the manifest needs to be served at:
@@ -34,22 +48,27 @@ Once signed, the manifest needs to be served at:
 https://ai-roast-generator.vercel.app/.well-known/farcaster.json
 ```
 
-This is automatically handled since we added it to `public/`.
+Verify it's live:
+```bash
+curl https://ai-roast-generator.vercel.app/.well-known/farcaster.json
+```
 
 ### 4. 📢 Register in Farcaster Directory
 After manifest is live:
-1. Go to: https://warpcast.com/ or https://miniapps.farcaster.xyz/
+1. Go to: https://miniapps.base.org/ or https://warpcast.com/
 2. Submit your app for listing
 3. Include the manifest URL
+4. Add description and demo video
 
-## 📖 Resources
-- [Farcaster Mini Apps Guide](https://miniapps.farcaster.xyz/docs/guides/publishing)
-- [Base Mini Apps Docs](https://docs.base.org/mini-apps/)
-- [Account Association](https://docs.base.org/mini-apps/features/sign-manifest)
+## 🔗 Reference Repos
+- [Base MiniKit Starter](https://github.com/builders-garden/base-minikit-starter) - Great example
+- [MiniKit Documentation](https://docs.base.org/base-app/build-with-minikit/overview)
+- [Farcaster Frames Docs](https://docs.farcaster.xyz/developers/frames/spec)
 
 ## ✨ What This Enables
-- ✅ App discoverable in Farcaster clients
+- ✅ App discoverable in Farcaster clients (Warpcast, Base App)
 - ✅ Native sharing with OG preview
-- ✅ Support for Farcaster Frames
+- ✅ Support for Farcaster Frames and MiniKit
 - ✅ Base Mini Apps directory listing
-- ✅ Better viral reach
+- ✅ Better viral reach within Farcaster network
+- ✅ Account association for notifications (optional)
