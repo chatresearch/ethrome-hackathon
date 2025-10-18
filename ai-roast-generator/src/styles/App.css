@@ -356,6 +356,77 @@ body {
   color: var(--text-secondary);
 }
 
+/* Agent Chooser Grid - Replaces Dropdown */
+.agent-chooser {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.agent-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.agent-option:hover {
+  border-color: var(--primary);
+  background: var(--bg-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.agent-option.active {
+  border-color: var(--primary);
+  background: rgba(0, 82, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.15);
+}
+
+.agent-option-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+  transition: all 0.2s;
+}
+
+.agent-option:hover .agent-option-icon {
+  transform: scale(1.1);
+}
+
+.agent-option img.agent-option-icon {
+  background: transparent;
+  border: 2px solid var(--border);
+}
+
+.agent-option-text {
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.agent-option-price {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
 .query-input {
   display: flex;
   gap: 10px;

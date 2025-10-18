@@ -249,11 +249,6 @@ const AppContent: React.FC = () => {
           />
           {xmtpError && <div className="error-banner">{xmtpError}</div>}
           {paymentError && <div className="error-banner">{paymentError}</div>}
-          <div className="pricing-info">
-            <span className="cost-badge">
-              💰 {livePrices['profile-roaster'] ? `${livePrices['profile-roaster']} ETH per roast` : '⚠️ Loading prices...'}
-            </span>
-          </div>
         </section>
 
         {uploadedImage && (

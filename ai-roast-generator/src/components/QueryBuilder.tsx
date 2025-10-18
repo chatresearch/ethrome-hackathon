@@ -22,15 +22,7 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [showAgentMenu, setShowAgentMenu] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const getAgentDisplay = (agentName: string): string => {
-    const price = agentPrices[agentName] ? ` - ${agentPrices[agentName]} ETH` : '';
-    const agent = availableAgents.find(a => a.name === agentName);
-    const description = agent?.description || agentName;
-    return `${description}${price}`;
-  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -88,64 +80,35 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
             Choose Roaster (optional):
           </label>
           
-          {/* Custom Agent Selector */}
-          <div className="custom-agent-selector">
-            <button 
-              type="button"
-              className="agent-selector-btn"
-              onClick={() => setShowAgentMenu(!showAgentMenu)}
-              disabled={isLoading}
+          {/* Agent Chooser Grid */}
+          <div className="agent-chooser">
+            <div 
+              className={`agent-option ${selectedAgent === null ? 'active' : ''}`}
+              onClick={() => setSelectedAgent(null)}
+              title="All roasters will roast your image"
             >
-              {selectedAgent ? (
-                <div className="selected-agent-display">
-                  {agentAvatars[selectedAgent] && (
-                    <img src={agentAvatars[selectedAgent]} alt={selectedAgent} className="agent-icon-img" />
-                  )}
-                  <span>{getAgentDisplay(selectedAgent)}</span>
-                </div>
-              ) : (
-                <span>🎲 Let me roast all of them</span>
-              )}
-            </button>
+              <div className="agent-option-icon">🎲</div>
+              <div className="agent-option-text">All Roasters</div>
+            </div>
             
-            {/* Dropdown Menu */}
-            {showAgentMenu && (
-              <div className="agent-menu">
-                <div 
-                  className="agent-menu-item"
-                  onClick={() => {
-                    setSelectedAgent(null);
-                    setShowAgentMenu(false);
-                  }}
-                >
-                  <span className="agent-menu-emoji">🎲</span>
-                  <div className="agent-menu-text">
-                    <div className="agent-name">Let me roast all of them</div>
-                  </div>
-                </div>
-                
-                {availableAgents.map((agent) => (
-                  <div
-                    key={agent.name}
-                    className={`agent-menu-item ${selectedAgent === agent.name ? 'active' : ''}`}
-                    onClick={() => {
-                      setSelectedAgent(agent.name);
-                      setShowAgentMenu(false);
-                    }}
-                  >
-                    {agentAvatars[agent.name] && (
-                      <img src={agentAvatars[agent.name]} alt={agent.name} className="agent-menu-avatar" />
-                    )}
-                    <div className="agent-menu-text">
-                      <div className="agent-name">{agent.description}</div>
-                      {agentPrices[agent.name] && (
-                        <div className="agent-price">💰 {agentPrices[agent.name]} ETH</div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+            {availableAgents.map((agent) => (
+              <div
+                key={agent.name}
+                className={`agent-option ${selectedAgent === agent.name ? 'active' : ''}`}
+                onClick={() => setSelectedAgent(agent.name)}
+                title={agent.description}
+              >
+                {agentAvatars[agent.name] ? (
+                  <img src={agentAvatars[agent.name]} alt={agent.name} className="agent-option-icon" />
+                ) : (
+                  <div className="agent-option-icon">🔄</div>
+                )}
+                <div className="agent-option-text">{agent.description}</div>
+                {agentPrices[agent.name] && (
+                  <div className="agent-option-price">💰 {agentPrices[agent.name]}</div>
+                )}
               </div>
-            )}
+            ))}
           </div>
         </div>
       </div>
