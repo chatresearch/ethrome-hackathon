@@ -9,6 +9,15 @@ dotenv.config();
 
 type AgentType = "defi-wizard" | "security-guru" | "profile-roaster" | "linkedin-roaster" | "vibe-roaster";
 
+// Generate a UUID v4
+function generateUUID(): string {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 // Upload media to ElizaOS for agent
 async function uploadMediaToElizaOS(agentId: string, base64: string): Promise<string> {
   const elizaosPort = process.env.ELIZAOS_PORT || "3002";
@@ -169,50 +178,54 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
   }
   
   try {
-    // Use Sessions API instead of messaging/submit for simpler agent communication
+    // Use ElizaOS Sessions API (from https://docs.elizaos.ai/api-reference)
     const elizaosPort = process.env.ELIZAOS_PORT || "3002";
     
-    console.log(`[generateResponse] Creating session for ${agent}...`);
+    console.log(`[generateResponse] Creating ElizaOS session for ${agent}...`);
     
-    // Step 1: Create a session
-    const sessionResp = await fetch(`http://localhost:${elizaosPort}/api/sessions`, {
+    // Step 1: Create a session (POST /api/messaging/sessions)
+    const sessionResp = await fetch(`http://localhost:${elizaosPort}/api/messaging/sessions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
+      body: JSON.stringify({
+        agentId: agentId,
+        userId: generateUUID(),
+      }),
     });
     
     if (!sessionResp.ok) {
-      throw new Error(`Failed to create session: ${sessionResp.status}`);
+      const errorText = await sessionResp.text();
+      throw new Error(`Failed to create session: ${sessionResp.status} - ${errorText}`);
     }
     
-    const sessionData = await sessionResp.json() as { sessionId?: string };
-    const sessionId = sessionData.sessionId;
+    const sessionData = await sessionResp.json() as { sessionId?: string; id?: string };
+    const sessionId = sessionData.sessionId || sessionData.id;
     
     if (!sessionId) {
-      throw new Error('No session ID returned');
+      throw new Error('No session ID returned from ElizaOS');
     }
     
     console.log(`[generateResponse] Session created: ${sessionId}`);
     
-    // Step 2: Send message to session
-    console.log(`[generateResponse] Sending message to session for ${agent}...`);
+    // Step 2: Send message to session (POST /api/messaging/sessions/{sessionId}/messages)
+    console.log(`[generateResponse] Sending message to ${agent} via session...`);
     
-    const messageResp = await fetch(`http://localhost:${elizaosPort}/api/sessions/${sessionId}/messages`, {
+    const messageResp = await fetch(`http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         text: formattedMessage,
-        agentId: agentId,
-        userId: `user-${Date.now()}`,
+        userId: generateUUID(),
       }),
     });
     
     if (!messageResp.ok) {
-      throw new Error(`Failed to send message: ${messageResp.status}`);
+      const errorText = await messageResp.text();
+      throw new Error(`Failed to send message to session: ${messageResp.status} - ${errorText}`);
     }
     
-    const messageData = await messageResp.json() as { text?: string; response?: string };
-    const response = messageData.text || messageData.response || "No response from agent";
+    const messageData = await messageResp.json() as { text?: string; response?: string; messages?: any[] };
+    const response = messageData.text || messageData.response || messageData.messages?.[0]?.text || "No response from agent";
     
     console.log(`[generateResponse] ✅ Got response from ${agent}: ${response.substring(0, 100)}`);
     return response;
