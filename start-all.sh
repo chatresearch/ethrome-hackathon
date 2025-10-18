@@ -29,17 +29,19 @@ Usage:
 Commands:
   start [service]    Start services (all by default)
   stop [service]     Stop services (all by default)
+  deploy-vercel      Deploy to Vercel with ngrok tunnel
 
 Services:
   buildguidl         BuidlGuidl frontend (port 3000)
   elizaos            ElizaOS agents (port 3002)
   xmtp               XMTP Agent API (port 3003)
-  miniapp            Protocol Council Miniapp (port 5174)
+  miniapp            AI Roast Generator Miniapp (port 5174)
   all                All services (default)
 
 Examples:
   ./start-all.sh start              # Start all services
   ./start-all.sh start miniapp      # Start only miniapp
+  ./start-all.sh deploy-vercel      # Deploy to Vercel with ngrok
   ./start-all.sh stop               # Stop all services
   ./start-all.sh stop elizaos       # Stop only ElizaOS
 
@@ -97,7 +99,7 @@ start_xmtp() {
 # Function to start Miniapp
 start_miniapp() {
   echo -e "${BLUE}[4/4] Starting Miniapp on port $MINIAPP_PORT${NC}"
-  cd "$PROJECT_ROOT/protocol-council-miniapp"
+  cd "$PROJECT_ROOT/ai-roast-generator"
   npm run dev > /tmp/miniapp.log 2>&1 &
   MINIAPP_PID=$!
   sleep 3
@@ -142,13 +144,69 @@ start_ngrok() {
   # Auto-sync to Vercel if vercel CLI is available
   if command -v vercel &> /dev/null; then
     echo "Syncing ngrok URL to Vercel..."
-    cd "$PROJECT_ROOT/protocol-council-miniapp"
-    vercel env rm REACT_APP_XMTP_API --yes 2>/dev/null || true
-    echo "$NGROK_URL" | vercel env add REACT_APP_XMTP_API production 2>/dev/null
+    cd "$PROJECT_ROOT/ai-roast-generator"
+    vercel env rm VITE_REACT_APP_XMTP_API --yes 2>/dev/null || true
+    echo "$NGROK_URL" | vercel env add VITE_REACT_APP_XMTP_API production 2>/dev/null
     if [ $? -eq 0 ]; then
       echo -e "${GREEN}Vercel env updated. Redeploy with: vercel --prod${NC}"
     fi
   fi
+}
+
+# Function to deploy to Vercel with ngrok
+deploy_vercel() {
+  echo -e "${BLUE}=== Deploying to Vercel ===${NC}"
+  
+  # First check if ngrok is running
+  if ! command -v ngrok &> /dev/null; then
+    echo -e "${RED}ngrok not found. Install: npm install -g ngrok${NC}"
+    return 1
+  fi
+  
+  if ! command -v vercel &> /dev/null; then
+    echo -e "${RED}Vercel CLI not found. Install: npm install -g vercel${NC}"
+    return 1
+  fi
+  
+  # Start ngrok if not already running
+  if ! pgrep -f "ngrok" > /dev/null; then
+    echo -e "${BLUE}Starting ngrok tunnel...${NC}"
+    start_ngrok || return 1
+  fi
+  
+  # Get ngrok URL
+  NGROK_URL=$(cat "$NGROK_CONFIG_FILE" 2>/dev/null)
+  if [ -z "$NGROK_URL" ]; then
+    NGROK_URL=$(curl -s http://localhost:4040/api/tunnels 2>/dev/null | grep -o '"public_url":"https://[^"]*' | cut -d'"' -f4 | head -1)
+  fi
+  
+  if [ -z "$NGROK_URL" ]; then
+    echo -e "${RED}Failed to get ngrok URL${NC}"
+    return 1
+  fi
+  
+  echo -e "${BLUE}Ngrok URL: $NGROK_URL${NC}"
+  echo -e "${BLUE}Setting Vercel environment variable...${NC}"
+  
+  # Set Vercel env var
+  cd "$PROJECT_ROOT/ai-roast-generator"
+  vercel env rm VITE_REACT_APP_XMTP_API --yes 2>/dev/null || true
+  echo "$NGROK_URL" | vercel env add VITE_REACT_APP_XMTP_API production 2>/dev/null
+  
+  if [ $? -eq 0 ]; then
+    echo -e "${GREEN}Vercel env updated${NC}"
+  else
+    echo -e "${RED}Failed to set Vercel env${NC}"
+    return 1
+  fi
+  
+  # Deploy to Vercel
+  echo -e "${BLUE}Deploying to Vercel...${NC}"
+  vercel --prod
+  
+  echo -e "${GREEN}=== Vercel Deployment Complete ===${NC}"
+  echo "Ngrok URL: $NGROK_URL"
+  echo "Check https://protocol-council-miniapp.vercel.app"
 }
 
 # Function to stop BuidlGuidl
@@ -172,7 +230,7 @@ stop_xmtp() {
 
 # Function to stop Miniapp
 stop_miniapp() {
-  pkill -f "npm run dev.*protocol-council-miniapp" 2>/dev/null || true
+  pkill -f "npm run dev.*ai-roast-generator" 2>/dev/null || true
   echo -e "${GREEN}Stopped Miniapp${NC}"
 }
 
@@ -192,7 +250,7 @@ if [ "$COMMAND" = "-h" ] || [ "$COMMAND" = "--help" ]; then
   exit 0
 fi
 
-if [ "$COMMAND" != "start" ] && [ "$COMMAND" != "stop" ]; then
+if [ "$COMMAND" != "start" ] && [ "$COMMAND" != "stop" ] && [ "$COMMAND" != "deploy-vercel" ]; then
   echo -e "${RED}Invalid command: $COMMAND${NC}"
   usage
   exit 1
@@ -296,4 +354,9 @@ elif [ "$COMMAND" = "stop" ]; then
   echo ""
   echo -e "${GREEN}=== Services Stopped ===${NC}"
   echo ""
+fi
+
+# Handle deploy-vercel command
+if [ "$COMMAND" = "deploy-vercel" ]; then
+  deploy_vercel || exit 1
 fi
