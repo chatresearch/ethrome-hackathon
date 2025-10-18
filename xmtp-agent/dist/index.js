@@ -26,10 +26,21 @@ async function generatePresignedUrl(filename, contentType = 'image/png') {
         throw new Error(`Failed to generate presigned URL: ${message}`);
     }
 }
-// Query real ElizaOS agents via HTTP instead of using mocks
+// Agent ID mappings (from curl http://localhost:3002/api/agents)
+const AGENT_IDS = {
+    "defi-wizard": "adb273ad-5c79-06a3-bd62-266b870651e6",
+    "security-guru": "23296f74-bc2c-012b-bc06-d3a1b6f5e61b",
+    "profile-roaster": "6bb0e88e-ec59-00f3-b411-84e72ef35003",
+    "linkedin-roaster": "92faf961-5fbf-0593-9b91-d069872d4082",
+    "vibe-roaster": "f7b032ca-cd10-023b-84fa-4ed33652d551",
+};
+// Query ElizaOS agents via REST API messaging
 async function generateResponse(agent, message) {
-    const agentPort = process.env.ELIZAOS_PORT || "3001";
-    const agentEndpoint = `http://localhost:${agentPort}/api/agents/${agent}/message`;
+    const elizaosPort = process.env.ELIZAOS_PORT || "3002";
+    const agentId = AGENT_IDS[agent];
+    if (!agentId) {
+        throw new Error(`No agent ID configured for: ${agent}`);
+    }
     // Detect if message contains image data (base64) - can be anywhere in the message
     const isImage = message.includes("data:image/") || message.includes("base64,") || message.includes(".s3.");
     console.log(`[generateResponse] Agent: ${agent}, Has image: ${isImage}, Message preview: ${message.substring(0, 100)}`);
@@ -55,7 +66,7 @@ async function generateResponse(agent, message) {
             }
             catch (error) {
                 console.error(`[generateResponse] Failed to fetch S3 image:`, error);
-                imageData = s3Match[1]; // Fallback to URL if fetch fails
+                throw new Error(`Failed to fetch S3 image: ${error}`);
             }
         }
         imageData = imageData || message;
@@ -63,45 +74,62 @@ async function generateResponse(agent, message) {
         console.log(`[generateResponse] Image detected for ${agent}, formatted message length: ${formattedMessage.length}`);
     }
     try {
-        const response = await fetch(agentEndpoint, {
+        // Create a unique channel ID for this conversation
+        const channelId = `channel-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        const serverId = "server-roaster";
+        const userId = `user-${Date.now()}`;
+        console.log(`[generateResponse] Sending to ElizaOS at http://localhost:${elizaosPort}/api/messaging/submit`);
+        console.log(`[generateResponse] Agent ID: ${agentId}, Channel: ${channelId}, Message length: ${formattedMessage.length}`);
+        const response = await fetch(`http://localhost:${elizaosPort}/api/messaging/submit`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: formattedMessage }),
+            body: JSON.stringify({
+                channel_id: channelId,
+                server_id: serverId,
+                author_id: userId,
+                content: formattedMessage,
+                source_type: "user",
+                raw_message: {
+                    text: formattedMessage,
+                    actions: ["REPLY"]
+                }
+            }),
         });
         if (!response.ok) {
-            throw new Error(`ElizaOS agent returned ${response.status}`);
+            throw new Error(`ElizaOS returned ${response.status}`);
         }
         const data = await response.json();
-        console.log(`[generateResponse] Got response from ${agent}`);
-        return data.response || data.message || "No response from agent";
+        console.log(`[generateResponse] ElizaOS response status: ${data.success}`);
+        // The messaging/submit endpoint accepts the message but responses come async
+        // We need to check for agent response in the channel
+        // For now, wait a bit for the agent to process
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        // Try to get messages from the channel
+        try {
+            const messagesResp = await fetch(`http://localhost:${elizaosPort}/api/channels/${channelId}/messages`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+            });
+            if (messagesResp.ok) {
+                const messagesData = await messagesResp.json();
+                if (messagesData.data && messagesData.data.length > 0) {
+                    // Find the agent's response (usually the last message)
+                    const agentResponse = messagesData.data[messagesData.data.length - 1];
+                    if (agentResponse.content) {
+                        console.log(`[generateResponse] Got response from ${agent}: ${agentResponse.content.substring(0, 100)}`);
+                        return agentResponse.content;
+                    }
+                }
+            }
+        }
+        catch (msgErr) {
+            console.error(`[generateResponse] Could not fetch messages:`, msgErr);
+        }
+        throw new Error(`No response from agent ${agent}`);
     }
     catch (error) {
-        console.error(`[generateResponse] Error from agent, using fallback. Is image: ${isImage}, Error: ${error}`);
-        // Fallback with realistic demo responses based on agent type and message
-        if (agent === "defi-wizard") {
-            if (message.toLowerCase().includes("yield") || message.toLowerCase().includes("apy")) {
-                return "Yield farming involves lending crypto assets to earn rewards. Current top opportunities: Curve Finance (8-15% APY), Aave (4-12% APY). Risk factors: smart contract vulnerabilities, impermanent loss on AMMs, liquidation risk on lending protocols.";
-            }
-            return "For DeFi analysis, ask about yield farming, APY comparisons, protocol risks, or liquidity positions.";
-        }
-        else if (agent === "security-guru") {
-            if (message.toLowerCase().includes("audit") ||
-                message.toLowerCase().includes("vulnerability") ||
-                message.toLowerCase().includes("reentrancy")) {
-                return "Smart contract audits are critical for security. Key focus areas: reentrancy vulnerabilities, integer overflow/underflow, access control, external call dangers, and state management. Always perform thorough testing before mainnet deployment.";
-            }
-            return "For security analysis, ask about audits, vulnerabilities, best practices, or specific attack vectors.";
-        }
-        else if (isImage && agent === "profile-roaster") {
-            return "😂 Okay so I'm looking at this photo and I'm getting serious main character energy here... but like in a way that's somehow both confident AND deeply unaware of itself? The lighting's doing you a solid, but that smile is giving \"I've been holding this pose for 47 seconds and my face hurts\" vibes. 10/10 for effort though!";
-        }
-        else if (isImage && agent === "linkedin-roaster") {
-            return "Professional headshot game: strong! But real talk, that blazer is doing 90% of the work here. The smile screams \"I'm very serious about synergy\" and I respect that energy. Your eyes have a faraway look like you're thinking about quarterly projections, which honestly checks out for the platform. LinkedIn would be proud! 📊";
-        }
-        else if (isImage && agent === "vibe-roaster") {
-            return "Aesthetic analysis complete: You've got that \"I shop at thrift stores but also have a Whole Foods membership\" energy going on, and honestly it's *working*. The color palette suggests you either have impeccable taste or your phone's camera is more forgiving than mine. There's definitely an indie musician OR startup founder vibe happening here!";
-        }
-        return "That's hilarious! 😂 You've got some serious style going on.";
+        console.error(`[generateResponse] Error: ${error}`);
+        throw error;
     }
 }
 // Store last response for HTTP API
