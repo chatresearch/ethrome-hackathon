@@ -359,9 +359,13 @@ body {
 /* Agent Chooser Grid - Replaces Dropdown */
 .agent-chooser {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   width: 100%;
+}
+
+.agent-chooser > div:first-child {
+  grid-column: 1 / -1;
 }
 
 .agent-option {
