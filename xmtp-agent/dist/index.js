@@ -33,10 +33,16 @@ async function generateResponse(agent, message) {
             }
             return "For security analysis, ask about contract vulnerabilities, audit status, or risk assessment.";
         }
-        else {
-            // Roaster agents
-            return "That's hilarious! 😂 You've got some serious style going on. Let me break it down...";
+        else if (agent === "profile-roaster") {
+            return "😂 Okay, so... I'm not gonna lie, you've got some *energy*. The lighting here is doing you some favors, but I'm getting main character energy mixed with \"just rolled out of bed\" vibes. I respect the confidence though! The way you're positioned says either \"I'm about to drop a hit single\" or \"I genuinely don't know where the camera is.\" Either way, it's a choice, and I respect that energy!";
         }
+        else if (agent === "linkedin-roaster") {
+            return "Professional headshot energy: 8/10. The blazer is doing heavy lifting here. However, that smile is giving \"I've been told to smile for exactly 2.3 seconds\" and the eyes say \"I'd rather be debugging code.\" The background is giving \"corporate stock photo\" but like... in a good way? Overall, you look like someone who says \"let's circle back\" unironically and I'm here for it.";
+        }
+        else if (agent === "vibe-roaster") {
+            return "Aesthetic assessment: You're going for the \"effortlessly put-together but also casually disheveled\" vibe and honestly? It's working. The color palette suggests you either have great taste or your camera's white balance needs help - we're gonna assume it's great taste. There's an ambiguous energy here - could be indie musician, could be tech founder, could be someone who exclusively shops at vintage stores. The mystery is *chef's kiss* but also slightly concerning.";
+        }
+        return "That's hilarious! 😂 You've got some serious style going on. Let me break it down...";
     }
 }
 // Store last response for HTTP API
