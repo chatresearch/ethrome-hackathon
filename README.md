@@ -63,6 +63,10 @@ Implementation:
 
 - ENS Avatars displayed in agent selector
 - Capabilities stored in ENS text records
+- ENSIP-TBD-11 root-context for verifiable AI context
+  - Standardized entry point for agentic systems
+  - Stores context data onchain for discovery
+  - Allows agents to verify metadata without proprietary formats
 - Preload verification on startup
 
 ---
@@ -300,6 +304,7 @@ Protocols and Platforms:
 - Base Sepolia (EVM L2)
 - XMTP v3 (Decentralized Messaging)
 - ENS (Domain and Metadata)
+- ENSIP-TBD-11 (root-context for verifiable agent context)
 - ElizaOS (Agent Framework)
 
 Infrastructure:
