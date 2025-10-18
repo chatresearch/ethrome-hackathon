@@ -72,6 +72,13 @@ body {
   color: var(--text-secondary);
 }
 
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
 .theme-toggle {
   background: var(--bg-secondary);
   border: 2px solid var(--border);
@@ -96,6 +103,72 @@ body {
 .main-content {
   display: grid;
   gap: 30px;
+}
+
+.network-status {
+  display: flex;
+  justify-content: center;
+  padding: 12px 20px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.status-badge {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-badge.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.status-badge.warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+}
+
+.pricing-info {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+.cost-badge {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--primary);
+}
+
+.wallet-connect {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wallet-info {
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-family: 'Monaco', monospace;
 }
 
 .query-section {
