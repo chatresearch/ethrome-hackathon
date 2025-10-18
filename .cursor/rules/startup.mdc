@@ -1,0 +1,52 @@
+---
+description: How to start all services and run tests
+---
+
+# Quick Start Commands
+
+See [STARTUP_GUIDE.md](mdc:STARTUP_GUIDE.md) for full details.
+
+## Running Services
+
+### Terminal 1: BuidlGuidl Frontend (port 3000)
+```bash
+cd eth-ai-asa
+yarn install
+yarn start
+```
+
+### Terminal 2: ElizaOS Agents (port 3001)
+```bash
+cd agent-marketplace
+bun install
+# Verify .env has SERVER_PORT=3001
+bun run start
+# or: elizaos start
+```
+
+### Terminal 3: XMTP Agent
+```bash
+cd xmtp-agent
+bun install
+# Verify .env has XMTP_WALLET_KEY, XMTP_DB_ENCRYPTION_KEY
+bun run dev
+```
+
+## Testing Agent Endpoints
+```bash
+# DeFi Wizard
+curl -X POST http://localhost:3001/api/agents/defi-wizard/message \
+  -H "Content-Type: application/json" \
+  -d '{"message": "What is yield farming?"}'
+
+# Security Guru
+curl -X POST http://localhost:3001/api/agents/security-guru/message \
+  -H "Content-Type: application/json" \
+  -d '{"message": "What are reentrancy attacks?"}'
+```
+
+## Port Reference
+- 3000: BuidlGuidl frontend
+- 3001: ElizaOS agents server
+- 5173: Vite dev server (if running from agent-marketplace)
+- XMTP: Uses websocket (configured in .env)

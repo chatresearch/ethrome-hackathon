@@ -1,8 +1,7 @@
-
 ---
 alwaysApply: true
 ---
-
+# no mocking, no fall backs, everything must use actual data and api calls. No hard coding examples for AI outputs
 # Testing Requirements for eth-ai-asa
 
 ## Smart Contract Changes
@@ -78,6 +77,50 @@ When modifying agent character files (TypeScript or JSON), ensure:
 - ✅ System prompt should be domain-specific, not generic
 - ✅ Topics and bio should match agent expertise
 
+
+## XMTP Agent Changes
+## XMTP Agent Changes
+
+After ANY changes to `xmtp-agent/src/` (ENS resolver, agent logic, etc.), you MUST:
+
+1. **Unit Tests (MUST use real ENS - NO mocks or fallbacks):**
+   ```bash
+   cd xmtp-agent && npm test
+   ```
+   - Expected: "Passed: 7/7 All tests passed!"
+   - Tests validate: routing, keywords, formatting, type safety
+   - CRITICAL: Tests MUST resolve ENS on Sepolia (require SEPOLIA_RPC env var)
+   - NO mock data, NO graceful fallbacks - real ENS resolution only
+
+2. **E2E Integration Tests (full agent startup):**
+   ```bash
+   cd xmtp-agent && npm run test:e2e
+   ```
+   - Expected: Agent starts, listens for messages, routes correctly
+   - Tests full XMTP Agent.create() → message receive → route → respond cycle
+   - Requires: XMTP_WALLET_KEY, XMTP_DB_ENCRYPTION_KEY, SEPOLIA_RPC
+
+3. **Rebuild the project:**
+   ```bash
+   npm run build
+   ```
+
+### Test Requirements
+
+- ❌ **Never use mock data** in unit tests
+- ❌ **Never use fallbacks** (graceful or otherwise)
+- ✅ **Always resolve ENS on Sepolia** in unit tests
+- ✅ **Always run E2E** after agent logic changes
+- ✅ **All tests must use real external data** - contracts, ENS, RPC
+
+### ENS Resolver Test Suite
+
+Unit tests cover (REAL ENS only):
+- DeFi keyword routing with ENS resolution
+- Security keyword routing with ENS resolution
+- Default routing with ENS metadata fetch
+- Response formatting with real agent metadata from ENS
+- Type safety with real capability data
 ## General Rules
 
 - ❌ **Never skip tests** - They validate agent and contract behavior
