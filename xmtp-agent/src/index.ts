@@ -62,7 +62,7 @@ async function startAgent() {
   console.log(`Agent connected successfully`);
 
   agent.on("text", async (ctx) => {
-    const userMessage = ctx.content();
+    const userMessage = ctx.message.content;
     console.log(`[User] ${userMessage}`);
 
     const agentType = determineAgent(userMessage);
