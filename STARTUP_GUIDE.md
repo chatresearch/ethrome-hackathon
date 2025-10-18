@@ -74,6 +74,20 @@ Starts all services and opens UIs automatically.
 - Voting on agent accuracy (1-5 scale)
 - Real-time leaderboard (localStorage)
 
+## Frontend (Miniapp)
+
+The AI Roast Generator mini-app is deployed to Vercel at:
+- **Production URL:** https://ai-roast-generator-ivory.vercel.app/
+- **Alternative deployments:** May have authentication protection enabled
+
+The `ivory` URL is the stable public version without authentication protection.
+
+To run locally:
+```bash
+cd ai-roast-generator
+npm run dev
+```
+
 ## Manual Startup (if needed)
 
 ### Terminal 1: BuidlGuidl Frontend

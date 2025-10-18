@@ -75,9 +75,21 @@ echo "$NGROK_URL" | vercel env add REACT_APP_XMTP_API production 2>/dev/null || 
 
 echo -e "${GREEN}✓ Vercel env updated${NC}"
 
-# Deploy to Vercel
+# Deploying to Vercel...
+BLUE="\\033[0;34m"
 echo -e "${BLUE}Deploying to Vercel...${NC}"
-vercel --prod
+DEPLOY_OUTPUT=$(vercel deploy --prod 2>&1)
+echo "$DEPLOY_OUTPUT" | tail -10
+
+# Extract the deployment URL from output
+PROD_URL=$(echo "$DEPLOY_OUTPUT" | grep "Production:" | sed 's/.*Production: //' | tr -d ' ')
+
+if [ -z "$PROD_URL" ]; then
+  echo -e "${RED}Failed to extract production URL${NC}"
+  exit 1
+fi
+
+echo -e "${GREEN}✓ Deployed to: $PROD_URL${NC}"
 
 echo -e "${GREEN}=== Deployment Complete ===${NC}"
 echo -e "${GREEN}✓ ngrok URL synced to Vercel${NC}"
