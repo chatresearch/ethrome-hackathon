@@ -1,0 +1,32 @@
+---
+alwaysApply: true
+---
+
+# Hackathon Project Status & Rules
+
+**DEADLINE: 9AM Sunday (29.8 hours remaining as of Sat Oct 18 03:11 PDT)**
+
+## Reference Documents
+- [HACKATHON.md](mdc:HACKATHON.md) - Master project status, bounties, components, priorities
+- [STARTUP_GUIDE.md](mdc:STARTUP_GUIDE.md) - How to run all services
+
+## Project: Protocol Council
+5 bounties targeting $12,000+ (ENS $5k, BuidlGuidl $2k, Base $5k, XMTP $3k)
+
+## Current Status
+- Completed: Smart contract, ENS integration, BuidlGuidl frontend, ElizaOS agents
+- In Progress: XMTP Agent ENS resolver (Priority 1)
+- Next: Miniapp components (Priority 2-3), gamification, submit with 3-minute demo video
+
+## Critical Requirements
+1. **No extra .md files** - Use only HACKATHON.md and STARTUP_GUIDE.md
+2. **Keep both files updated** as work progresses
+3. **Demo video required** - 3 minutes before submission (deadline-critical)
+4. **Time tracking** - Check time regularly, user needs visibility into remaining hours
+
+## Key Deliverables Before 9AM Sunday
+- [ ] ENS resolver working (Priority 1)
+- [ ] Miniapp foundation ready (Priority 2)
+- [ ] Basic gamification (Priority 3)
+- [ ] 3-minute demo video recorded
+- [ ] Submit to all 5 bounties

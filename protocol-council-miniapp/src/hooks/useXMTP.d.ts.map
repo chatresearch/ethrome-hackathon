@@ -1,0 +1,1 @@
+{"version":3,"file":"useXMTP.d.ts","sourceRoot":"","sources":["useXMTP.ts"],"names":[],"mappings":"AAEA,UAAU,WAAW;IACnB,MAAM,EAAE,MAAM,CAAC;IACf,OAAO,EAAE,MAAM,CAAC;IAChB,SAAS,EAAE,MAAM,CAAC;IAClB,SAAS,CAAC,EAAE,MAAM,CAAC;CACpB;AAED,wBAAgB,OAAO;;;2BAI2B,MAAM;iCAgCN,WAAW;EAU5D"}

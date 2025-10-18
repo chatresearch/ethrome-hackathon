@@ -1,115 +1,221 @@
 # Project Startup Guide
 
-## Quick Start
+## Quick Start (One Command)
 
-This project consists of three main services that run on different ports.
+```bash
+cd /path/to/ethrome-hackathon
+./start-all.sh start
+```
 
-### Port Configuration
+Starts all services and opens UIs automatically.
 
-- **BuidlGuidl Frontend (NextJS)**: `http://localhost:3000`
-- **ElizaOS Agents**: `http://localhost:3001` (configured in `agent-marketplace/.env`)
-- **Vite Dev Server** (if running frontend from agent-marketplace): `http://localhost:5173`
+## Script Usage
 
-## Starting Services
+### Start All Services
+```bash
+./start-all.sh start
+```
 
-### 1. Start the BuidlGuidl Frontend (eth-ai-asa)
+### Start Single Service
+```bash
+./start-all.sh start buildguidl    # Port 3000
+./start-all.sh start elizaos       # Port 3002
+./start-all.sh start xmtp          # Port 3003
+./start-all.sh start miniapp       # Port 5174
+```
+
+### Stop All Services
+```bash
+./start-all.sh stop
+```
+
+### Stop Single Service
+```bash
+./start-all.sh stop buildguidl
+./start-all.sh stop elizaos
+./start-all.sh stop xmtp
+./start-all.sh stop miniapp
+```
+
+### Show Help
+```bash
+./start-all.sh -h
+```
+
+## Port Configuration
+
+- **3000:** BuidlGuidl Frontend (required)
+- **3002:** ElizaOS Agents (required)
+- **3003:** XMTP Agent HTTP API (required)
+- **5174:** Protocol Council Miniapp (required)
+
+## Services Overview
+
+### BuidlGuidl Frontend (port 3000)
+- Agent marketplace dApp
+- View agents from AgentRegistry contract
+- Query agents directly
+- Built with Scaffold-ETH + NextJS
+
+### ElizaOS Agents (port 3002)
+- DeFi Wizard agent
+- Security Guru agent
+- Uses real OpenAI API (no mocks)
+
+### XMTP Agent (port 3003)
+- HTTP API wrapper around XMTP SDK
+- Routes requests to ElizaOS agents
+- Includes ENS capability metadata
+- API endpoint: `POST /api/message`
+
+### Protocol Council Miniapp (port 5174)
+- Main UI for voting and leaderboard
+- Queries XMTP Agent API
+- Voting on agent accuracy (1-5 scale)
+- Real-time leaderboard (localStorage)
+
+## Manual Startup (if needed)
+
+### Terminal 1: BuidlGuidl Frontend
 
 ```bash
 cd eth-ai-asa
-
-# Install dependencies
 yarn install
-
-# Start the frontend (runs on port 3000)
-yarn start
+yarn start  # Port 3000
 ```
 
-### 2. Start the ElizaOS Agents (agent-marketplace)
-
-In a new terminal:
+### Terminal 2: ElizaOS Agents
 
 ```bash
 cd agent-marketplace
-
-# Install dependencies
-bun install
-
-# Make sure .env file exists with SERVER_PORT=3001
-cat .env
-
-# Start the agents (runs on port 3001)
-bun run start
-# or
-elizaos start
+SERVER_PORT=3002 npm run start
 ```
 
-### 3. Test the Agents
-
-In a new terminal, test that agents are running:
+### Terminal 3: XMTP Agent
 
 ```bash
-# Test DeFi Wizard agent
-curl -X POST http://localhost:3001/api/agents/defi-wizard/message \
+cd xmtp-agent
+HTTP_PORT=3003 ELIZAOS_PORT=3002 npm run dev
+```
+
+**Critical .env settings (xmtp-agent/.env):**
+```
+XMTP_WALLET_KEY=0x... (your private key)
+XMTP_DB_ENCRYPTION_KEY=... (NO 0x prefix, 64 hex chars)
+XMTP_ENV=production
+```
+
+### Terminal 4: Protocol Council Miniapp
+
+```bash
+cd protocol-council-miniapp
+npm run dev  # Port 5174
+```
+
+## Testing the Stack
+
+Once all services are running:
+
+### Test XMTP API Endpoint
+```bash
+curl -X POST http://localhost:3003/api/message \
   -H "Content-Type: application/json" \
   -d '{"message": "What is yield farming?"}'
-
-# Test Security Guru agent
-curl -X POST http://localhost:3001/api/agents/security-guru/message \
-  -H "Content-Type: application/json" \
-  -d '{"message": "What are common smart contract vulnerabilities?"}'
 ```
 
-## Troubleshooting
+Should return agent response with capabilities.
 
-### Port Already in Use
+### Test Miniapp UI
+1. Open http://localhost:5174
+2. Enter "Analyze yield farming"
+3. Should see real DeFi Wizard response from ElizaOS
+4. Vote 1-5 on accuracy
+5. Leaderboard updates in real-time
 
-If you get "port already in use" error:
-
-```bash
-# Find what's using the port
-lsof -i :3000  # or :3001, :3001, etc.
-
-# Kill the process if needed
-kill -9 <PID>
-```
-
-### Setting OpenAI API Key
-
-The agents require an OpenAI API key:
-
-```bash
-# In agent-marketplace directory
-echo "OPENAI_API_KEY=sk-your-api-key-here" >> .env
-```
-
-### ElizaOS Not Starting
-
-Check the logs:
-- Ensure `SERVER_PORT=3001` is set in `agent-marketplace/.env`
-- Ensure `OPENAI_API_KEY` is configured
-- Run with debug: `DEBUG=* bun run start`
+### Test BuidlGuidl
+1. Open http://localhost:3000
+2. Browse registered agents
+3. Query agents directly
 
 ## Architecture
 
 ```
-User Browser (http://localhost:3000)
+User Browser
     ↓
-BuidlGuidl Frontend (NextJS)
-    ↓ (queries via /api proxy)
-ElizaOS Server (http://localhost:3001)
-    ├─ DeFi Wizard Agent
-    └─ Security Guru Agent
-        ↓
-    OpenAI API (GPT-4)
+BuidlGuidl (3000)          Protocol Council Miniapp (5174)
+    ↓                              ↓
+AgentRegistry Contract     XMTP Agent API (3003)
+    ↓                              ↓
+Base Sepolia              ElizaOS Agents (3002)
+    ↓                              ↓
+Smart Contract            OpenAI API (real LLM)
+    
++ ENS resolution (Sepolia)
++ Capability metadata
++ User voting + leaderboard (localStorage)
 ```
 
-## Integration
+## Troubleshooting
 
-The frontend automatically proxies `/api` requests to `http://localhost:3001` (or whatever `SERVER_PORT` is configured to).
+### ElizaOS won't start - "Port 3000 is in use"
 
-When you query an agent from the frontend, the flow is:
-1. User enters message in UI
-2. Frontend sends POST to `/api/agents/defi-wizard/message`
-3. Vite/NextJS dev server proxies to `http://localhost:3001/api/agents/defi-wizard/message`
-4. ElizaOS server processes with agent
-5. Response returned to frontend
+ElizaOS has a bug where it ignores SERVER_PORT and tries port 3000. Kill anything on 3000:
+
+```bash
+lsof -i :3000
+kill -9 <PID>
+
+# Then try again
+./start-all.sh start elizaos
+```
+
+### XMTP Agent won't start
+
+**Error: "Failed to query defi-wizard on port 3001"**
+- Make sure ElizaOS is running on port 3002
+- Check: `lsof -i :3002`
+
+**Error: "Non-base16 character"**
+- Check `XMTP_DB_ENCRYPTION_KEY` has NO `0x` prefix
+- Must be exactly 64 hex characters
+
+### Miniapp shows "Failed to send message"
+
+1. Verify XMTP Agent is running: `lsof -i :3003`
+2. Verify ElizaOS is running: `lsof -i :3002`
+3. Check browser console for actual error
+4. Try curl test first (see Testing section)
+
+### Port Already in Use
+
+```bash
+# Find and kill process
+lsof -i :<PORT>
+kill -9 <PID>
+
+# Or just run the cleanup
+./start-all.sh stop
+```
+
+## Logs
+
+All services log to `/tmp/`:
+```bash
+tail -f /tmp/buildguidl.log  # BuidlGuidl logs
+tail -f /tmp/elizaos.log     # ElizaOS logs
+tail -f /tmp/xmtp.log        # XMTP Agent logs
+tail -f /tmp/miniapp.log     # Miniapp logs
+```
+
+## Cleanup
+
+Stop all services:
+
+```bash
+./start-all.sh stop
+```
+
+Or manually:
+```bash
+pkill -f 'npm run dev|npm run start|bun run start|yarn start'
+```

@@ -2,12 +2,18 @@
 
 import Link from "next/link";
 import type { NextPage } from "next";
+import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-eth";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <>
@@ -20,7 +26,7 @@ const Home: NextPage = () => {
           <p className="text-center text-lg opacity-75 mt-4 mb-6">ENSIP-TBD-11 Reference Implementation</p>
           <div className="flex justify-center items-center space-x-2 flex-col">
             <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} />
+            {mounted && <Address address={connectedAddress} />}
           </div>
 
           <p className="text-center text-base opacity-70 mt-6">
