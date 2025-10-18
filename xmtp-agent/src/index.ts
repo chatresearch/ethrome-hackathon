@@ -12,13 +12,19 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
   const agentPort = process.env.ELIZAOS_PORT || "3001";
   const agentEndpoint = `http://localhost:${agentPort}/api/agents/${agent}/message`;
   
-  // Detect if message contains image data (base64)
-  const isImage = message.includes("data:image/") || message.match(/^[A-Za-z0-9+/]{100,}={0,2}$/);
+  // Detect if message contains image data (base64) - can be anywhere in the message
+  const isImage = message.includes("data:image/") || message.includes("base64,");
+  
+  console.log(`[generateResponse] Agent: ${agent}, Has image: ${isImage}`);
   
   // Format message for vision agents if it's an image
   let formattedMessage = message;
   if (isImage && (agent === "profile-roaster" || agent === "linkedin-roaster" || agent === "vibe-roaster")) {
-    formattedMessage = `Please analyze this image and provide a hilarious, witty roast. Image data: ${message.substring(0, 200)}...`;
+    // Extract the image part
+    const imageMatch = message.match(/(data:image\/[^:]*;base64,[A-Za-z0-9+/=]+)/);
+    const imageData = imageMatch ? imageMatch[1] : message;
+    formattedMessage = `Please analyze this image and provide a hilarious, witty roast. Here's the image: ${imageData}`;
+    console.log(`[generateResponse] Image detected for ${agent}, sending formatted message`);
   }
   
   try {
@@ -33,8 +39,10 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     }
 
     const data = await response.json() as { response?: string; message?: string };
+    console.log(`[generateResponse] Got response from ${agent}`);
     return data.response || data.message || "No response from agent";
   } catch (error) {
+    console.error(`[generateResponse] Error from agent, using fallback. Is image: ${isImage}`);
     // Fallback with realistic demo responses based on agent type and message
     if (agent === "defi-wizard") {
       if (message.toLowerCase().includes("yield") || message.toLowerCase().includes("apy")) {
