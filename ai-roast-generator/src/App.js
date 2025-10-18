@@ -45,26 +45,53 @@ async function checkBackendConnectivity() {
         { name: 'Local Backend', url: isProduction ? undefined : localBackendUrl },
     ];
     console.log('[Preload] Checking backend connectivity...');
+    let hasHealthyBackend = false;
     for (const { name, url } of urlsToCheck) {
         if (!url) {
             console.log(`[Preload] ${name}: not configured`);
             continue;
         }
         try {
-            const response = await fetch(`${url}/api/health`, {
+            // Test health endpoint
+            const healthResponse = await fetch(`${url}/api/health`, {
                 method: 'GET',
                 signal: AbortSignal.timeout(3000),
             });
-            if (response.ok) {
-                console.log(`[Preload] ✅ ${name}: ${url} is reachable`);
+            if (!healthResponse.ok) {
+                console.warn(`[Preload] ⚠️ ${name}: ${url} returned ${healthResponse.status} on /api/health`);
+                continue;
+            }
+            // Test message endpoint with a dummy request
+            const testResponse = await fetch(`${url}/api/message`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: 'test' }),
+                signal: AbortSignal.timeout(3000),
+            });
+            if (testResponse.ok || testResponse.status === 400 || testResponse.status === 422) {
+                // 400/422 is OK - it means the endpoint exists but rejected the test data
+                console.log(`[Preload] ✅ ${name}: ${url} is fully operational`);
+                hasHealthyBackend = true;
+                break;
+            }
+            else if (testResponse.status === 500) {
+                console.warn(`[Preload] ❌ ${name}: ${url} returned 500 on /api/message - server error`);
             }
             else {
-                console.warn(`[Preload] ⚠️ ${name}: ${url} returned ${response.status}`);
+                console.warn(`[Preload] ⚠️ ${name}: ${url} returned ${testResponse.status} on /api/message`);
             }
         }
         catch (error) {
             const msg = error instanceof Error ? error.message : String(error);
             console.warn(`[Preload] ❌ ${name}: ${url} - ${msg}`);
+        }
+    }
+    if (!hasHealthyBackend) {
+        const errorMsg = `❌ XMTP Backend Unavailable\n\nNo working backend found. Checked:\n${urlsToCheck.map(u => `  - ${u.name}: ${u.url || 'not configured'}`).join('\n')}\n\nPlease ensure:\n1. XMTP agent is running on port 3003\n2. ngrok tunnel is active\n3. Environment variables are set on Vercel`;
+        console.error('[Preload]', errorMsg);
+        // Show banner alert to user
+        if (typeof window !== 'undefined') {
+            window.__xmtpError = errorMsg;
         }
     }
 }
@@ -83,6 +110,7 @@ const AppContent = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [votes, setVotes] = useState({});
     const [leaderboardRefresh, setLeaderboardRefresh] = useState(0);
+    const [preloadError, setPreloadError] = useState(null);
     const [isDarkMode, setIsDarkMode] = useState(() => {
         const saved = localStorage.getItem('roast-generator-dark-mode');
         if (saved !== null) {
@@ -178,6 +206,12 @@ const AppContent = () => {
     useEffect(() => {
         setLeaderboardRefresh(0);
     }, []);
+    // Check for preload errors
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.__xmtpError) {
+            setPreloadError(window.__xmtpError);
+        }
+    }, []);
     const handleImageUpload = async (imageBase64, agent) => {
         setUploadedImage(imageBase64);
         setS3ImageUrl(null);
@@ -265,7 +299,7 @@ const AppContent = () => {
                                     { name: 'profile-roaster', description: 'Dating Profile Roast' },
                                     { name: 'linkedin-roaster', description: 'LinkedIn Headshot Roast' },
                                     { name: 'vibe-roaster', description: 'Aesthetic & Vibe Roast' }
-                                ], agentAvatars: agentAvatars, agentPrices: livePrices }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results, s3ImageUrl: s3ImageUrl })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] }), _jsx(Confetti, { trigger: confettiTrigger })] }));
+                                ], agentAvatars: agentAvatars, agentPrices: livePrices }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError }), preloadError && _jsx("div", { className: "error-banner", children: preloadError })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results, s3ImageUrl: s3ImageUrl })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] }), _jsx(Confetti, { trigger: confettiTrigger })] }));
 };
 export const App = () => {
     const queryClient = new QueryClient();

@@ -16,6 +16,13 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { useHealthCheck } from './hooks/useHealthCheck';
 import { Confetti } from './components/Confetti';
 
+// Extend window type to include __xmtpError
+declare global {
+  interface Window {
+    __xmtpError?: string;
+  }
+}
+
 interface AgentResponse {
   agent: string;
   capabilities: string[];
@@ -128,6 +135,7 @@ const AppContent: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [votes, setVotes] = useState<Record<number, number>>({});
   const [leaderboardRefresh, setLeaderboardRefresh] = useState(0);
+  const [preloadError, setPreloadError] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem('roast-generator-dark-mode');
     if (saved !== null) {
@@ -229,6 +237,13 @@ const AppContent: React.FC = () => {
 
   useEffect(() => {
     setLeaderboardRefresh(0);
+  }, []);
+
+  // Check for preload errors
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).__xmtpError) {
+      setPreloadError((window as any).__xmtpError);
+    }
   }, []);
 
   const handleImageUpload = async (imageBase64: string, agent?: string) => {
@@ -381,6 +396,7 @@ const AppContent: React.FC = () => {
           />
           {xmtpError && <div className="error-banner">{xmtpError}</div>}
           {paymentError && <div className="error-banner">{paymentError}</div>}
+          {preloadError && <div className="error-banner">{preloadError}</div>}
         </section>
 
         {uploadedImage && (
