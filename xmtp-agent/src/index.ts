@@ -155,7 +155,7 @@ function startHttpServer() {
     }
 
     // S3 Presigned URL endpoint
-    if (req.url === "/api/s3-upload-url" && req.method === "GET") {
+    if (req.url?.startsWith("/api/s3-upload-url") && req.method === "GET") {
       try {
         const queryParams = new URL(req.url || "", `http://${req.headers.host || 'localhost'}`);
         const filename = queryParams.searchParams.get('filename') || 'image.png';
@@ -179,7 +179,7 @@ function startHttpServer() {
       return;
     }
 
-    if (req.url === "/api/message" && req.method === "POST") {
+    if (req.url?.startsWith("/api/message") && req.method === "POST") {
       let body = "";
       req.on("data", (chunk) => {
         body += chunk.toString();
