@@ -176,10 +176,10 @@ const AppContent = () => {
             const s3Url = await uploadImageToS3(imageBase64);
             setS3ImageUrl(s3Url);
             console.log(`Image uploaded to S3: ${s3Url}`);
-            // Then, query the agent via XMTP with the S3 URL
+            // Then, query the agent via XMTP with base64 for vision processing
             const query = agent
-                ? `[REQUEST TO ${agent.toUpperCase()}] Please roast this image: ${s3Url}`
-                : `Roast this image: ${s3Url}`;
+                ? `[REQUEST TO ${agent.toUpperCase()}] Please roast this image: ${imageBase64}`
+                : `Roast this image: ${imageBase64}`;
             const response = await sendMessage(query);
             if (response.agents) {
                 const newResults = response.agents.map((agentResponse) => ({

@@ -47,8 +47,29 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
   if (isImage && (agent === "profile-roaster" || agent === "linkedin-roaster" || agent === "vibe-roaster")) {
     // Extract the image part - could be base64 or S3 URL
     const imageMatch = message.match(/(data:image\/[^:]*;base64,[A-Za-z0-9+/=]+)/);
-    const s3Match = message.match(/(https:\/\/[^\s]+\.s3\.[^\s]+)/);
-    const imageData = imageMatch ? imageMatch[1] : (s3Match ? s3Match[1] : message);
+    let s3Match = message.match(/(https:\/\/[^\s]+\.s3\.[^\s]+)/);
+    
+    let imageData = imageMatch ? imageMatch[1] : null;
+    
+    // If we found an S3 URL, fetch it and convert to base64
+    if (!imageData && s3Match) {
+      try {
+        console.log(`[generateResponse] Fetching S3 image: ${s3Match[1]}`);
+        const imgResponse = await fetch(s3Match[1]);
+        if (imgResponse.ok) {
+          const buffer = await imgResponse.arrayBuffer();
+          const base64 = Buffer.from(buffer).toString('base64');
+          const contentType = imgResponse.headers.get('content-type') || 'image/png';
+          imageData = `data:${contentType};base64,${base64}`;
+          console.log(`[generateResponse] Successfully converted S3 image to base64`);
+        }
+      } catch (error) {
+        console.error(`[generateResponse] Failed to fetch S3 image:`, error);
+        imageData = s3Match[1]; // Fallback to URL if fetch fails
+      }
+    }
+    
+    imageData = imageData || message;
     formattedMessage = `Please analyze this image and provide a hilarious, witty roast. Here's the image: ${imageData}`;
     console.log(`[generateResponse] Image detected for ${agent}, formatted message length: ${formattedMessage.length}`);
   }
