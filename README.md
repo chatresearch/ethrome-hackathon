@@ -8,7 +8,7 @@ A Web3 mini application that uses AI agents to generate roasts of user selfies. 
 
 ## Hackathon Bounties & Implementation
 
-### 1. Base Mini Apps ($5k)
+### 1. Base Mini Apps 
 Challenge: Build an engaging, viral mini app that drives user adoption and social sharing on Base blockchain.
 
 Implementation:
@@ -21,7 +21,7 @@ Implementation:
 
 ---
 
-### 2. Best Use of XMTP Agent SDK ($1.5k)
+### 2. Best Use of XMTP Agent SDK 
 Challenge: Build agents that communicate via XMTP decentralized messaging.
 
 Implementation:
@@ -42,11 +42,11 @@ User App -> S3 Upload -> XMTP Agent -> ElizaOS Media API -> Vision Agents -> Res
 Challenge: Create a mini app that works well in group chat contexts.
 
 Implementation:
-- XMTP Integration for messaging
-- Multi-user support with individual sessions
-- Shared results via copy/share
-- End-to-end encrypted messages
-- Leaderboard for social comparison
+- Standalone Web3 mini app with shareable links
+- Results shareable to Twitter and Farcaster
+- Leaderboard for comparing roasts with friends
+- Copy-to-clipboard for easy sharing
+- XMTP for private agent communication
 
 ---
 
