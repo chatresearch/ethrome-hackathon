@@ -15,14 +15,19 @@ export function useXMTP() {
     try {
       setError(null);
       
-      // Detect environment: Vercel has VITE_REACT_APP_XMTP_API, local dev uses localhost
+      // Detect environment
       // @ts-ignore
-      const isVercel = !!import.meta.env.VITE_REACT_APP_XMTP_API;
+      const envUrl = import.meta.env.VITE_REACT_APP_XMTP_API;
       // @ts-ignore
-      const apiUrl = isVercel 
-        // @ts-ignore
-        ? import.meta.env.VITE_REACT_APP_XMTP_API 
+      const viteUrl = import.meta.env.VITE_XMTP_API;
+      
+      // On Vercel, use env var. On localhost, use localhost:3003
+      const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+      const apiUrl = isProduction && (envUrl || viteUrl) 
+        ? (envUrl || viteUrl)
         : 'http://127.0.0.1:3003';
+      
+      console.log(`[useXMTP] Using API URL: ${apiUrl}`);
       
       // Try to reach XMTP agent with 8 second timeout
       const controller = new AbortController();
@@ -65,7 +70,11 @@ export function useXMTP() {
           ? err.message 
           : 'Failed to connect to XMTP agent';
         
-        throw new Error(`❌ XMTP Agent Error: ${errorMsg}\n\nMake sure XMTP agent is running on http://localhost:3003`);
+        const helpText = isProduction 
+          ? `Make sure ngrok tunnel is running and REACT_APP_XMTP_API is set on Vercel`
+          : `Make sure XMTP agent is running on http://localhost:3003`;
+        
+        throw new Error(`❌ XMTP Agent Error: ${errorMsg}\n\n${helpText}\nUsing URL: ${apiUrl}`);
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
