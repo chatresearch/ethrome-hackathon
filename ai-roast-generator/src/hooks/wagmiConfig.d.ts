@@ -1,4 +1,4 @@
-export declare const wagmiConfig: import("wagmi").Config<readonly [{
+export declare const wagmiConfig: import("wagmi").Config<[{
     blockExplorers: {
         readonly default: {
             readonly name: "Basescan";
@@ -306,7 +306,5 @@ export declare const wagmiConfig: import("wagmi").Config<readonly [{
         readonly transaction: typeof import("viem/chains").serializeTransactionOpStack;
     };
     readonly network: "base-sepolia";
-}], {
-    84532: import("viem").HttpTransport<undefined, false>;
-}, readonly import("wagmi").CreateConnectorFn[]>;
+}], import("@rainbow-me/rainbowkit/dist/config/getDefaultConfig")._transports, import("wagmi").CreateConnectorFn<unknown, Record<string, unknown>, Record<string, unknown>>[]>;
 //# sourceMappingURL=wagmiConfig.d.ts.map
