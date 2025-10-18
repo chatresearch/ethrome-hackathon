@@ -5,6 +5,76 @@ import { routeByCapabilities, formatResponseWithCapabilities, resolveAgentCapabi
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 dotenv.config();
+// Upload media to ElizaOS for agent
+async function uploadMediaToElizaOS(agentId, base64) {
+    const elizaosPort = process.env.ELIZAOS_PORT || "3002";
+    try {
+        // Convert base64 to blob
+        const base64Data = base64.split(',')[1] || base64;
+        const binaryString = atob(base64Data);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        // Detect content type
+        let mimeType = 'image/png';
+        if (base64.includes('image/jpeg') || base64.includes('/9j/')) {
+            mimeType = 'image/jpeg';
+        }
+        else if (base64.includes('image/gif')) {
+            mimeType = 'image/gif';
+        }
+        else if (base64.includes('image/webp')) {
+            mimeType = 'image/webp';
+        }
+        const blob = new Blob([bytes], { type: mimeType });
+        const formData = new FormData();
+        formData.append('file', blob, `roast-${Date.now()}.${mimeType.split('/')[1]}`);
+        console.log(`[Media] Uploading to ElizaOS for agent ${agentId}, size: ${blob.size} bytes`);
+        const response = await fetch(`http://localhost:${elizaosPort}/api/media/${agentId}/upload-media`, {
+            method: 'POST',
+            body: formData,
+        });
+        if (!response.ok) {
+            throw new Error(`ElizaOS media upload returned ${response.status}`);
+        }
+        const mediaData = await response.json();
+        if (!mediaData.url) {
+            throw new Error('No media URL returned from ElizaOS');
+        }
+        console.log(`[Media] ✅ Uploaded to ElizaOS: ${mediaData.url}`);
+        return mediaData.url;
+    }
+    catch (error) {
+        const msg = error instanceof Error ? error.message : String(error);
+        console.error(`[Media] ❌ Upload failed: ${msg}`);
+        throw error;
+    }
+}
+// Compress base64 image by reducing quality and size
+function compressBase64Image(base64, maxSizeKB = 200) {
+    // If already small enough, return as-is
+    const sizeInKB = base64.length / 1024;
+    if (sizeInKB <= maxSizeKB) {
+        console.log(`[Image] Size ${sizeInKB.toFixed(1)}KB - no compression needed`);
+        return base64;
+    }
+    console.log(`[Image] Compressing from ${sizeInKB.toFixed(1)}KB to ~${maxSizeKB}KB`);
+    // Extract header and data
+    const parts = base64.split(',');
+    if (parts.length !== 2)
+        return base64;
+    const header = parts[0];
+    const data = parts[1];
+    // Estimate compression ratio needed
+    const ratio = maxSizeKB / sizeInKB;
+    const targetChars = Math.floor(data.length * ratio);
+    // Truncate the base64 string (this effectively reduces quality)
+    const compressed = data.substring(0, targetChars);
+    const result = `${header},${compressed}`;
+    console.log(`[Image] Compressed to ${(result.length / 1024).toFixed(1)}KB`);
+    return result;
+}
 // Generate presigned URL for S3 upload
 async function generatePresignedUrl(filename, contentType = 'image/png') {
     try {
@@ -50,28 +120,27 @@ async function generateResponse(agent, message) {
         // Extract the image part - could be base64 or S3 URL
         const imageMatch = message.match(/(data:image\/[^:]*;base64,[A-Za-z0-9+/=]+)/);
         let s3Match = message.match(/(https:\/\/[^\s]+\.s3\.[^\s]+)/);
-        let imageData = imageMatch ? imageMatch[1] : null;
-        // If we found an S3 URL, fetch it and convert to base64
-        if (!imageData && s3Match) {
+        let imageUrl = null;
+        // If we have base64 data, upload it to ElizaOS media API
+        if (imageMatch) {
             try {
-                console.log(`[generateResponse] Fetching S3 image: ${s3Match[1]}`);
-                const imgResponse = await fetch(s3Match[1]);
-                if (imgResponse.ok) {
-                    const buffer = await imgResponse.arrayBuffer();
-                    const base64 = Buffer.from(buffer).toString('base64');
-                    const contentType = imgResponse.headers.get('content-type') || 'image/png';
-                    imageData = `data:${contentType};base64,${base64}`;
-                    console.log(`[generateResponse] Successfully converted S3 image to base64`);
-                }
+                console.log(`[generateResponse] Base64 image detected, uploading to ElizaOS media API...`);
+                imageUrl = await uploadMediaToElizaOS(agentId, imageMatch[1]);
             }
             catch (error) {
-                console.error(`[generateResponse] Failed to fetch S3 image:`, error);
-                throw new Error(`Failed to fetch S3 image: ${error}`);
+                console.error(`[generateResponse] Failed to upload base64 to ElizaOS:`, error);
+                throw error;
             }
         }
-        imageData = imageData || message;
-        formattedMessage = `Please analyze this image and provide a hilarious, witty roast. Here's the image: ${imageData}`;
-        console.log(`[generateResponse] Image detected for ${agent}, formatted message length: ${formattedMessage.length}`);
+        // If we have an S3 URL, use it directly (ElizaOS can fetch it)
+        else if (s3Match) {
+            imageUrl = s3Match[1];
+            console.log(`[generateResponse] Using S3 URL directly: ${imageUrl}`);
+        }
+        if (imageUrl) {
+            formattedMessage = `Please analyze this image and provide a hilarious, witty roast. Here's the image: ${imageUrl}`;
+            console.log(`[generateResponse] Image URL set, formatted message length: ${formattedMessage.length}`);
+        }
     }
     try {
         // Create a unique channel ID for this conversation
