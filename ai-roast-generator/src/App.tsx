@@ -55,9 +55,10 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const prices: Record<string, string> = {};
         const agents = ['profile-roaster', 'linkedin-roaster', 'vibe-roaster', 'defi-wizard', 'security-guru'];
         
+        // Fetch prices
+        const prices: Record<string, string> = {};
         for (const agent of agents) {
           const agentFqn = `${agent}.aiconfig.eth`;
           try {
@@ -72,18 +73,28 @@ const AppContent: React.FC = () => {
         setLivePrices(prices);
         console.log('Live prices fetched from contract:', prices);
 
-        const avatars: Record<string, string> = {};
-        for (const agent of agents) {
+        // Fetch avatars in parallel
+        const avatarPromises = agents.map(async (agent) => {
           const agentFqn = `${agent}.aiconfig.eth`;
           try {
             const avatar = await fetchAgentAvatar(agentFqn);
-            avatars[agent] = avatar;
+            console.log(`[Avatar] ✅ Loaded ${agent}`);
+            return { agent, avatar };
           } catch (error) {
             console.warn(`[Avatar] Failed to fetch for ${agent}:`, error instanceof Error ? error.message : String(error));
-            // Continue without avatar for this agent
+            return { agent, avatar: null };
           }
-        }
-        setAgentAvatars(avatars);
+        });
+
+        // Set avatars as they complete
+        const results = await Promise.all(avatarPromises);
+        const avatars: Record<string, string> = {};
+        results.forEach(({ agent, avatar }) => {
+          if (avatar) {
+            avatars[agent] = avatar;
+            setAgentAvatars((prev) => ({ ...prev, [agent]: avatar }));
+          }
+        });
         console.log('Agent avatars fetched:', avatars);
 
       } catch (error) {
