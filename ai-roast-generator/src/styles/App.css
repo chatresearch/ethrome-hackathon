@@ -866,6 +866,29 @@ body {
   font-size: 1rem;
 }
 
+.roast-link {
+  color: var(--primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  word-break: break-word;
+}
+
+.roast-link:hover {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+.agent-col {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.agent-icon {
+  font-size: 1.2rem;
+}
+
 @media (max-width: 768px) {
   .leaderboard-table {
     font-size: 0.9rem;

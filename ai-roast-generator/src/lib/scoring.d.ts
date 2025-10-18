@@ -14,7 +14,19 @@ interface UserStats {
 export interface LeaderboardEntry extends UserStats {
     rank: number;
 }
+export interface RoastData {
+    id: string;
+    agent: string;
+    roastText: string;
+    imageUrl?: string;
+    votes: number;
+    timestamp: number;
+}
 export declare function recordVote(userId: string, vote: VoteData): void;
+export declare function recordRoast(agent: string, roastText: string, imageUrl?: string): void;
+export declare function getRoasts(): RoastData[];
+export declare function voteRoast(roastId: string): void;
+export declare function getTopRoasts(limit?: number): RoastData[];
 export declare function getVotes(): Array<VoteData & {
     userId: string;
 }>;
