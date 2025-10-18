@@ -4,7 +4,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { useAccount } from 'wagmi';
 
 export const WalletConnect: React.FC = () => {
-  const { address, isConnecting, isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
 
   return (
     <div className="wallet-connect">
