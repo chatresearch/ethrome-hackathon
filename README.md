@@ -176,7 +176,7 @@ User journey:
 |--------|-------|
 | Agents | 5 (3 roasters, 2 fallback) |
 | Bounties Targeted | 6 |
-| Potential Earnings | $16,500 |
+
 | Price per Roast | 0.00001 ETH |
 | Max Batch | 5 agents |
 | Response Time | 2-3 seconds |
@@ -327,4 +327,4 @@ MIT - Open source for the Web3 community
 
 ---
 
-**Status:** Production Ready | Live on Vercel | All Bounties Implemented | $16,500 Potential Earnings
+**Status:** Production Ready | Live on Vercel | All Bounties Implemented 
