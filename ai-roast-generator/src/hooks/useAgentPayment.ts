@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useAccount, useChainId } from 'wagmi';
 import { parseEther, formatEther } from 'viem';
+import { ethers } from 'ethers';
 
 const AGENT_REGISTRY_ADDRESS = '0xFBeE7f501704A9AA629Ae2D0aE6FB30989571Bd0';
 const BASE_SEPOLIA_CHAIN_ID = 84532;
@@ -77,46 +78,72 @@ export function useAgentPayment() {
 // Helper to fetch agent price from contract
 export async function fetchAgentPrice(agentName: string): Promise<string> {
   try {
-    const response = await fetch('https://sepolia.base.org', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        method: 'eth_call',
-        params: [
-          {
-            to: AGENT_REGISTRY_ADDRESS,
-            data: encodeGetAgent(agentName),
-          },
-          'latest',
-        ],
-        id: 1,
-      }),
-    });
-
-    const result = await response.json();
-    if (result.result) {
-      // Parse the returned struct to get queryPrice (second field after owner)
-      // Struct: owner (20 bytes) + ensName (32 bytes offset) + queryPrice (32 bytes) + ...
-      const queryPriceHex = '0x' + result.result.slice(130, 194);
-      return formatEther(BigInt(queryPriceHex));
+    const BASE_SEPOLIA_RPC = 'https://base-sepolia.g.alchemy.com/v2/7U4mbJajvpp6GzozCw6z6kMEGAqKcXkG';
+    console.log(`[Price] Fetching price for ${agentName}...`);
+    
+    const provider = new ethers.JsonRpcProvider(BASE_SEPOLIA_RPC);
+    
+    const AGENT_REGISTRY_ABI = [
+      'function getAgent(string memory _ensName) public view returns (tuple(address owner, string ensName, uint256 queryPrice, uint256 totalQueries, uint256 earnings, bool active, uint256 registeredAt))'
+    ];
+    
+    const contract = new ethers.Contract(AGENT_REGISTRY_ADDRESS, AGENT_REGISTRY_ABI, provider);
+    console.log(`[Price] Calling getAgent() on contract ${AGENT_REGISTRY_ADDRESS}...`);
+    
+    const agent = await contract.getAgent(agentName);
+    console.log(`[Price] Got agent data:`, agent);
+    
+    const price = agent.queryPrice;
+    if (!price || price === 0n) {
+      throw new Error(`Invalid price for agent ${agentName}`);
     }
+    
+    const priceEth = formatEther(price);
+    console.log(`[Price] ✅ Price fetched for ${agentName}: ${priceEth} ETH`);
+    return priceEth;
   } catch (error) {
-    console.error('Error fetching agent price:', error);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`[Price] ❌ Failed to fetch price for ${agentName}:`, message, error);
+    throw new Error(`Failed to fetch price for ${agentName}: ${message}`);
   }
-  return '0.00001'; // Fallback
+}
+
+// Helper to fetch ENS avatar for an agent using ethers.js
+export async function fetchAgentAvatar(ensName: string): Promise<string> {
+  try {
+    const SEPOLIA_RPC = 'https://eth-sepolia.g.alchemy.com/v2/7U4mbJajvpp6GzozCw6z6kMEGAqKcXkG';
+    console.log(`[ENS] Creating provider for ${ensName}...`);
+    const provider = new ethers.JsonRpcProvider(SEPOLIA_RPC);
+    
+    console.log(`[ENS] Resolving avatar for ${ensName}...`);
+    const resolver = await provider.getResolver(ensName);
+    console.log(`[ENS] Resolver result:`, resolver);
+    
+    if (!resolver) {
+      throw new Error(`No ENS resolver found for ${ensName}`);
+    }
+    
+    console.log(`[ENS] Fetching avatar text record...`);
+    const avatarUrl = await resolver.getText('avatar');
+    console.log(`[ENS] Avatar URL result:`, avatarUrl);
+    
+    if (!avatarUrl) {
+      throw new Error(`No avatar text record set for ${ensName}`);
+    }
+    
+    console.log(`[ENS] ✅ Avatar fetched for ${ensName}: ${avatarUrl}`);
+    return avatarUrl;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`[ENS] ❌ Failed to fetch avatar for ${ensName}:`, message, error);
+    throw new Error(`Failed to fetch avatar for ${ensName}: ${message}`);
+  }
 }
 
 function encodeQueryAgent(agentName: string): string {
   const functionSignature = '0x17a7e67e'; // keccak256('queryAgent(string)')
   const encodedName = encodeString(agentName);
   return functionSignature + encodedName.slice(2);
-}
-
-function encodeGetAgent(agentName: string): string {
-  const functionSignature = 'bde52cb2'; // keccak256('getAgent(string)').slice(0, 8)
-  const encodedName = encodeString(agentName);
-  return '0x' + functionSignature + encodedName.slice(2);
 }
 
 function encodeString(str: string): string {

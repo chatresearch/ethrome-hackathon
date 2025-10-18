@@ -4,6 +4,8 @@ interface QueryBuilderProps {
   onSubmit: (imageBase64: string, agent?: string) => Promise<void>;
   isLoading?: boolean;
   availableAgents?: { name: string; description: string }[];
+  agentAvatars?: Record<string, string>;
+  agentPrices?: Record<string, string>;
 }
 
 export const QueryBuilder: React.FC<QueryBuilderProps> = ({ 
@@ -13,20 +15,21 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
     { name: 'profile-roaster', description: 'Dating Profile Roast' },
     { name: 'linkedin-roaster', description: 'LinkedIn Headshot Roast' },
     { name: 'vibe-roaster', description: 'Aesthetic & Vibe Roast' }
-  ]
+  ],
+  agentAvatars = {},
+  agentPrices = {}
 }) => {
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [showAgentMenu, setShowAgentMenu] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const getAgentIcon = (agentName: string): string => {
-    switch (agentName) {
-      case 'profile-roaster': return '💕';
-      case 'linkedin-roaster': return '💼';
-      case 'vibe-roaster': return '✨';
-      default: return '😈';
-    }
+  const getAgentDisplay = (agentName: string): string => {
+    const price = agentPrices[agentName] ? ` - ${agentPrices[agentName]} ETH` : '';
+    const agent = availableAgents.find(a => a.name === agentName);
+    const description = agent?.description || agentName;
+    return `${description}${price}`;
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,23 +84,69 @@ export const QueryBuilder: React.FC<QueryBuilderProps> = ({
     <form onSubmit={handleSubmit} className="query-builder">
       <div className="query-controls">
         <div className="agent-selector-wrapper">
-          <label htmlFor="agent-select" className="agent-label">
+          <label className="agent-label">
             Choose Roaster (optional):
           </label>
-          <select
-            id="agent-select"
-            value={selectedAgent || ''}
-            onChange={(e) => setSelectedAgent(e.target.value || null)}
-            disabled={isLoading}
-            className="agent-select"
-          >
-            <option value="">Let me roast all of them</option>
-            {availableAgents.map((agent) => (
-              <option key={agent.name} value={agent.name}>
-                {getAgentIcon(agent.name)} {agent.description}
-              </option>
-            ))}
-          </select>
+          
+          {/* Custom Agent Selector */}
+          <div className="custom-agent-selector">
+            <button 
+              type="button"
+              className="agent-selector-btn"
+              onClick={() => setShowAgentMenu(!showAgentMenu)}
+              disabled={isLoading}
+            >
+              {selectedAgent ? (
+                <div className="selected-agent-display">
+                  {agentAvatars[selectedAgent] && (
+                    <img src={agentAvatars[selectedAgent]} alt={selectedAgent} className="agent-icon-img" />
+                  )}
+                  <span>{getAgentDisplay(selectedAgent)}</span>
+                </div>
+              ) : (
+                <span>🎲 Let me roast all of them</span>
+              )}
+            </button>
+            
+            {/* Dropdown Menu */}
+            {showAgentMenu && (
+              <div className="agent-menu">
+                <div 
+                  className="agent-menu-item"
+                  onClick={() => {
+                    setSelectedAgent(null);
+                    setShowAgentMenu(false);
+                  }}
+                >
+                  <span className="agent-menu-emoji">🎲</span>
+                  <div className="agent-menu-text">
+                    <div className="agent-name">Let me roast all of them</div>
+                  </div>
+                </div>
+                
+                {availableAgents.map((agent) => (
+                  <div
+                    key={agent.name}
+                    className={`agent-menu-item ${selectedAgent === agent.name ? 'active' : ''}`}
+                    onClick={() => {
+                      setSelectedAgent(agent.name);
+                      setShowAgentMenu(false);
+                    }}
+                  >
+                    {agentAvatars[agent.name] && (
+                      <img src={agentAvatars[agent.name]} alt={agent.name} className="agent-menu-avatar" />
+                    )}
+                    <div className="agent-menu-text">
+                      <div className="agent-name">{agent.description}</div>
+                      {agentPrices[agent.name] && (
+                        <div className="agent-price">💰 {agentPrices[agent.name]} ETH</div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

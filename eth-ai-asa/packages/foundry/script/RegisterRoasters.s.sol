@@ -39,7 +39,8 @@ contract RegisterRoasters is Script {
         try registry.registerAgent(ScriptConstants.PROFILE_ROASTER_NAME, ScriptConstants.AGENT_QUERY_PRICE) {
             console.log("   [OK] Registered\n");
         } catch {
-            console.log("   [SKIP] Already registered\n");
+            console.log("   [SKIP] Already registered - updating price...\n");
+            registry.updateAgent(ScriptConstants.PROFILE_ROASTER_NAME, ScriptConstants.AGENT_QUERY_PRICE, true);
         }
         
         // Register LinkedIn Roaster
@@ -47,7 +48,8 @@ contract RegisterRoasters is Script {
         try registry.registerAgent(ScriptConstants.LINKEDIN_ROASTER_NAME, ScriptConstants.AGENT_QUERY_PRICE) {
             console.log("   [OK] Registered\n");
         } catch {
-            console.log("   [SKIP] Already registered\n");
+            console.log("   [SKIP] Already registered - updating price...\n");
+            registry.updateAgent(ScriptConstants.LINKEDIN_ROASTER_NAME, ScriptConstants.AGENT_QUERY_PRICE, true);
         }
         
         // Register Vibe Roaster
@@ -55,7 +57,8 @@ contract RegisterRoasters is Script {
         try registry.registerAgent(ScriptConstants.VIBE_ROASTER_NAME, ScriptConstants.AGENT_QUERY_PRICE) {
             console.log("   [OK] Registered\n");
         } catch {
-            console.log("   [SKIP] Already registered\n");
+            console.log("   [SKIP] Already registered - updating price...\n");
+            registry.updateAgent(ScriptConstants.VIBE_ROASTER_NAME, ScriptConstants.AGENT_QUERY_PRICE, true);
         }
         
         vm.stopBroadcast();

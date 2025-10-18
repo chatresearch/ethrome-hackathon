@@ -6,6 +6,8 @@ interface QueryBuilderProps {
         name: string;
         description: string;
     }[];
+    agentAvatars?: Record<string, string>;
+    agentPrices?: Record<string, string>;
 }
 export declare const QueryBuilder: React.FC<QueryBuilderProps>;
 export {};

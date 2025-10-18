@@ -235,6 +235,127 @@ body {
   background: #f9fafb;
 }
 
+/* Custom Agent Selector Styles */
+.custom-agent-selector {
+  position: relative;
+}
+
+.agent-selector-btn {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.agent-selector-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: var(--bg-secondary);
+}
+
+.agent-selector-btn:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.1);
+}
+
+.agent-selector-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.selected-agent-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.agent-icon-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.agent-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.agent-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 1px solid var(--border);
+}
+
+.agent-menu-item:last-child {
+  border-bottom: none;
+}
+
+.agent-menu-item:hover {
+  background: var(--bg-secondary);
+}
+
+.agent-menu-item.active {
+  background: rgba(0, 82, 255, 0.1);
+  border-left: 3px solid var(--primary);
+  padding-left: 13px;
+}
+
+.agent-menu-emoji {
+  font-size: 1.2rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+.agent-menu-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+
+.agent-menu-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.agent-name {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.agent-price {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
 .query-input {
   display: flex;
   gap: 10px;

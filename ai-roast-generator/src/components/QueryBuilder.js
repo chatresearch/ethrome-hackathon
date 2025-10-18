@@ -4,18 +4,17 @@ export const QueryBuilder = ({ onSubmit, isLoading = false, availableAgents = [
     { name: 'profile-roaster', description: 'Dating Profile Roast' },
     { name: 'linkedin-roaster', description: 'LinkedIn Headshot Roast' },
     { name: 'vibe-roaster', description: 'Aesthetic & Vibe Roast' }
-] }) => {
+], agentAvatars = {}, agentPrices = {} }) => {
     const [selectedAgent, setSelectedAgent] = useState(null);
     const [error, setError] = useState(null);
     const [preview, setPreview] = useState(null);
+    const [showAgentMenu, setShowAgentMenu] = useState(false);
     const fileInputRef = useRef(null);
-    const getAgentIcon = (agentName) => {
-        switch (agentName) {
-            case 'profile-roaster': return '💕';
-            case 'linkedin-roaster': return '💼';
-            case 'vibe-roaster': return '✨';
-            default: return '😈';
-        }
+    const getAgentDisplay = (agentName) => {
+        const price = agentPrices[agentName] ? ` - ${agentPrices[agentName]} ETH` : '';
+        const agent = availableAgents.find(a => a.name === agentName);
+        const description = agent?.description || agentName;
+        return `${description}${price}`;
     };
     const handleFileChange = (e) => {
         const file = e.target.files?.[0];
@@ -59,6 +58,12 @@ export const QueryBuilder = ({ onSubmit, isLoading = false, availableAgents = [
             setError(message);
         }
     };
-    return (_jsxs("form", { onSubmit: handleSubmit, className: "query-builder", children: [_jsx("div", { className: "query-controls", children: _jsxs("div", { className: "agent-selector-wrapper", children: [_jsx("label", { htmlFor: "agent-select", className: "agent-label", children: "Choose Roaster (optional):" }), _jsxs("select", { id: "agent-select", value: selectedAgent || '', onChange: (e) => setSelectedAgent(e.target.value || null), disabled: isLoading, className: "agent-select", children: [_jsx("option", { value: "", children: "Let me roast all of them" }), availableAgents.map((agent) => (_jsxs("option", { value: agent.name, children: [getAgentIcon(agent.name), " ", agent.description] }, agent.name)))] })] }) }), _jsxs("div", { className: "query-input", children: [_jsx("input", { ref: fileInputRef, type: "file", accept: "image/*", onChange: handleFileChange, disabled: isLoading, className: "file-input", style: { display: 'none' } }), _jsx("button", { type: "button", onClick: () => fileInputRef.current?.click(), disabled: isLoading, className: "upload-btn", children: preview ? '📷 Change Image' : '📸 Upload Selfie' }), preview && (_jsx("button", { type: "submit", disabled: isLoading, className: "submit-btn", children: isLoading ? 'Getting Roasted...' : 'Roast Me! 🔥' }))] }), preview && (_jsxs("div", { className: "preview-container", children: [_jsx("img", { src: preview, alt: "Preview", className: "preview-thumbnail" }), _jsx("p", { className: "preview-info", children: "Ready to be roasted?" })] })), error && _jsx("div", { className: "error", children: error })] }));
+    return (_jsxs("form", { onSubmit: handleSubmit, className: "query-builder", children: [_jsx("div", { className: "query-controls", children: _jsxs("div", { className: "agent-selector-wrapper", children: [_jsx("label", { className: "agent-label", children: "Choose Roaster (optional):" }), _jsxs("div", { className: "custom-agent-selector", children: [_jsx("button", { type: "button", className: "agent-selector-btn", onClick: () => setShowAgentMenu(!showAgentMenu), disabled: isLoading, children: selectedAgent ? (_jsxs("div", { className: "selected-agent-display", children: [agentAvatars[selectedAgent] && (_jsx("img", { src: agentAvatars[selectedAgent], alt: selectedAgent, className: "agent-icon-img" })), _jsx("span", { children: getAgentDisplay(selectedAgent) })] })) : (_jsx("span", { children: "\uD83C\uDFB2 Let me roast all of them" })) }), showAgentMenu && (_jsxs("div", { className: "agent-menu", children: [_jsxs("div", { className: "agent-menu-item", onClick: () => {
+                                                setSelectedAgent(null);
+                                                setShowAgentMenu(false);
+                                            }, children: [_jsx("span", { className: "agent-menu-emoji", children: "\uD83C\uDFB2" }), _jsx("div", { className: "agent-menu-text", children: _jsx("div", { className: "agent-name", children: "Let me roast all of them" }) })] }), availableAgents.map((agent) => (_jsxs("div", { className: `agent-menu-item ${selectedAgent === agent.name ? 'active' : ''}`, onClick: () => {
+                                                setSelectedAgent(agent.name);
+                                                setShowAgentMenu(false);
+                                            }, children: [agentAvatars[agent.name] && (_jsx("img", { src: agentAvatars[agent.name], alt: agent.name, className: "agent-menu-avatar" })), _jsxs("div", { className: "agent-menu-text", children: [_jsx("div", { className: "agent-name", children: agent.description }), agentPrices[agent.name] && (_jsxs("div", { className: "agent-price", children: ["\uD83D\uDCB0 ", agentPrices[agent.name], " ETH"] }))] })] }, agent.name)))] }))] })] }) }), _jsxs("div", { className: "query-input", children: [_jsx("input", { ref: fileInputRef, type: "file", accept: "image/*", onChange: handleFileChange, disabled: isLoading, className: "file-input", style: { display: 'none' } }), _jsx("button", { type: "button", onClick: () => fileInputRef.current?.click(), disabled: isLoading, className: "upload-btn", children: preview ? '📷 Change Image' : '📸 Upload Selfie' }), preview && (_jsx("button", { type: "submit", disabled: isLoading, className: "submit-btn", children: isLoading ? 'Getting Roasted...' : 'Roast Me! 🔥' }))] }), preview && (_jsxs("div", { className: "preview-container", children: [_jsx("img", { src: preview, alt: "Preview", className: "preview-thumbnail" }), _jsx("p", { className: "preview-info", children: "Ready to be roasted?" })] })), error && _jsx("div", { className: "error", children: error })] }));
 };
 //# sourceMappingURL=QueryBuilder.js.map

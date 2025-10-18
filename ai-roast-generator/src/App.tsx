@@ -7,7 +7,7 @@ import { ResultsDisplay } from './components/ResultsDisplay';
 import { Leaderboard } from './components/Leaderboard';
 import { WalletConnect } from './components/WalletConnect';
 import { useXMTP } from './hooks/useXMTP';
-import { useAgentPayment, fetchAgentPrice } from './hooks/useAgentPayment';
+import { useAgentPayment, fetchAgentPrice, fetchAgentAvatar } from './hooks/useAgentPayment';
 import { wagmiConfig } from './hooks/wagmiConfig';
 import { recordVote } from './lib/scoring';
 import './styles/App.css';
@@ -48,30 +48,52 @@ const AppContent: React.FC = () => {
   });
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [livePrices, setLivePrices] = useState<Record<string, string>>(AGENT_PRICES);
+  const [agentAvatars, setAgentAvatars] = useState<Record<string, string>>({});
   const userId = getCurrentUserId();
 
-  // Fetch live agent prices from contract on mount
+  // Fetch live agent prices and avatars on mount
   useEffect(() => {
-    const fetchPrices = async () => {
+    const fetchData = async () => {
       try {
         const prices: Record<string, string> = {};
         const agents = ['profile-roaster', 'linkedin-roaster', 'vibe-roaster', 'defi-wizard', 'security-guru'];
         
         for (const agent of agents) {
           const agentFqn = `${agent}.aiconfig.eth`;
-          const price = await fetchAgentPrice(agentFqn);
-          prices[agent] = price;
+          try {
+            const price = await fetchAgentPrice(agentFqn);
+            prices[agent] = price;
+          } catch (error) {
+            console.warn(`[Price] Failed to fetch for ${agent}:`, error instanceof Error ? error.message : String(error));
+            // Continue without price for this agent
+          }
         }
         
         setLivePrices(prices);
-        console.log('Live prices fetched:', prices);
+        console.log('Live prices fetched from contract:', prices);
+
+        const avatars: Record<string, string> = {};
+        for (const agent of agents) {
+          const agentFqn = `${agent}.aiconfig.eth`;
+          try {
+            const avatar = await fetchAgentAvatar(agentFqn);
+            avatars[agent] = avatar;
+          } catch (error) {
+            console.warn(`[Avatar] Failed to fetch for ${agent}:`, error instanceof Error ? error.message : String(error));
+            // Continue without avatar for this agent
+          }
+        }
+        setAgentAvatars(avatars);
+        console.log('Agent avatars fetched:', avatars);
+
       } catch (error) {
-        console.error('Failed to fetch live prices:', error);
-        // Keep using hardcoded fallback prices
+        const message = error instanceof Error ? error.message : String(error);
+        console.error('CRITICAL: Failed to fetch live prices and avatars from contract:', message);
+        throw new Error(`Cannot load agent prices or avatars from Base Sepolia: ${message}`);
       }
     };
 
-    fetchPrices();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -95,7 +117,11 @@ const AppContent: React.FC = () => {
       // First, process payment on-chain
       if (isConnected && isCorrectNetwork) {
         const agentName = agent || 'profile-roaster';
-        const price = livePrices[agentName] || AGENT_PRICES[agentName] || '0.00001';
+        const price = livePrices[agentName];
+        
+        if (!price) {
+          throw new Error(`Price not loaded for ${agentName}. Please refresh the page.`);
+        }
         
         console.log(`Processing payment for ${agentName} (${price} ETH)...`);
         const paymentResult = await queryAgentWithPayment(agentName, price);
@@ -207,11 +233,15 @@ const AppContent: React.FC = () => {
               { name: 'linkedin-roaster', description: 'LinkedIn Headshot Roast' },
               { name: 'vibe-roaster', description: 'Aesthetic & Vibe Roast' }
             ]}
+            agentAvatars={agentAvatars}
+            agentPrices={livePrices}
           />
           {xmtpError && <div className="error-banner">{xmtpError}</div>}
           {paymentError && <div className="error-banner">{paymentError}</div>}
           <div className="pricing-info">
-            <span className="cost-badge">💰 {livePrices['profile-roaster'] || '0.00001'} ETH per roast</span>
+            <span className="cost-badge">
+              💰 {livePrices['profile-roaster'] ? `${livePrices['profile-roaster']} ETH per roast` : '⚠️ Loading prices...'}
+            </span>
           </div>
         </section>
 
