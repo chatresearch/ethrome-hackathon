@@ -214,7 +214,7 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        text: formattedMessage,
+        content: formattedMessage,
         userId: generateUUID(),
       }),
     });
