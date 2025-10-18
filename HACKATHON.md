@@ -48,19 +48,18 @@ Total potential earnings: $12,000+ across multiple tracks
 - Daily engagement loops
 - Onchain rewards/achievements
 
-**Our Implementation - Protocol Council Miniapp:**
-- **Use Case:** Friends collaboratively analyze DeFi protocols, vote on accuracy, compete on leaderboards
-- **Business Purpose:** Risk assessment tool for group investing + gamified learning platform
-- **User Workflow:** Input protocol → agents analyze → vote on accuracy → leaderboard updates → share to other groups
-- **UI/UX:** Query builder, results display with capability highlights, voting interface, leaderboard with rankings and badges (critical for winning)
-- **Onboarding:** Explain protocol analysis → show sample agent responses → vote on accuracy → view leaderboard (simple 4-step intro)
-- **Viral Mechanics:** Friend rankings, shareable badges, daily engagement hooks, prediction accuracy competitions, FOMO from leaderboards
-- **Onchain Rewards:** Badges/NFTs for milestones (5+ correct calls, accuracy %, etc.)
-- **Status:** IN PROGRESS (Priority 2-3 in build)
+**Our Implementation - AI Roast Generator Miniapp:**
+- **Use Case:** Users upload selfies to get hilarious AI roasts from specialized agents (dating profile, LinkedIn, vibe)
+- **Business Purpose:** Viral social app with shareable AI-generated content + gamified funny roast leaderboards
+- **User Workflow:** Upload selfie → choose roaster type (optional) → get roasts → vote on funniest → leaderboard updates → share roasts
+- **UI/UX:** Image upload with preview, multiple roaster agents, funny roasts with copy-to-clipboard, leaderboard with funniest roasts (critical for social engagement)
+- **Onboarding:** Simple upload → instant roasts → vote and share (2-step, super quick)
+- **Viral Mechanics:** Share roasts socially, compete for "funniest roast" leaderboard, tag friends for their roasts, daily engagement from new uploads
+- **Onchain Rewards:** (Optional) Badges/NFTs for "Most Hilarious" or achievements on leaderboard
+- **Status:** MVP COMPLETE - Image upload working, roaster agents configured, leaderboard functional
 - Hit angles:
-  - Social: "Friend rankings drive competitive engagement. Leaderboards show accuracy %, creating FOMO. Badge sharing creates viral loops."
-  - Games: "Accuracy predictions + daily engagement. Competitive leaderboards. Onchain badges incentivize participation."
-  - Business: Optional - "Helps DeFi DAOs crowdsource protocol analysis from community members."
+  - Social: "Users upload, get roasted, share roasts with friends. Leaderboard drives competition for funniest roasts. Viral sharing loop."
+  - Games: "Roast competition + leaderboard. Daily engagement from sharing. Funny content drives repeat usage."
 
 ### XMTP - $3,000
 **Bounties:**

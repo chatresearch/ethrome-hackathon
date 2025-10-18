@@ -1,6 +1,6 @@
 import React from 'react';
 interface QueryBuilderProps {
-    onSubmit: (query: string, agent?: string) => Promise<void>;
+    onSubmit: (imageBase64: string, agent?: string) => Promise<void>;
     isLoading?: boolean;
     availableAgents?: {
         name: string;
