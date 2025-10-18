@@ -2,6 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from 'react';
 import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { QueryBuilder } from './components/QueryBuilder';
 import { ResultsDisplay } from './components/ResultsDisplay';
 import { Leaderboard } from './components/Leaderboard';
@@ -118,6 +119,7 @@ const AppContent = () => {
                                 ] }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError }), _jsx("div", { className: "pricing-info", children: _jsx("span", { className: "cost-badge", children: "\uD83D\uDCB0 0.001 ETH per roast" }) })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] })] }));
 };
 export const App = () => {
-    return (_jsx(WagmiProvider, { config: wagmiConfig, children: _jsx(RainbowKitProvider, { children: _jsx(AppContent, {}) }) }));
+    const queryClient = new QueryClient();
+    return (_jsx(WagmiProvider, { config: wagmiConfig, children: _jsx(QueryClientProvider, { client: queryClient, children: _jsx(RainbowKitProvider, { children: _jsx(AppContent, {}) }) }) }));
 };
 //# sourceMappingURL=App.js.map

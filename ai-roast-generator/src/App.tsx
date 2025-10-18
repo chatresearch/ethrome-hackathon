@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { QueryBuilder } from './components/QueryBuilder';
 import { ResultsDisplay } from './components/ResultsDisplay';
 import { Leaderboard } from './components/Leaderboard';
@@ -229,11 +230,15 @@ const AppContent: React.FC = () => {
 };
 
 export const App: React.FC = () => {
+  const queryClient = new QueryClient();
+  
   return (
     <WagmiProvider config={wagmiConfig}>
-      <RainbowKitProvider>
-        <AppContent />
-      </RainbowKitProvider>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>
+          <AppContent />
+        </RainbowKitProvider>
+      </QueryClientProvider>
     </WagmiProvider>
   );
 };

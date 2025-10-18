@@ -1,9 +1,9 @@
-import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { createConfig, http } from 'wagmi';
 import { baseSepolia } from 'viem/chains';
-export const wagmiConfig = getDefaultConfig({
-    appName: 'AI Roast Generator',
-    projectId: 'dff08f6bdde3d811e21e991e0bca1d67',
+export const wagmiConfig = createConfig({
     chains: [baseSepolia],
-    ssr: false,
+    transports: {
+        [baseSepolia.id]: http(),
+    },
 });
 //# sourceMappingURL=wagmiConfig.js.map
