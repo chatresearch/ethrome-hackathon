@@ -19,7 +19,11 @@ export function useS3Upload() {
                 import.meta.env.VITE_XMTP_API ||
                 'http://127.0.0.1:3003';
             console.log(`[S3] Requesting presigned URL from ${xmtpApiUrl}/api/s3-upload-url...`);
-            const presignedUrlResponse = await fetch(`${xmtpApiUrl}/api/s3-upload-url?filename=roast.png&contentType=image/png`);
+            const presignedUrlResponse = await fetch(`${xmtpApiUrl}/api/s3-upload-url?filename=roast.png&contentType=image/png`, {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true',
+                },
+            });
             if (!presignedUrlResponse.ok) {
                 const errorText = await presignedUrlResponse.text();
                 console.error(`[S3] Presigned URL request failed: ${presignedUrlResponse.status}`, errorText);
