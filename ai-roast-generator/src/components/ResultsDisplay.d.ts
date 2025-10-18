@@ -7,6 +7,7 @@ interface AgentResponse {
 }
 interface ResultsDisplayProps {
     results: AgentResponse[];
+    s3ImageUrl?: string | null;
 }
 export declare const ResultsDisplay: React.FC<ResultsDisplayProps>;
 export {};

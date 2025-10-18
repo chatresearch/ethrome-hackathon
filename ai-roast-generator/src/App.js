@@ -9,6 +9,7 @@ import { Leaderboard } from './components/Leaderboard';
 import { WalletConnect } from './components/WalletConnect';
 import { useXMTP } from './hooks/useXMTP';
 import { useAgentPayment, fetchAgentPrice, fetchAgentAvatar } from './hooks/useAgentPayment';
+import { useS3Upload } from './hooks/useS3Upload';
 import { wagmiConfig } from './hooks/wagmiConfig';
 import { recordVote } from './lib/scoring';
 import './styles/App.css';
@@ -29,6 +30,7 @@ const getCurrentUserId = () => {
 const AppContent = () => {
     const { sendMessage, error: xmtpError } = useXMTP();
     const { queryAgentWithPayment, loading: paymentLoading, error: paymentError, isConnected, isCorrectNetwork } = useAgentPayment();
+    const { uploadImageToS3 } = useS3Upload();
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [votes, setVotes] = useState({});
@@ -38,6 +40,7 @@ const AppContent = () => {
         return saved ? JSON.parse(saved) : false;
     });
     const [uploadedImage, setUploadedImage] = useState(null);
+    const [s3ImageUrl, setS3ImageUrl] = useState(null);
     const [livePrices, setLivePrices] = useState(AGENT_PRICES);
     const [agentAvatars, setAgentAvatars] = useState({});
     const userId = getCurrentUserId();
@@ -107,6 +110,7 @@ const AppContent = () => {
     }, []);
     const handleImageUpload = async (imageBase64, agent) => {
         setUploadedImage(imageBase64);
+        setS3ImageUrl(null);
         setIsLoading(true);
         try {
             // First, process payment on-chain
@@ -139,6 +143,11 @@ const AppContent = () => {
             else if (!isCorrectNetwork) {
                 throw new Error('🌍 Wrong network! Switch to Base Sepolia to get roasted!');
             }
+            // Upload image to S3 for sharing
+            console.log('Uploading image to S3...');
+            const s3Url = await uploadImageToS3(imageBase64);
+            setS3ImageUrl(s3Url);
+            console.log(`Image uploaded to S3: ${s3Url}`);
             // Then, query the agent via XMTP
             const query = agent
                 ? `[REQUEST TO ${agent.toUpperCase()}] Please roast this image: ${imageBase64.substring(0, 100)}...`
@@ -183,7 +192,7 @@ const AppContent = () => {
                                     { name: 'profile-roaster', description: 'Dating Profile Roast' },
                                     { name: 'linkedin-roaster', description: 'LinkedIn Headshot Roast' },
                                     { name: 'vibe-roaster', description: 'Aesthetic & Vibe Roast' }
-                                ], agentAvatars: agentAvatars, agentPrices: livePrices }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] })] }));
+                                ], agentAvatars: agentAvatars, agentPrices: livePrices }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results, s3ImageUrl: s3ImageUrl })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] })] }));
 };
 export const App = () => {
     const queryClient = new QueryClient();

@@ -32,11 +32,6 @@ export function useS3Upload() {
       // Upload to S3 using default AWS credentials from environment
       const s3Client = new S3Client({
         region: S3_REGION,
-        credentials: {
-          // AWS SDK will use environment variables or default profile
-          // AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN
-          // Or default ~/.aws/credentials profile
-        }
       });
 
       const uploadParams = {

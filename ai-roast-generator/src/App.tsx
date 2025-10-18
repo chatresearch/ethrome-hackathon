@@ -7,7 +7,7 @@ import { ResultsDisplay } from './components/ResultsDisplay';
 import { Leaderboard } from './components/Leaderboard';
 import { WalletConnect } from './components/WalletConnect';
 import { useXMTP } from './hooks/useXMTP';
-import { useAgentPayment } from './hooks/useAgentPayment';
+import { useAgentPayment, fetchAgentPrice, fetchAgentAvatar } from './hooks/useAgentPayment';
 import { useS3Upload } from './hooks/useS3Upload';
 import { wagmiConfig } from './hooks/wagmiConfig';
 import { recordVote } from './lib/scoring';
@@ -39,7 +39,7 @@ const getCurrentUserId = () => {
 const AppContent: React.FC = () => {
   const { sendMessage, error: xmtpError } = useXMTP();
   const { queryAgentWithPayment, loading: paymentLoading, error: paymentError, isConnected, isCorrectNetwork } = useAgentPayment();
-  const { uploadImageToS3, uploading: s3Uploading } = useS3Upload();
+  const { uploadImageToS3 } = useS3Upload();
   const [results, setResults] = useState<AgentResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [votes, setVotes] = useState<Record<number, number>>({});
