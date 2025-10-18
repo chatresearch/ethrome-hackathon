@@ -39,6 +39,20 @@ fi
 
 echo -e "${GREEN}✓ ngrok URL: $NGROK_URL${NC}"
 
+# Check XMTP health via ngrok
+echo -e "${BLUE}Checking XMTP Agent health...${NC}"
+HEALTH_CHECK=$(curl -s -m 5 "$NGROK_URL/api/health" 2>&1)
+
+if echo "$HEALTH_CHECK" | grep -q '"status":"healthy"'; then
+  echo -e "${GREEN}✓ XMTP Agent is healthy${NC}"
+elif echo "$HEALTH_CHECK" | grep -q '"status"'; then
+  echo -e "${YELLOW}⚠ XMTP Agent responded but status unclear: $HEALTH_CHECK${NC}"
+else
+  echo -e "${RED}❌ XMTP Agent health check failed${NC}"
+  echo -e "${YELLOW}Response: $HEALTH_CHECK${NC}"
+  echo -e "${YELLOW}⚠ Proceeding with deployment anyway...${NC}"
+fi
+
 # Update Vercel environment variable
 echo -e "${BLUE}Updating Vercel environment variables...${NC}"
 cd "$PROJECT_ROOT/ai-roast-generator"
