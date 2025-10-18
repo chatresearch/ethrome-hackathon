@@ -34,7 +34,7 @@ async function generatePresignedUrl(filename: string, contentType: string = 'ima
 
 // Query real ElizaOS agents via HTTP instead of using mocks
 async function generateResponse(agent: AgentType, message: string): Promise<string> {
-  const agentPort = process.env.ELIZAOS_PORT || "3001";
+  const agentPort = process.env.ELIZAOS_PORT || "3002";
   const agentEndpoint = `http://localhost:${agentPort}/api/agents/${agent}/message`;
   
   // Detect if message contains image data (base64) - can be anywhere in the message
@@ -75,6 +75,7 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
   }
   
   try {
+    console.log(`[generateResponse] Sending message to ElizaOS agent: ${formattedMessage}`);
     const response = await fetch(agentEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
