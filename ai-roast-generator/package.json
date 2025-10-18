@@ -1,7 +1,7 @@
 {
-  "name": "protocol-council-miniapp",
+  "name": "ai-roast-generator",
   "version": "0.1.0",
-  "description": "Base App miniapp for Protocol Council - collaborative DeFi protocol analysis with voting and leaderboards",
+  "description": "Base App miniapp - AI Roast Generator with ElizaOS agents and XMTP integration",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {

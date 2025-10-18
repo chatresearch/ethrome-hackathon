@@ -1,5 +1,5 @@
-const STORAGE_KEY = 'protocol-council-votes';
-const USERS_KEY = 'protocol-council-users';
+const STORAGE_KEY = 'ai-roast-generator-votes';
+const USERS_KEY = 'ai-roast-generator-users';
 export function recordVote(userId, vote) {
     const votes = getVotes();
     votes.push({ ...vote, userId });
