@@ -15,6 +15,7 @@ import { recordVote } from './lib/scoring';
 import './styles/App.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import { useHealthCheck } from './hooks/useHealthCheck';
+import { Confetti } from './components/Confetti';
 const AGENT_PRICES = {
     'profile-roaster': '0.00001',
     'linkedin-roaster': '0.00001',
@@ -45,6 +46,8 @@ const AppContent = () => {
     const [s3ImageUrl, setS3ImageUrl] = useState(null);
     const [livePrices, setLivePrices] = useState(AGENT_PRICES);
     const [agentAvatars, setAgentAvatars] = useState({});
+    const [isAnimatedTagline, setIsAnimatedTagline] = useState(false);
+    const [confettiTrigger, setConfettiTrigger] = useState(0);
     const userId = getCurrentUserId();
     // Fetch live agent prices and avatars on mount
     useEffect(() => {
@@ -98,6 +101,19 @@ const AppContent = () => {
         };
         fetchData();
     }, []);
+    // Animate tagline every 4 seconds
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setIsAnimatedTagline(prev => !prev);
+        }, 4000);
+        return () => clearInterval(interval);
+    }, []);
+    // Trigger confetti when first result appears
+    useEffect(() => {
+        if (results.length > 0) {
+            setConfettiTrigger(prev => prev + 1);
+        }
+    }, [results.length]);
     useEffect(() => {
         if (isDarkMode) {
             document.documentElement.classList.add('dark-mode');
@@ -190,11 +206,11 @@ const AppContent = () => {
     const toggleDarkMode = () => {
         setIsDarkMode(!isDarkMode);
     };
-    return (_jsxs("div", { className: "app", children: [_jsxs("header", { className: "header", children: [_jsxs("div", { className: "header-content", children: [_jsx("h1", { children: "AI Roast Generator" }), _jsx("p", { children: "Upload a selfie and get savage AI roasts \uD83D\uDE08" })] }), _jsxs("div", { className: "header-controls", children: [_jsx("button", { className: "theme-toggle", onClick: toggleDarkMode, title: isDarkMode ? 'Switch to light mode' : 'Switch to dark mode', "aria-label": "Toggle dark mode", children: isDarkMode ? '☀️' : '🌙' }), _jsx(WalletConnect, {}), _jsx("div", { className: `health-indicator ${xmtpHealth?.status}`, title: xmtpHealth?.message })] })] }), _jsxs("main", { className: "main-content", children: [_jsx("section", { className: "network-status", children: isConnected ? (isCorrectNetwork ? (_jsx("div", { className: "status-badge success", children: "\u2713 Base Sepolia Connected" })) : (_jsx("div", { className: "status-badge warning", children: "\u26A0 Switch to Base Sepolia" }))) : (_jsx("div", { className: "status-badge warning", children: "\u26A0 Wallet not connected" })) }), _jsxs("section", { className: "query-section", children: [_jsx(QueryBuilder, { onSubmit: handleImageUpload, isLoading: isLoading || paymentLoading, availableAgents: [
+    return (_jsxs("div", { className: "app", children: [_jsxs("header", { className: "header", children: [_jsxs("div", { className: "banner", children: [_jsx("img", { src: "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/roaster-banner.png", alt: "AI Roast Generator", className: "banner-image" }), _jsxs("div", { className: "banner-overlay", children: [_jsx("h1", { children: "AI Roast Generator" }), _jsx("p", { className: "animated-tagline", children: isAnimatedTagline ? "Let's see what you're working with 😅" : "Ready to get roasted? 🔥" })] })] }), _jsxs("div", { className: "header-controls", children: [_jsx("button", { className: "theme-toggle", onClick: toggleDarkMode, title: isDarkMode ? 'Switch to light mode' : 'Switch to dark mode', "aria-label": "Toggle dark mode", children: isDarkMode ? '☀️' : '🌙' }), _jsx(WalletConnect, {}), _jsx("div", { className: `health-indicator ${xmtpHealth?.status}`, title: xmtpHealth?.message })] })] }), _jsxs("main", { className: "main-content", children: [_jsx("section", { className: "network-status", children: isConnected ? (isCorrectNetwork ? (_jsx("div", { className: "status-badge success", children: "\u2713 Base Sepolia Connected" })) : (_jsx("div", { className: "status-badge warning", children: "\u26A0 Switch to Base Sepolia" }))) : (_jsx("div", { className: "status-badge warning", children: "\u26A0 Wallet not connected" })) }), _jsxs("section", { className: "query-section", children: [_jsx(QueryBuilder, { onSubmit: handleImageUpload, isLoading: isLoading || paymentLoading, availableAgents: [
                                     { name: 'profile-roaster', description: 'Dating Profile Roast' },
                                     { name: 'linkedin-roaster', description: 'LinkedIn Headshot Roast' },
                                     { name: 'vibe-roaster', description: 'Aesthetic & Vibe Roast' }
-                                ], agentAvatars: agentAvatars, agentPrices: livePrices }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results, s3ImageUrl: s3ImageUrl })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] })] }));
+                                ], agentAvatars: agentAvatars, agentPrices: livePrices }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results, s3ImageUrl: s3ImageUrl })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] }), _jsx(Confetti, { trigger: confettiTrigger })] }));
 };
 export const App = () => {
     const queryClient = new QueryClient();

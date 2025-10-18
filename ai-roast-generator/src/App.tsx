@@ -258,6 +258,15 @@ const AppContent: React.FC = () => {
             {isDarkMode ? '☀️' : '🌙'}
           </button>
           <WalletConnect />
+          {!isConnected && (
+            <div className="status-badge warning">⚠ Not connected</div>
+          )}
+          {isConnected && !isCorrectNetwork && (
+            <div className="status-badge warning">⚠ Wrong network</div>
+          )}
+          {isConnected && isCorrectNetwork && (
+            <div className="status-badge success">✓ Connected</div>
+          )}
           <div 
             className={`health-indicator ${xmtpHealth?.status}`}
             title={xmtpHealth?.message}
@@ -266,18 +275,6 @@ const AppContent: React.FC = () => {
       </header>
 
       <main className="main-content">
-        <section className="network-status">
-          {isConnected ? (
-            isCorrectNetwork ? (
-              <div className="status-badge success">✓ Base Sepolia Connected</div>
-            ) : (
-              <div className="status-badge warning">⚠ Switch to Base Sepolia</div>
-            )
-          ) : (
-            <div className="status-badge warning">⚠ Wallet not connected</div>
-          )}
-        </section>
-
         <section className="query-section">
           <QueryBuilder 
             onSubmit={handleImageUpload} 
