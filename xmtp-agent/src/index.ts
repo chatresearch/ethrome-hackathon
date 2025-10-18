@@ -5,7 +5,7 @@ import { routeByCapabilities, formatResponseWithCapabilities } from "./ens-resol
 
 dotenv.config();
 
-type AgentType = "defi-wizard" | "security-guru";
+type AgentType = "defi-wizard" | "security-guru" | "profile-roaster" | "linkedin-roaster" | "vibe-roaster";
 
 // Query real ElizaOS agents via HTTP instead of using mocks
 async function generateResponse(agent: AgentType, message: string): Promise<string> {
@@ -32,11 +32,14 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
         return "Yield farming involves lending crypto assets to earn rewards. Current top opportunities: Curve Finance (8-15% APY), Aave (4-12% APY). Risk factors: smart contract vulnerabilities, impermanent loss on AMMs, liquidation risk on lending protocols.";
       }
       return "For DeFi analysis, ask about yield farming, APY comparisons, protocol risks, or liquidity positions.";
-    } else {
+    } else if (agent === "security-guru") {
       if (message.toLowerCase().includes("audit") || message.toLowerCase().includes("risk")) {
         return "Security audit findings show this protocol has standard mechanisms but monitor: 1) Reentrancy guards on all transfers 2) Time-lock delays on admin functions 3) External audit status from Trail of Bits (Feb 2024). Risk score: Medium.";
       }
       return "For security analysis, ask about contract vulnerabilities, audit status, or risk assessment.";
+    } else {
+      // Roaster agents
+      return "That's hilarious! 😂 You've got some serious style going on. Let me break it down...";
     }
   }
 }
