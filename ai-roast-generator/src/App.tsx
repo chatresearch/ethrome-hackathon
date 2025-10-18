@@ -58,6 +58,8 @@ async function checkBackendConnectivity() {
   
   console.log('[Preload] Checking backend connectivity...');
   
+  let hasHealthyBackend = false;
+  
   for (const { name, url } of urlsToCheck) {
     if (!url) {
       console.log(`[Preload] ${name}: not configured`);
@@ -65,19 +67,47 @@ async function checkBackendConnectivity() {
     }
     
     try {
-      const response = await fetch(`${url}/api/health`, {
+      // Test health endpoint
+      const healthResponse = await fetch(`${url}/api/health`, {
         method: 'GET',
         signal: AbortSignal.timeout(3000),
       });
       
-      if (response.ok) {
-        console.log(`[Preload] ✅ ${name}: ${url} is reachable`);
+      if (!healthResponse.ok) {
+        console.warn(`[Preload] ⚠️ ${name}: ${url} returned ${healthResponse.status} on /api/health`);
+        continue;
+      }
+      
+      // Test message endpoint with a dummy request
+      const testResponse = await fetch(`${url}/api/message`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'test' }),
+        signal: AbortSignal.timeout(3000),
+      });
+      
+      if (testResponse.ok || testResponse.status === 400 || testResponse.status === 422) {
+        // 400/422 is OK - it means the endpoint exists but rejected the test data
+        console.log(`[Preload] ✅ ${name}: ${url} is fully operational`);
+        hasHealthyBackend = true;
+        break;
+      } else if (testResponse.status === 500) {
+        console.warn(`[Preload] ❌ ${name}: ${url} returned 500 on /api/message - server error`);
       } else {
-        console.warn(`[Preload] ⚠️ ${name}: ${url} returned ${response.status}`);
+        console.warn(`[Preload] ⚠️ ${name}: ${url} returned ${testResponse.status} on /api/message`);
       }
     } catch (error) {
       const msg = error instanceof Error ? error.message : String(error);
       console.warn(`[Preload] ❌ ${name}: ${url} - ${msg}`);
+    }
+  }
+  
+  if (!hasHealthyBackend) {
+    const errorMsg = `❌ XMTP Backend Unavailable\n\nNo working backend found. Checked:\n${urlsToCheck.map(u => `  - ${u.name}: ${u.url || 'not configured'}`).join('\n')}\n\nPlease ensure:\n1. XMTP agent is running on port 3003\n2. ngrok tunnel is active\n3. Environment variables are set on Vercel`;
+    console.error('[Preload]', errorMsg);
+    // Show banner alert to user
+    if (typeof window !== 'undefined') {
+      window.__xmtpError = errorMsg;
     }
   }
 }

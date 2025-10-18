@@ -143,58 +143,42 @@ async function generateResponse(agent, message) {
         }
     }
     try {
-        // Create a unique channel ID for this conversation
-        const channelId = `channel-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-        const serverId = "server-roaster";
-        const userId = `user-${Date.now()}`;
-        console.log(`[generateResponse] Sending to ElizaOS at http://localhost:${elizaosPort}/api/messaging/submit`);
-        console.log(`[generateResponse] Agent ID: ${agentId}, Channel: ${channelId}, Message length: ${formattedMessage.length}`);
-        const response = await fetch(`http://localhost:${elizaosPort}/api/messaging/submit`, {
+        // Use Sessions API instead of messaging/submit for simpler agent communication
+        const elizaosPort = process.env.ELIZAOS_PORT || "3002";
+        console.log(`[generateResponse] Creating session for ${agent}...`);
+        // Step 1: Create a session
+        const sessionResp = await fetch(`http://localhost:${elizaosPort}/api/sessions`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({}),
+        });
+        if (!sessionResp.ok) {
+            throw new Error(`Failed to create session: ${sessionResp.status}`);
+        }
+        const sessionData = await sessionResp.json();
+        const sessionId = sessionData.sessionId;
+        if (!sessionId) {
+            throw new Error('No session ID returned');
+        }
+        console.log(`[generateResponse] Session created: ${sessionId}`);
+        // Step 2: Send message to session
+        console.log(`[generateResponse] Sending message to session for ${agent}...`);
+        const messageResp = await fetch(`http://localhost:${elizaosPort}/api/sessions/${sessionId}/messages`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                channel_id: channelId,
-                server_id: serverId,
-                author_id: userId,
-                content: formattedMessage,
-                source_type: "user",
-                raw_message: {
-                    text: formattedMessage,
-                    actions: ["REPLY"]
-                }
+                text: formattedMessage,
+                agentId: agentId,
+                userId: `user-${Date.now()}`,
             }),
         });
-        if (!response.ok) {
-            throw new Error(`ElizaOS returned ${response.status}`);
+        if (!messageResp.ok) {
+            throw new Error(`Failed to send message: ${messageResp.status}`);
         }
-        const data = await response.json();
-        console.log(`[generateResponse] ElizaOS response status: ${data.success}`);
-        // The messaging/submit endpoint accepts the message but responses come async
-        // We need to check for agent response in the channel
-        // For now, wait a bit for the agent to process
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        // Try to get messages from the channel
-        try {
-            const messagesResp = await fetch(`http://localhost:${elizaosPort}/api/channels/${channelId}/messages`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
-            });
-            if (messagesResp.ok) {
-                const messagesData = await messagesResp.json();
-                if (messagesData.data && messagesData.data.length > 0) {
-                    // Find the agent's response (usually the last message)
-                    const agentResponse = messagesData.data[messagesData.data.length - 1];
-                    if (agentResponse.content) {
-                        console.log(`[generateResponse] Got response from ${agent}: ${agentResponse.content.substring(0, 100)}`);
-                        return agentResponse.content;
-                    }
-                }
-            }
-        }
-        catch (msgErr) {
-            console.error(`[generateResponse] Could not fetch messages:`, msgErr);
-        }
-        throw new Error(`No response from agent ${agent}`);
+        const messageData = await messageResp.json();
+        const response = messageData.text || messageData.response || "No response from agent";
+        console.log(`[generateResponse] ✅ Got response from ${agent}: ${response.substring(0, 100)}`);
+        return response;
     }
     catch (error) {
         console.error(`[generateResponse] Error: ${error}`);
