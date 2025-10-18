@@ -7,9 +7,13 @@
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "tsx src/test-ens.ts",
+    "test:e2e": "tsx src/test-e2e.ts"
   },
   "dependencies": {
+    "@elizaos/core": "^1.6.1",
+    "@elizaos/plugin-openai": "^1.5.16",
     "@xmtp/agent-sdk": "^1.1.7",
     "@xmtp/node-sdk": "^4.2.3",
     "dotenv": "^16.0.3",
