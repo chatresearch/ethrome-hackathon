@@ -9,9 +9,10 @@ interface AgentResponse {
 
 interface ResultsDisplayProps {
   results: AgentResponse[];
+  s3ImageUrl?: string | null;
 }
 
-export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results }) => {
+export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3ImageUrl }) => {
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [expandedIdx, setExpandedIdx] = useState<Set<number>>(new Set());
 
@@ -62,6 +63,21 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results }) => {
               >
                 {copiedIdx === idx ? '✓ Copied!' : '📋 Copy'}
               </button>
+              {s3ImageUrl && (
+                <button
+                  className="share-btn"
+                  onClick={() => {
+                    const shareText = `Check out this roast! 🔥 ${s3ImageUrl}`;
+                    navigator.clipboard.writeText(shareText);
+                    setCopiedIdx(idx);
+                    setTimeout(() => setCopiedIdx(null), 2000);
+                  }}
+                  title="Copy shareable link"
+                  aria-label="Copy shareable link"
+                >
+                  {copiedIdx === idx ? '✓ Copied!' : '🔗 Share'}
+                </button>
+              )}
             </div>
           </div>
 

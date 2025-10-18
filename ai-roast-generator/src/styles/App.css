@@ -592,6 +592,29 @@ body {
   transform: translateY(0);
 }
 
+.share-btn {
+  padding: 6px 12px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.share-btn:hover {
+  background: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+}
+
+.share-btn:active {
+  transform: translateY(0);
+}
+
 .response-container {
   margin-bottom: 12px;
 }

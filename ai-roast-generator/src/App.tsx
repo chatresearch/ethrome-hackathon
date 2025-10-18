@@ -7,7 +7,8 @@ import { ResultsDisplay } from './components/ResultsDisplay';
 import { Leaderboard } from './components/Leaderboard';
 import { WalletConnect } from './components/WalletConnect';
 import { useXMTP } from './hooks/useXMTP';
-import { useAgentPayment, fetchAgentPrice, fetchAgentAvatar } from './hooks/useAgentPayment';
+import { useAgentPayment } from './hooks/useAgentPayment';
+import { useS3Upload } from './hooks/useS3Upload';
 import { wagmiConfig } from './hooks/wagmiConfig';
 import { recordVote } from './lib/scoring';
 import './styles/App.css';
@@ -38,6 +39,7 @@ const getCurrentUserId = () => {
 const AppContent: React.FC = () => {
   const { sendMessage, error: xmtpError } = useXMTP();
   const { queryAgentWithPayment, loading: paymentLoading, error: paymentError, isConnected, isCorrectNetwork } = useAgentPayment();
+  const { uploadImageToS3, uploading: s3Uploading } = useS3Upload();
   const [results, setResults] = useState<AgentResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [votes, setVotes] = useState<Record<number, number>>({});
@@ -47,6 +49,7 @@ const AppContent: React.FC = () => {
     return saved ? JSON.parse(saved) : false;
   });
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [s3ImageUrl, setS3ImageUrl] = useState<string | null>(null);
   const [livePrices, setLivePrices] = useState<Record<string, string>>(AGENT_PRICES);
   const [agentAvatars, setAgentAvatars] = useState<Record<string, string>>({});
   const userId = getCurrentUserId();
@@ -122,6 +125,7 @@ const AppContent: React.FC = () => {
 
   const handleImageUpload = async (imageBase64: string, agent?: string) => {
     setUploadedImage(imageBase64);
+    setS3ImageUrl(null);
     setIsLoading(true);
     
     try {
@@ -156,6 +160,12 @@ const AppContent: React.FC = () => {
       } else if (!isCorrectNetwork) {
         throw new Error('🌍 Wrong network! Switch to Base Sepolia to get roasted!');
       }
+
+      // Upload image to S3 for sharing
+      console.log('Uploading image to S3...');
+      const s3Url = await uploadImageToS3(imageBase64);
+      setS3ImageUrl(s3Url);
+      console.log(`Image uploaded to S3: ${s3Url}`);
 
       // Then, query the agent via XMTP
       const query = agent
@@ -260,7 +270,7 @@ const AppContent: React.FC = () => {
 
         <section className="results-section">
           <h2>The Roasts 🔥</h2>
-          <ResultsDisplay results={results} />
+          <ResultsDisplay results={results} s3ImageUrl={s3ImageUrl} />
         </section>
 
         <section className="voting-section">
