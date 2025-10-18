@@ -138,29 +138,32 @@ const AppContent = () => {
         setS3ImageUrl(null);
         setIsLoading(true);
         try {
-            // First, process payment on-chain
-            if (isConnected && isCorrectNetwork) {
-                const agentName = agent || 'profile-roaster';
-                const price = livePrices[agentName];
-                if (!price) {
-                    throw new Error(`Price not loaded for ${agentName}. Please refresh the page.`);
+            // Parse agents - can be comma-separated or single agent
+            const agentsToUse = agent ? agent.split(',').map(a => a.trim()) : [];
+            // First, process payment on-chain for each agent
+            if (isConnected && isCorrectNetwork && agentsToUse.length > 0) {
+                for (const agentName of agentsToUse) {
+                    const price = livePrices[agentName];
+                    if (!price) {
+                        throw new Error(`Price not loaded for ${agentName}. Please refresh the page.`);
+                    }
+                    console.log(`Processing payment for ${agentName} (${price} ETH)...`);
+                    const paymentResult = await queryAgentWithPayment(agentName, price);
+                    if (!paymentResult.success) {
+                        const errorMsg = paymentResult.error || 'Unknown error';
+                        // Funny error messages
+                        if (errorMsg.toLowerCase().includes('insufficient')) {
+                            throw new Error(`💸 Oops! Your wallet is too poor for roasts. You need ${price} ETH but your account is basically a crypto beggar. Go touch grass and earn some Base coins! 😅`);
+                        }
+                        else if (errorMsg.toLowerCase().includes('network')) {
+                            throw new Error('🌍 Wrong network, buddy! Are you even on Base Sepolia? Your roasts need to be L2!');
+                        }
+                        else {
+                            throw new Error(`💥 Payment kaboom! ${errorMsg}`);
+                        }
+                    }
+                    console.log(`Payment confirmed! TX: ${paymentResult.txHash}`);
                 }
-                console.log(`Processing payment for ${agentName} (${price} ETH)...`);
-                const paymentResult = await queryAgentWithPayment(agentName, price);
-                if (!paymentResult.success) {
-                    const errorMsg = paymentResult.error || 'Unknown error';
-                    // Funny error messages
-                    if (errorMsg.toLowerCase().includes('insufficient')) {
-                        throw new Error(`💸 Oops! Your wallet is too poor for roasts. You need ${price} ETH but your account is basically a crypto beggar. Go touch grass and earn some Base coins! 😅`);
-                    }
-                    else if (errorMsg.toLowerCase().includes('network')) {
-                        throw new Error('🌍 Wrong network, buddy! Are you even on Base Sepolia? Your roasts need to be L2!');
-                    }
-                    else {
-                        throw new Error(`💥 Payment kaboom! ${errorMsg}`);
-                    }
-                }
-                console.log(`Payment confirmed! TX: ${paymentResult.txHash}`);
             }
             else if (!isConnected) {
                 throw new Error('🔗 Connect your wallet first, genius!');

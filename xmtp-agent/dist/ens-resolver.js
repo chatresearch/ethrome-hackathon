@@ -124,5 +124,5 @@ export async function formatResponseWithCapabilities(agentName, response) {
         return response;
     }
     const capList = capabilities.capabilities.join(", ");
-    return `[${agentName.toUpperCase()} - v${capabilities.version}]\nCapabilities: ${capList}\n\n${response}`;
+    return `[${agentName.toUpperCase()}]\nCapabilities: ${capList}\n\n${response}`;
 }

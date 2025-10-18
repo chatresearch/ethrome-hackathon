@@ -135,6 +135,12 @@ function startHttpServer() {
             res.end();
             return;
         }
+        // Health check endpoint
+        if (req.url === "/api/health" && req.method === "GET") {
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ status: "healthy", timestamp: new Date().toISOString() }));
+            return;
+        }
         // S3 Presigned URL endpoint
         if (req.url?.startsWith("/api/s3-upload-url") && req.method === "GET") {
             try {
