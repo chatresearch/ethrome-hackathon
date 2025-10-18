@@ -1,5 +1,4 @@
 import { Agent } from "@xmtp/agent-sdk";
-import { Wallet } from "ethers";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -50,20 +49,17 @@ function determineAgent(message: string): AgentType {
 }
 
 async function startAgent() {
-  const privateKey = process.env.PRIVATE_KEY;
-  if (!privateKey) {
-    throw new Error("PRIVATE_KEY not set in .env");
+  // Verify required environment variables
+  if (!process.env.XMTP_WALLET_KEY) {
+    throw new Error("XMTP_WALLET_KEY not set in .env");
   }
 
-  const signer = new Wallet(privateKey);
   console.log(`Starting XMTP Agent`);
-  console.log(`Address: ${signer.address}`);
 
-  const agent = await Agent.create(signer, {
-    env: "production",
-  });
+  // Use Agent.createFromEnv() which reads XMTP_WALLET_KEY and XMTP_ENV automatically
+  const agent = await Agent.createFromEnv();
 
-  console.log(`Connected`);
+  console.log(`Agent connected successfully`);
 
   agent.on("text", async (ctx) => {
     const userMessage = ctx.content();
