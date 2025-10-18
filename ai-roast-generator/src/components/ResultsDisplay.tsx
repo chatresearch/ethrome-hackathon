@@ -24,22 +24,30 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
 
   const handleShare = (agentName: string, roastText: string, idx: number) => {
     const shortRoast = roastText.substring(0, 200);
-    const shareText = `Just got roasted by ${agentName}! 🔥\n\n"${shortRoast}..."\n\nGet your own roast at AI Roast Generator`;
+    const shareableUrl = `/api/roast?image=${encodeURIComponent(s3ImageUrl || '')}&agent=${encodeURIComponent(agentName)}&text=${encodeURIComponent(roastText)}`;
+    const fullShareUrl = `${window.location.origin}${shareableUrl}`;
     
-    handleCopy(shareText + (s3ImageUrl ? `\n\n${s3ImageUrl}` : ''), idx);
+    const shareText = `Just got roasted by ${agentName}! 🔥\n\n"${shortRoast}..."\n\n${fullShareUrl}`;
+    handleCopy(shareText, idx);
   };
 
   const handleTwitterShare = (agentName: string, roastText: string) => {
-    const shortRoast = roastText.substring(0, 150);
-    const text = `Just got roasted by ${agentName}! 🔥\n"${shortRoast}..."\nTry AI Roast Generator`;
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}${s3ImageUrl ? `&url=${encodeURIComponent(s3ImageUrl)}` : ''}`;
+    const shortRoast = roastText.substring(0, 100);
+    const shareableUrl = `/api/roast?image=${encodeURIComponent(s3ImageUrl || '')}&agent=${encodeURIComponent(agentName)}&text=${encodeURIComponent(roastText)}`;
+    const fullShareUrl = `${window.location.origin}${shareableUrl}`;
+    
+    const text = `Just got roasted by ${agentName}! 🔥\n"${shortRoast}..."\n\nTry AI Roast Generator`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(fullShareUrl)}`;
     window.open(url, 'twitter-share', 'width=550,height=420');
   };
 
   const handleFarcasterShare = (agentName: string, roastText: string) => {
-    const shortRoast = roastText.substring(0, 150);
-    const text = `Just got roasted by ${agentName}! 🔥\n"${shortRoast}..."\n\nTry AI Roast Generator`;
-    const url = `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}${s3ImageUrl ? `&embeds[]=${encodeURIComponent(s3ImageUrl)}` : ''}`;
+    const shortRoast = roastText.substring(0, 100);
+    const shareableUrl = `/api/roast?image=${encodeURIComponent(s3ImageUrl || '')}&agent=${encodeURIComponent(agentName)}&text=${encodeURIComponent(roastText)}`;
+    const fullShareUrl = `${window.location.origin}${shareableUrl}`;
+    
+    const text = `Just got roasted by ${agentName}! 🔥\n"${shortRoast}..."\n\nTry AI Roast Generator at ${fullShareUrl}`;
+    const url = `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}`;
     window.open(url, 'farcaster-share', 'width=550,height=420');
   };
 
