@@ -5,7 +5,6 @@
     "signature": "M+4kPHzyr7H9MdrzkMJS1AeiL7oENrwIGuFyiiy4JjsemuhJcswJxVgrrRrqsXvgPtKzzO2IYWoEzhhEA3aUjBw="
   },
   "name": "AI Roast Generator",
-  "description": "Upload a photo and get AI-powered roasts. Vote on-chain and share.",
   "homeUrl": "https://ai-roast-generator-ivory.vercel.app",
   "iconUrl": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/vibe-roaster.png",
   "splashImageUrl": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/roaster-banner.png",
