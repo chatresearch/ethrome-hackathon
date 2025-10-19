@@ -166,10 +166,30 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
         throw error;
       }
     }
-    // If we have an S3 URL, use it directly (ElizaOS can fetch it)
+    // If we have an S3 URL, fetch it and convert to base64
     else if (s3Match) {
-      imageUrl = s3Match[1];
-      logger.info(`[generateResponse] Using S3 URL directly: ${imageUrl}`);
+      try {
+        const s3Url = s3Match[1];
+        logger.info(`[generateResponse] S3 image detected, downloading for agent: ${s3Url}`);
+        
+        // Fetch the S3 image
+        const s3Response = await fetch(s3Url);
+        if (!s3Response.ok) {
+          throw new Error(`Failed to fetch S3 image: ${s3Response.status}`);
+        }
+        
+        const arrayBuffer = await s3Response.arrayBuffer();
+        const base64 = Buffer.from(arrayBuffer).toString('base64');
+        
+        // Determine MIME type from S3 URL or response
+        const contentType = s3Response.headers.get('content-type') || 'image/jpeg';
+        imageUrl = `data:${contentType};base64,${base64}`;
+        
+        logger.info(`[generateResponse] S3 image converted to base64 (${base64.length} bytes)`);
+      } catch (error) {
+        logger.error(`[generateResponse] Failed to process S3 image:`, error);
+        throw error;
+      }
     }
     
     if (imageUrl) {
