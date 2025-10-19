@@ -150,51 +150,26 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
   // Format message for vision agents if it's an image
   let formattedMessage = message;
   if (isImage && (agent === "profile-roaster" || agent === "linkedin-roaster" || agent === "vibe-roaster")) {
-    // Extract the image part - could be base64 or S3 URL
+    // Extract the image part - could be base64 or URL
     const imageMatch = message.match(/(data:image\/[^:]*;base64,[A-Za-z0-9+/=]+)/);
-    let s3Match = message.match(/(https:\/\/[^\s]+\.s3\.[^\s]+)/);
+    let urlMatch = message.match(/(https?:\/\/[^\s]+)/);
     
     let imageUrl = null;
     
-    // If we have base64 data, upload it to ElizaOS media API
-    if (imageMatch) {
-      try {
-        logger.info(`[generateResponse] Base64 image detected, uploading to ElizaOS media API...`);
-        imageUrl = await uploadMediaToElizaOS(agentId, imageMatch[1]);
-      } catch (error) {
-        logger.error(`[generateResponse] Failed to upload base64 to ElizaOS:`, error);
-        throw error;
-      }
+    // If we have a URL (S3, presigned, or any HTTPS), use it directly
+    if (urlMatch) {
+      imageUrl = urlMatch[1];
+      logger.info(`[generateResponse] Image URL detected: ${imageUrl.substring(0, 100)}...`);
     }
-    // If we have an S3 URL, fetch it and convert to base64
-    else if (s3Match) {
-      try {
-        const s3Url = s3Match[1];
-        logger.info(`[generateResponse] S3 image detected, downloading for agent: ${s3Url}`);
-        
-        // Fetch the S3 image
-        const s3Response = await fetch(s3Url);
-        if (!s3Response.ok) {
-          throw new Error(`Failed to fetch S3 image: ${s3Response.status}`);
-        }
-        
-        const arrayBuffer = await s3Response.arrayBuffer();
-        const base64 = Buffer.from(arrayBuffer).toString('base64');
-        
-        // Determine MIME type from S3 URL or response
-        const contentType = s3Response.headers.get('content-type') || 'image/jpeg';
-        imageUrl = `data:${contentType};base64,${base64}`;
-        
-        logger.info(`[generateResponse] S3 image converted to base64 (${base64.length} bytes)`);
-      } catch (error) {
-        logger.error(`[generateResponse] Failed to process S3 image:`, error);
-        throw error;
-      }
+    // If we have base64 data, keep it as is
+    else if (imageMatch) {
+      imageUrl = imageMatch[1];
+      logger.info(`[generateResponse] Base64 image detected (${imageUrl.length} bytes)`);
     }
     
     if (imageUrl) {
       formattedMessage = `Please analyze this image and provide a hilarious, witty roast. Here's the image: ${imageUrl}`;
-      logger.info(`[generateResponse] Image URL set, formatted message length: ${formattedMessage.length}`);
+      logger.info(`[generateResponse] Image set, formatted message length: ${formattedMessage.length}`);
     }
   }
   
