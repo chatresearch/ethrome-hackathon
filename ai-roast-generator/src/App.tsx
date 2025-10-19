@@ -246,7 +246,7 @@ const AppContent: React.FC = () => {
     setUploadedImage(imageBase64);
     setS3ImageUrl(null);
     setIsLoading(true);
-    setIsImageProcessing(true);  // Show loading dialog for image processing
+    // Don't show loading dialog yet - wait for payment confirmation
     
     try {
       // Parse agents - can be comma-separated or single agent
@@ -284,6 +284,9 @@ const AppContent: React.FC = () => {
       } else if (!isCorrectNetwork) {
         throw new Error('🌍 Wrong network! Switch to Base Sepolia to get roasted!');
       }
+
+      // ✅ Payment confirmed! Now show loading dialog
+      setIsImageProcessing(true);
 
       // Upload image to S3 for sharing
       console.log('Uploading image to S3...');

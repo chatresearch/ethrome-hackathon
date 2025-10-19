@@ -30,7 +30,7 @@ export const LoadingDialog: React.FC<LoadingDialogProps> = ({
     
     const interval = setInterval(() => {
       setMessageIndex((prev) => (prev + 1) % FUNNY_MESSAGES.length);
-    }, 3000); // Change message every 3 seconds
+    }, 9000); // Change message every 9 seconds
 
     return () => clearInterval(interval);
   }, [isOpen]);
