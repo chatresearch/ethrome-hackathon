@@ -24,7 +24,8 @@ export const useInitializeNativeCurrencyPrice = () => {
 
   // Get the price of ETH from Uniswap on mount
   useEffect(() => {
-    fetchPrice();
+    // Fire and forget - don't block startup
+    fetchPrice().catch(err => console.debug("Price fetch background task failed:", err));
   }, [fetchPrice]);
 
   // Get the price of ETH from Uniswap at a given interval

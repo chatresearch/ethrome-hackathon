@@ -306,7 +306,6 @@ contract AgentRegistry {
         Roast[] memory topRoasts = new Roast[](count);
         
         // Simple sorting: find top N by votes
-        Roast[] memory temp = new Roast[](roasts.length);
         uint256[] memory indices = new uint256[](roasts.length);
         
         // Initialize indices

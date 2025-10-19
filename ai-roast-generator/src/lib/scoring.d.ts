@@ -22,11 +22,17 @@ export interface RoastData {
     votes: number;
     timestamp: number;
 }
+export interface AgentStats {
+    agent: string;
+    totalVotes: number;
+    totalRoasts: number;
+}
 export declare function recordVote(userId: string, vote: VoteData): void;
 export declare function recordRoast(agent: string, roastText: string, imageUrl?: string): void;
 export declare function getRoasts(): RoastData[];
 export declare function voteRoast(roastId: string): void;
 export declare function getTopRoasts(limit?: number): RoastData[];
+export declare function getAgentLeaderboard(limit?: number): AgentStats[];
 export declare function getVotes(): Array<VoteData & {
     userId: string;
 }>;

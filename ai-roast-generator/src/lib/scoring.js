@@ -37,6 +37,25 @@ export function getTopRoasts(limit = 10) {
         .sort((a, b) => b.votes - a.votes)
         .slice(0, limit);
 }
+export function getAgentLeaderboard(limit = 10) {
+    const roasts = getRoasts();
+    const agentStats = new Map();
+    roasts.forEach(roast => {
+        if (!agentStats.has(roast.agent)) {
+            agentStats.set(roast.agent, { totalVotes: 0, totalRoasts: 0 });
+        }
+        const stats = agentStats.get(roast.agent);
+        stats.totalVotes += roast.votes;
+        stats.totalRoasts += 1;
+    });
+    return Array.from(agentStats.entries())
+        .map(([agent, stats]) => ({
+        agent,
+        ...stats,
+    }))
+        .sort((a, b) => b.totalVotes - a.totalVotes)
+        .slice(0, limit);
+}
 export function getVotes() {
     const stored = localStorage.getItem(STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];

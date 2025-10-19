@@ -17,6 +17,18 @@ const ABI = parseAbi([
   "function token1() external view returns (address)",
 ]);
 
+/**
+ * Helper to create a promise that rejects after a timeout
+ */
+const withTimeout = <T,>(promise: Promise<T>, timeoutMs: number): Promise<T> => {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error(`Timeout after ${timeoutMs}ms`)), timeoutMs),
+    ),
+  ]);
+};
+
 export const fetchPriceFromUniswap = async (targetNetwork: ChainWithAttributes): Promise<number> => {
   if (
     targetNetwork.nativeCurrency.symbol !== "ETH" &&
@@ -39,20 +51,30 @@ export const fetchPriceFromUniswap = async (targetNetwork: ChainWithAttributes):
       abi: ABI,
     };
 
-    const reserves = await publicClient.readContract({
-      ...wagmiConfig,
-      functionName: "getReserves",
-    });
+    // Wrap all RPC calls with a 5-second timeout
+    const reserves = await withTimeout(
+      publicClient.readContract({
+        ...wagmiConfig,
+        functionName: "getReserves",
+      }),
+      5000,
+    );
 
-    const token0Address = await publicClient.readContract({
-      ...wagmiConfig,
-      functionName: "token0",
-    });
+    const token0Address = await withTimeout(
+      publicClient.readContract({
+        ...wagmiConfig,
+        functionName: "token0",
+      }),
+      5000,
+    );
 
-    const token1Address = await publicClient.readContract({
-      ...wagmiConfig,
-      functionName: "token1",
-    });
+    const token1Address = await withTimeout(
+      publicClient.readContract({
+        ...wagmiConfig,
+        functionName: "token1",
+      }),
+      5000,
+    );
     const token0 = [TOKEN, DAI].find(token => token.address === token0Address) as Token;
     const token1 = [TOKEN, DAI].find(token => token.address === token1Address) as Token;
     const pair = new Pair(
@@ -63,9 +85,9 @@ export const fetchPriceFromUniswap = async (targetNetwork: ChainWithAttributes):
     const price = parseFloat(route.midPrice.toSignificant(6));
     return price;
   } catch (error) {
-    console.error(
-      `useNativeCurrencyPrice - Error fetching ${targetNetwork.nativeCurrency.symbol} price from Uniswap: `,
-      error,
+    console.debug(
+      `fetchPriceFromUniswap - Error fetching ${targetNetwork.nativeCurrency.symbol} price from Uniswap (continuing anyway): `,
+      error instanceof Error ? error.message : error,
     );
     return 0;
   }

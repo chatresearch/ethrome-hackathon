@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     AgentRegistry: {
-      address: "0x0000000000000000000000000000000000000000",
+      address: "0x700b6a60ce7eaaea56f065753d8dcb9653dbad35",
       abi: [
         {
           type: "constructor",
@@ -213,7 +213,145 @@ const deployedContracts = {
         },
         {
           type: "function",
+          name: "getRoast",
+          inputs: [
+            {
+              name: "_roastId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "tuple",
+              internalType: "struct AgentRegistry.Roast",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "agentName",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "roastText",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "imageUrl",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "creator",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "votes",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "timestamp",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getTopRoasts",
+          inputs: [
+            {
+              name: "_limit",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "tuple[]",
+              internalType: "struct AgentRegistry.Roast[]",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "agentName",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "roastText",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "imageUrl",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "creator",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "votes",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "timestamp",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
           name: "getTotalAgents",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getTotalRoasts",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "platformBalance",
           inputs: [],
           outputs: [
             {
@@ -252,6 +390,29 @@ const deployedContracts = {
         },
         {
           type: "function",
+          name: "recordRoast",
+          inputs: [
+            {
+              name: "_agentName",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "_roastText",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "_imageUrl",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
           name: "registerAgent",
           inputs: [
             {
@@ -267,6 +428,74 @@ const deployedContracts = {
           ],
           outputs: [],
           stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "roastVotes",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "roasts",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "agentName",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "roastText",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "imageUrl",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "creator",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "votes",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "timestamp",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
         },
         {
           type: "function",
@@ -293,6 +522,19 @@ const deployedContracts = {
         },
         {
           type: "function",
+          name: "voteRoast",
+          inputs: [
+            {
+              name: "_roastId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
           name: "withdrawEarnings",
           inputs: [
             {
@@ -301,6 +543,13 @@ const deployedContracts = {
               internalType: "string",
             },
           ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "withdrawPlatformBalance",
+          inputs: [],
           outputs: [],
           stateMutability: "nonpayable",
         },
@@ -435,12 +684,68 @@ const deployedContracts = {
           ],
           anonymous: false,
         },
+        {
+          type: "event",
+          name: "RoastRecorded",
+          inputs: [
+            {
+              name: "roastId",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "agentName",
+              type: "string",
+              indexed: true,
+              internalType: "string",
+            },
+            {
+              name: "creator",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "imageUrl",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "RoastVoted",
+          inputs: [
+            {
+              name: "roastId",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "voter",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "totalVotes",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
       ],
       inheritedFunctions: {},
       deployedOnBlock: 1,
     },
   },
-  8453: {
+  84532: {
     AgentRegistry: {
       address: "0xFBeE7f501704A9AA629Ae2D0aE6FB30989571Bd0",
       abi: [
@@ -648,7 +953,145 @@ const deployedContracts = {
         },
         {
           type: "function",
+          name: "getRoast",
+          inputs: [
+            {
+              name: "_roastId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "tuple",
+              internalType: "struct AgentRegistry.Roast",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "agentName",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "roastText",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "imageUrl",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "creator",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "votes",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "timestamp",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getTopRoasts",
+          inputs: [
+            {
+              name: "_limit",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "tuple[]",
+              internalType: "struct AgentRegistry.Roast[]",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "agentName",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "roastText",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "imageUrl",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "creator",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "votes",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "timestamp",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
           name: "getTotalAgents",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getTotalRoasts",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "platformBalance",
           inputs: [],
           outputs: [
             {
@@ -687,6 +1130,29 @@ const deployedContracts = {
         },
         {
           type: "function",
+          name: "recordRoast",
+          inputs: [
+            {
+              name: "_agentName",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "_roastText",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "_imageUrl",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
           name: "registerAgent",
           inputs: [
             {
@@ -702,6 +1168,74 @@ const deployedContracts = {
           ],
           outputs: [],
           stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "roastVotes",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "roasts",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "agentName",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "roastText",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "imageUrl",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "creator",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "votes",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "timestamp",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
         },
         {
           type: "function",
@@ -728,6 +1262,19 @@ const deployedContracts = {
         },
         {
           type: "function",
+          name: "voteRoast",
+          inputs: [
+            {
+              name: "_roastId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
           name: "withdrawEarnings",
           inputs: [
             {
@@ -736,6 +1283,13 @@ const deployedContracts = {
               internalType: "string",
             },
           ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "withdrawPlatformBalance",
+          inputs: [],
           outputs: [],
           stateMutability: "nonpayable",
         },
@@ -870,9 +1424,64 @@ const deployedContracts = {
           ],
           anonymous: false,
         },
+        {
+          type: "event",
+          name: "RoastRecorded",
+          inputs: [
+            {
+              name: "roastId",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "agentName",
+              type: "string",
+              indexed: true,
+              internalType: "string",
+            },
+            {
+              name: "creator",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "imageUrl",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "RoastVoted",
+          inputs: [
+            {
+              name: "roastId",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "voter",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "totalVotes",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
       ],
       inheritedFunctions: {},
-      deployedOnBlock: 1,
     },
   },
 } as const;

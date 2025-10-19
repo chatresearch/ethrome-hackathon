@@ -16,9 +16,9 @@ export function useXMTP() {
                 ? (envUrl || viteUrl)
                 : 'http://127.0.0.1:3003';
             console.log(`[useXMTP] Using API URL: ${apiUrl}`);
-            // Try to reach XMTP agent with 8 second timeout
+            // Try to reach XMTP agent with 60 second timeout (GPT-4o needs time for image processing)
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            const timeoutId = setTimeout(() => controller.abort(), 60000);
             try {
                 const response = await fetch(`${apiUrl}/api/message`, {
                     method: 'POST',

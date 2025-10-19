@@ -21,7 +21,7 @@ export function DebugContracts() {
 
   const [selectedContract, setSelectedContract] = useSessionStorage<ContractName>(
     selectedContractStorageKey,
-    contractNames[0],
+    (contractNames[0] || "") as ContractName,
     { initializeWithValue: false },
   );
 

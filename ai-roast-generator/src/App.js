@@ -7,20 +7,17 @@ import { QueryBuilder } from './components/QueryBuilder';
 import { ResultsDisplay } from './components/ResultsDisplay';
 import { Leaderboard } from './components/Leaderboard';
 import { WalletConnect } from './components/WalletConnect';
+import { LoadingDialog } from './components/LoadingDialog';
 import { useXMTP } from './hooks/useXMTP';
 import { useAgentPayment, fetchAgentPrice, fetchAgentAvatar } from './hooks/useAgentPayment';
 import { useS3Upload } from './hooks/useS3Upload';
 import { wagmiConfig } from './hooks/wagmiConfig';
-import { recordVote } from './lib/scoring';
+import { recordVote, recordRoast } from './lib/scoring';
+import { useAgentRegistry } from './hooks/useAgentRegistry';
 import './styles/App.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import { useHealthCheck } from './hooks/useHealthCheck';
 import { Confetti } from './components/Confetti';
-const AGENT_PRICES = {
-    'profile-roaster': '0.00001',
-    'linkedin-roaster': '0.00001',
-    'vibe-roaster': '0.00001',
-};
 const getCurrentUserId = () => {
     let userId = localStorage.getItem('roast-generator-user-id');
     if (!userId) {
@@ -106,9 +103,14 @@ const AppContent = () => {
     const { queryAgentWithPayment, loading: paymentLoading, error: paymentError, isConnected, isCorrectNetwork } = useAgentPayment();
     const { uploadImageToS3 } = useS3Upload();
     const xmtpHealth = useHealthCheck();
+    const { recordRoastAsync, voteRoastAsync } = useAgentRegistry();
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isImageProcessing, setIsImageProcessing] = useState(false);
+    const [s3ImageUrl, setS3ImageUrl] = useState(null);
+    const [uploadedImage, setUploadedImage] = useState(null);
     const [votes, setVotes] = useState({});
+    const [roastIds, setRoastIds] = useState({}); // Track roast IDs for voting
     const [leaderboardRefresh, setLeaderboardRefresh] = useState(0);
     const [preloadError, setPreloadError] = useState(null);
     const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -122,12 +124,10 @@ const AppContent = () => {
         }
         return false;
     });
-    const [uploadedImage, setUploadedImage] = useState(null);
-    const [s3ImageUrl, setS3ImageUrl] = useState(null);
-    const [livePrices, setLivePrices] = useState(AGENT_PRICES);
-    const [agentAvatars, setAgentAvatars] = useState({});
     const [isAnimatedTagline, setIsAnimatedTagline] = useState(false);
     const [confettiTrigger, setConfettiTrigger] = useState(0);
+    const [livePrices, setLivePrices] = useState({});
+    const [agentAvatars, setAgentAvatars] = useState({});
     const userId = getCurrentUserId();
     // Fetch live agent prices and avatars on mount
     useEffect(() => {
@@ -216,6 +216,7 @@ const AppContent = () => {
         setUploadedImage(imageBase64);
         setS3ImageUrl(null);
         setIsLoading(true);
+        // Don't show loading dialog yet - wait for payment confirmation
         try {
             // Parse agents - can be comma-separated or single agent
             const agentsToUse = agent ? agent.split(',').map(a => a.trim()) : [];
@@ -250,6 +251,8 @@ const AppContent = () => {
             else if (!isCorrectNetwork) {
                 throw new Error('🌍 Wrong network! Switch to Base Sepolia to get roasted!');
             }
+            // ✅ Payment confirmed! Now show loading dialog
+            setIsImageProcessing(true);
             // Upload image to S3 for sharing
             console.log('Uploading image to S3...');
             const s3Url = await uploadImageToS3(imageBase64);
@@ -267,6 +270,21 @@ const AppContent = () => {
                     response: agentResponse.response,
                     timestamp: Date.now(),
                 }));
+                // Record each roast and track their IDs
+                const newRoastIds = { ...roastIds };
+                const currentIdx = results.length;
+                newResults.forEach((result, idx) => {
+                    const roastId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+                    recordRoast(result.agent, result.response, s3ImageUrl || undefined);
+                    // Also record on-chain if wallet is connected
+                    if (isConnected && isCorrectNetwork) {
+                        recordRoastAsync(result.agent, result.response, s3ImageUrl || '').catch(err => {
+                            console.warn(`Failed to record roast on-chain for ${result.agent}:`, err);
+                        });
+                    }
+                    newRoastIds[currentIdx + idx] = roastId;
+                });
+                setRoastIds(newRoastIds);
                 setResults((prev) => [...prev, ...newResults]);
             }
         }
@@ -277,6 +295,7 @@ const AppContent = () => {
         }
         finally {
             setIsLoading(false);
+            setIsImageProcessing(false);
         }
     };
     const handleVote = (resultIdx, accuracy) => {
@@ -290,6 +309,13 @@ const AppContent = () => {
             vote: accuracy,
             timestamp: Date.now(),
         });
+        // Also vote on-chain if wallet is connected
+        if (roastIds[resultIdx] && isConnected && isCorrectNetwork) {
+            // Convert roastId string to a number (we'll use resultIdx as roast ID)
+            voteRoastAsync(resultIdx).catch(err => {
+                console.warn(`Failed to vote on roast on-chain:`, err);
+            });
+        }
         setLeaderboardRefresh(prev => prev + 1);
     };
     const toggleDarkMode = () => {
@@ -299,7 +325,7 @@ const AppContent = () => {
                                     { name: 'profile-roaster', description: 'Dating Profile Roast' },
                                     { name: 'linkedin-roaster', description: 'LinkedIn Headshot Roast' },
                                     { name: 'vibe-roaster', description: 'Aesthetic & Vibe Roast' }
-                                ], agentAvatars: agentAvatars, agentPrices: livePrices }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError }), preloadError && _jsx("div", { className: "error-banner", children: preloadError })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results, s3ImageUrl: s3ImageUrl })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] }), _jsx(Confetti, { trigger: confettiTrigger })] }));
+                                ], agentAvatars: agentAvatars, agentPrices: livePrices }), xmtpError && _jsx("div", { className: "error-banner", children: xmtpError }), paymentError && _jsx("div", { className: "error-banner", children: paymentError }), preloadError && _jsx("div", { className: "error-banner", children: preloadError })] }), uploadedImage && (_jsxs("section", { className: "image-preview-section", children: [_jsx("h2", { children: "Your Selfie" }), _jsx("img", { src: uploadedImage, alt: "Your selfie", className: "preview-image" })] })), _jsxs("section", { className: "results-section", children: [_jsx("h2", { children: "The Roasts \uD83D\uDD25" }), _jsx(ResultsDisplay, { results: results, s3ImageUrl: s3ImageUrl })] }), _jsxs("section", { className: "voting-section", children: [_jsx("h2", { children: "Rate the Roasts" }), _jsx("p", { children: "Vote on how funny each roast is (1-5 scale, 5 = HILARIOUS)" }), results.length === 0 ? (_jsx("p", { style: { color: 'var(--text-secondary)' }, children: "Upload a selfie to get roasted!" })) : (results.map((result, idx) => (_jsxs("div", { className: "vote-card", children: [_jsx("h4", { children: result.agent }), _jsx("div", { className: "vote-buttons", children: [1, 2, 3, 4, 5].map((score) => (_jsx("button", { onClick: () => handleVote(idx, score), className: `vote-btn ${votes[idx] === score ? 'active' : ''}`, children: score }, score))) }), _jsx("span", { className: "vote-value", children: votes[idx] ? `Voted: ${votes[idx]}/5` : 'No vote' })] }, idx))))] }), _jsxs("section", { className: "leaderboard-section", children: [_jsx("h2", { children: "Funniest Roasts" }), _jsx("p", { children: "Community's favorite roasts" }), _jsx(Leaderboard, { refreshTrigger: leaderboardRefresh })] })] }), _jsx(LoadingDialog, { isOpen: isImageProcessing, message: isImageProcessing ? "Processing your roast..." : "Processing your roast...", isImageProcessing: isImageProcessing }), _jsx(Confetti, { trigger: confettiTrigger })] }));
 };
 export const App = () => {
     const queryClient = new QueryClient();

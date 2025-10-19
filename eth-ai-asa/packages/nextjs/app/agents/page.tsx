@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { NextPage } from "next";
 import { parseEther } from "viem";
 import { useAccount } from "wagmi";
@@ -16,6 +16,8 @@ interface Agent {
   stats?: {
     totalQueries?: number;
     earnings?: string;
+    active?: boolean;
+    registeredAt?: number;
   };
 }
 
@@ -31,32 +33,77 @@ const AgentMarketplace: NextPage = () => {
     functionName: "getTotalAgents",
   });
 
+  // Fetch all agent names from contract
+  const { data: allAgentNames } = useScaffoldReadContract({
+    contractName: "AgentRegistry",
+    functionName: "getAllAgentNames",
+  });
+
   // Write contract function
   const { writeContractAsync: queryAgent } = useScaffoldWriteContract({
     contractName: "AgentRegistry",
   });
 
-  // Mock agents data (would come from contract + ENS in production)
+  // Agent metadata (static for now, would come from ENS in production)
+  const agentMetadata: Record<string, { name: string; description: string }> = {
+    "defi-wizard.aiconfig.eth": {
+      name: "DeFi Wizard",
+      description: "Expert DeFi strategy and yield optimization advisor",
+    },
+    "security-guru.aiconfig.eth": {
+      name: "Security Guru",
+      description: "Smart contract security expert and vulnerability analyzer",
+    },
+    "profile-roaster.aiconfig.eth": {
+      name: "Profile Roaster",
+      description: "AI-powered roaster that analyzes and critiques dating profiles",
+    },
+    "linkedin-roaster.aiconfig.eth": {
+      name: "LinkedIn Roaster",
+      description: "Professional profile analyzer and humorously critical reviewer",
+    },
+    "vibe-roaster.aiconfig.eth": {
+      name: "Vibe Roaster",
+      description: "Analyzes aesthetic choices and lifestyle vibes with witty commentary",
+    },
+  };
+
+  // Load agents from contract data
   useEffect(() => {
-    const mockAgents: Agent[] = [
-      {
-        name: "DeFi Wizard",
-        ensName: "defi-wizard.aiconfig.eth",
-        description: "Expert DeFi strategy and yield optimization advisor",
+    console.log("allAgentNames:", allAgentNames, "Type:", typeof allAgentNames, "Is Array:", Array.isArray(allAgentNames));
+    
+    if (allAgentNames && Array.isArray(allAgentNames) && allAgentNames.length > 0) {
+      const loadedAgents: Agent[] = allAgentNames.map((ensName: string) => {
+        const metadata = agentMetadata[ensName] || { name: ensName, description: "AI Agent" };
+        return {
+          name: metadata.name,
+          ensName: ensName,
+          description: metadata.description,
+          price: "0.00001",
+          stats: { totalQueries: 0, earnings: "0", active: true, registeredAt: 0 },
+        };
+      });
+      console.log("Loaded agents:", loadedAgents);
+      setAgents(loadedAgents);
+      setLoading(false);
+    } else if (!allAgentNames) {
+      // Still loading or error
+      console.log("allAgentNames not loaded yet");
+      setLoading(true);
+    } else {
+      // Fallback: show all known agents if contract returns empty
+      console.log("Contract returned empty, using fallback agents");
+      const fallbackAgents: Agent[] = Object.entries(agentMetadata).map(([ensName, metadata]) => ({
+        name: metadata.name,
+        ensName: ensName,
+        description: metadata.description,
         price: "0.00001",
-        stats: { totalQueries: 42, earnings: "0.042" },
-      },
-      {
-        name: "Security Guru",
-        ensName: "security-guru.aiconfig.eth",
-        description: "Smart contract security expert and vulnerability analyzer",
-        price: "0.00001",
-        stats: { totalQueries: 28, earnings: "0.042" },
-      },
-    ];
-    setAgents(mockAgents);
-    setLoading(false);
-  }, []);
+        stats: { totalQueries: 0, earnings: "0", active: true, registeredAt: 0 },
+      }));
+      setAgents(fallbackAgents);
+      setLoading(false);
+    }
+  }, [allAgentNames]);
 
   const handleQueryAgent = async (agent: Agent) => {
     try {
@@ -145,11 +192,34 @@ const AgentMarketplace: NextPage = () => {
                           <div className="badge">Protocol Comparison</div>
                           <div className="badge">Risk Assessment</div>
                         </>
-                      ) : (
+                      ) : agent.name === "Security Guru" ? (
                         <>
                           <div className="badge">Vulnerability Scan</div>
                           <div className="badge">Audit Checklist</div>
                           <div className="badge">Best Practices</div>
+                        </>
+                      ) : agent.name === "Profile Roaster" ? (
+                        <>
+                          <div className="badge">Profile Analysis</div>
+                          <div className="badge">Dating Insights</div>
+                          <div className="badge">Witty Roasts</div>
+                        </>
+                      ) : agent.name === "LinkedIn Roaster" ? (
+                        <>
+                          <div className="badge">Career Analysis</div>
+                          <div className="badge">Profile Review</div>
+                          <div className="badge">Constructive Roasts</div>
+                        </>
+                      ) : agent.name === "Vibe Roaster" ? (
+                        <>
+                          <div className="badge">Aesthetic Analysis</div>
+                          <div className="badge">Lifestyle Review</div>
+                          <div className="badge">Vibe Roasting</div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="badge">AI Powered</div>
+                          <div className="badge">Analysis</div>
                         </>
                       )}
                     </div>
