@@ -1,20 +1,20 @@
 {
   "name": "AI Roast Generator",
-  "version": "1.0.0",
+  "homeUrl": "https://ai-roast-generator-ivory.vercel.app",
+  "iconUrl": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/vibe-roaster.png",
+  "splashImageUrl": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/roaster-banner.png",
+  "splashBackgroundColor": "#1a1a1a",
+  "primaryCategory": "entertainment",
+  "tags": ["ai", "roast", "gaming", "web3", "social"],
   "description": "Get brutally hilarious AI-powered roasts on Base. Upload a photo and let GPT-4o vision roast your vibe. Vote on roasts on-chain and share to Twitter/Farcaster.",
+  "version": "1.0.0",
   "shortDescription": "AI roasts powered by GPT-4o on Base blockchain",
-  "icon": "https://ai-roast-generator-ivory.vercel.app/icon.png",
-  "logo": "https://ai-roast-generator-ivory.vercel.app/logo.png",
-  "banner": "https://ai-roast-generator-ivory.vercel.app/banner.png",
-  "url": "https://ai-roast-generator-ivory.vercel.app",
   "developer": {
     "name": "ethrome-hackathon",
     "url": "https://github.com/ballew/ethrome-hackathon"
   },
   "chain": "base",
   "chainId": 84532,
-  "category": "entertainment",
-  "tags": ["ai", "web3", "social", "gaming", "entertainment"],
   "features": [
     "AI Image Analysis with GPT-4o",
     "On-Chain Voting & Leaderboard",
