@@ -250,7 +250,7 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     
     let response = "";
     let pollAttempts = 0;
-    const maxAttempts = 30; // 30 attempts * 200ms = 6 seconds max wait
+    const maxAttempts = 60; // 60 attempts * 200ms = 12 seconds max wait
     
     while (!response && pollAttempts < maxAttempts) {
       await new Promise(resolve => setTimeout(resolve, 200)); // Wait 200ms between polls
