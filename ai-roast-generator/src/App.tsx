@@ -11,7 +11,8 @@ import { useXMTP } from './hooks/useXMTP';
 import { useAgentPayment, fetchAgentPrice, fetchAgentAvatar } from './hooks/useAgentPayment';
 import { useS3Upload } from './hooks/useS3Upload';
 import { wagmiConfig } from './hooks/wagmiConfig';
-import { recordVote, recordRoast, voteRoast } from './lib/scoring';
+import { recordVote, recordRoast } from './lib/scoring';
+import { useAgentRegistry } from './hooks/useAgentRegistry';
 import './styles/App.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import { useHealthCheck } from './hooks/useHealthCheck';
@@ -126,6 +127,7 @@ const AppContent: React.FC = () => {
   const { queryAgentWithPayment, loading: paymentLoading, error: paymentError, isConnected, isCorrectNetwork } = useAgentPayment();
   const { uploadImageToS3 } = useS3Upload();
   const xmtpHealth = useHealthCheck();
+  const { recordRoastAsync, voteRoastAsync } = useAgentRegistry();
   const [results, setResults] = useState<AgentResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isImageProcessing, setIsImageProcessing] = useState(false);
@@ -314,9 +316,15 @@ const AppContent: React.FC = () => {
         const newRoastIds: Record<number, string> = { ...roastIds };
         const currentIdx = results.length;
         
-        newResults.forEach((result, idx) => {
+        newResults.forEach((result: AgentResponse, idx: number) => {
           const roastId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
           recordRoast(result.agent, result.response, s3ImageUrl || undefined);
+          // Also record on-chain if wallet is connected
+          if (isConnected && isCorrectNetwork) {
+            recordRoastAsync(result.agent, result.response, s3ImageUrl || '').catch(err => {
+              console.warn(`Failed to record roast on-chain for ${result.agent}:`, err);
+            });
+          }
           newRoastIds[currentIdx + idx] = roastId;
         });
         
@@ -345,6 +353,14 @@ const AppContent: React.FC = () => {
       vote: accuracy,
       timestamp: Date.now(),
     });
+
+    // Also vote on-chain if wallet is connected
+    if (roastIds[resultIdx] && isConnected && isCorrectNetwork) {
+      // Convert roastId string to a number (we'll use resultIdx as roast ID)
+      voteRoastAsync(resultIdx).catch(err => {
+        console.warn(`Failed to vote on roast on-chain:`, err);
+      });
+    }
 
     setLeaderboardRefresh(prev => prev + 1);
   };
