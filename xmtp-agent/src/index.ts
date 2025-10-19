@@ -254,9 +254,9 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     let initialWait = true;
     
     while (!response && pollAttempts < maxAttempts) {
-      // First wait: 3 seconds before first poll
-      // Subsequent waits: 1 second between polls
-      const delayMs = initialWait ? 3000 : 1000;
+      // First wait: 5 seconds before first poll
+      // Subsequent waits: 2.5 seconds between polls
+      const delayMs = initialWait ? 5000 : 2500;
       await new Promise(resolve => setTimeout(resolve, delayMs));
       initialWait = false;
       
