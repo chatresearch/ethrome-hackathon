@@ -1,0 +1,2070 @@
+2025-10-18 17:36:09 [INFO] Starting XMTP Agent
+2025-10-18 17:36:09 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 17:36:12 [INFO] Connected to XMTP
+2025-10-18 17:36:13 [INFO] Listening for XMTP messages
+2025-10-18 17:36:44 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 17:36:44 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:36:44 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:36:44 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:36:44 [INFO] [generateResponse] Message: "test"
+2025-10-18 17:36:44 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:36:44 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:36:44 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:36:44 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "0a7f2ef3-4b61-4912-83d6-82b96f8c9b3b" }
+2025-10-18 17:36:44 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:36:44 [INFO] [CURL 1] SessionId: 85efadd4-aa6e-4b72-8c22-789141ab899c
+
+2025-10-18 17:36:44 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:36:44 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/85efadd4-aa6e-4b72-8c22-789141ab899c/messages
+2025-10-18 17:36:44 [INFO] [CURL 2] Body: { content: "test", userId: "0a7f2ef3-4b61-4912-83d6-82b96f8c9b3b" }
+2025-10-18 17:36:44 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:36:44 [INFO] [CURL 2] MessageId: 2d74047c-2455-4bc7-ab86-31eb9deb6f4f
+
+2025-10-18 17:36:44 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:36:44 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/85efadd4-aa6e-4b72-8c22-789141ab899c/messages
+2025-10-18 17:36:44 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 17:36:44 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:36:44 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:36:44 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:36:44 [INFO] [generateResponse] Message: "test"
+2025-10-18 17:36:44 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:36:44 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:36:44 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:36:44 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "6b2b745d-cca5-4735-9149-dcfb093907cc" }
+2025-10-18 17:36:44 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:36:44 [INFO] [CURL 1] SessionId: 0351aaf5-8dbc-48af-a0a3-15c8aca13cd3
+
+2025-10-18 17:36:44 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:36:44 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/0351aaf5-8dbc-48af-a0a3-15c8aca13cd3/messages
+2025-10-18 17:36:44 [INFO] [CURL 2] Body: { content: "test", userId: "6b2b745d-cca5-4735-9149-dcfb093907cc" }
+2025-10-18 17:36:44 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:36:44 [INFO] [CURL 2] MessageId: 85fdf517-f573-4a2a-bf9e-2d335998135c
+
+2025-10-18 17:36:44 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:36:44 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/0351aaf5-8dbc-48af-a0a3-15c8aca13cd3/messages
+2025-10-18 17:36:44 [INFO] [CURL 3] Attempt 3/30: Still waiting for agent...
+2025-10-18 17:36:44 [INFO] [CURL 3] Attempt 3/30: Still waiting for agent...
+2025-10-18 17:36:45 [INFO] [CURL 3] Attempt 6/30: Still waiting for agent...
+2025-10-18 17:36:45 [INFO] [CURL 3] Attempt 6/30: Still waiting for agent...
+2025-10-18 17:36:45 [INFO] [CURL 3] Attempt 9/30: Still waiting for agent...
+2025-10-18 17:36:46 [INFO] [CURL 3] Attempt 9/30: Still waiting for agent...
+2025-10-18 17:36:46 [INFO] [CURL 3] Attempt 12/30: Still waiting for agent...
+2025-10-18 17:36:46 [INFO] [CURL 3] Attempt 12/30: Still waiting for agent...
+2025-10-18 17:36:47 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 17:36:47 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 17:36:47 [INFO] [CURL 3] Attempt 18/30: Still waiting for agent...
+2025-10-18 17:36:47 [INFO] [CURL 3] Attempt 18/30: Still waiting for agent...
+2025-10-18 17:36:48 [INFO] [CURL 3] Attempt 21/30: Still waiting for agent...
+2025-10-18 17:36:48 [INFO] [CURL 3] Attempt 21/30: Still waiting for agent...
+2025-10-18 17:36:49 [INFO] [CURL 3] Attempt 24/30: Still waiting for agent...
+2025-10-18 17:36:49 [INFO] [CURL 3] Attempt 24/30: Still waiting for agent...
+2025-10-18 17:36:49 [INFO] [CURL 3] Attempt 27/30: Still waiting for agent...
+2025-10-18 17:36:49 [INFO] [CURL 3] Attempt 27/30: Still waiting for agent...
+2025-10-18 17:36:50 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 17:36:50 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 17:36:50 [ERROR] [generateResponse] ========================================
+
+2025-10-18 17:36:50 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:239:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:347:42)"
+}
+2025-10-18 17:36:50 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 17:36:50 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 17:36:50 [ERROR] [generateResponse] ========================================
+
+2025-10-18 17:36:50 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:239:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:347:42)"
+}
+2025-10-18 17:36:59 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: [REQUEST TO PROFILE-ROASTER] Please roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws
+2025-10-18 17:36:59 [INFO] [generateResponse] Using S3 URL directly: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760834217127-msf0rag-image-1760834216931.jpg
+2025-10-18 17:36:59 [INFO] [generateResponse] Image URL set, formatted message length: 185
+2025-10-18 17:36:59 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:36:59 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:36:59 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:36:59 [INFO] [generateResponse] Message: "[REQUEST TO PROFILE-ROASTER] Please roast this ima..."
+2025-10-18 17:36:59 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:36:59 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:36:59 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:36:59 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "c1e6c52b-26b4-48bd-92c9-20cc0deedb04" }
+2025-10-18 17:36:59 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:36:59 [INFO] [CURL 1] SessionId: d9d96fdc-e2bd-4c1a-b336-39be440c83fa
+
+2025-10-18 17:36:59 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:36:59 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/d9d96fdc-e2bd-4c1a-b336-39be440c83fa/messages
+2025-10-18 17:36:59 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "c1e6c52b-26b4-48bd-92c9-20cc0deedb04" }
+2025-10-18 17:36:59 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:36:59 [INFO] [CURL 2] MessageId: 27bf11bd-3996-4669-b048-d9e3888e0283
+
+2025-10-18 17:36:59 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:36:59 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/d9d96fdc-e2bd-4c1a-b336-39be440c83fa/messages
+2025-10-18 17:37:00 [INFO] [CURL 3] Attempt 3/30: Still waiting for agent...
+2025-10-18 17:37:00 [INFO] [CURL 3] Attempt 6/30: Still waiting for agent...
+2025-10-18 17:37:01 [INFO] [CURL 3] Attempt 9/30: Still waiting for agent...
+2025-10-18 17:37:02 [INFO] [CURL 3] Attempt 12/30: Still waiting for agent...
+2025-10-18 17:37:02 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 17:37:03 [INFO] [CURL 3] Attempt 18/30: Still waiting for agent...
+2025-10-18 17:37:04 [INFO] [CURL 3] Attempt 21/30: Still waiting for agent...
+2025-10-18 17:37:04 [INFO] [CURL 3] Attempt 24/30: Still waiting for agent...
+2025-10-18 17:37:05 [INFO] [CURL 3] Attempt 27/30: Still waiting for agent...
+2025-10-18 17:37:05 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 17:37:05 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 17:37:05 [ERROR] [generateResponse] ========================================
+
+2025-10-18 17:37:05 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:239:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:347:42)"
+}
+2025-10-18 17:39:39 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 17:39:39 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:39:39 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:39:39 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:39:39 [INFO] [generateResponse] Message: "test"
+2025-10-18 17:39:39 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:39:39 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:39:39 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:39:39 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "27f80397-5e0a-4e01-b2b7-f2904f35ead6" }
+2025-10-18 17:39:39 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:39:39 [INFO] [CURL 1] SessionId: 685bfbc7-b55a-408c-9a84-90d800553d2b
+
+2025-10-18 17:39:39 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:39:39 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/685bfbc7-b55a-408c-9a84-90d800553d2b/messages
+2025-10-18 17:39:39 [INFO] [CURL 2] Body: { content: "test", userId: "27f80397-5e0a-4e01-b2b7-f2904f35ead6" }
+2025-10-18 17:39:39 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:39:39 [INFO] [CURL 2] MessageId: f286b3b4-162d-4972-a41c-e36ddb83b3b4
+
+2025-10-18 17:39:39 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:39:39 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/685bfbc7-b55a-408c-9a84-90d800553d2b/messages
+2025-10-18 17:39:40 [INFO] [CURL 3] Attempt 3/30: Still waiting for agent...
+2025-10-18 17:39:40 [INFO] [CURL 3] Attempt 6/30: Still waiting for agent...
+2025-10-18 17:39:41 [INFO] [CURL 3] Attempt 9/30: Still waiting for agent...
+2025-10-18 17:39:41 [INFO] [CURL 3] Attempt 12/30: Still waiting for agent...
+2025-10-18 17:39:42 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 17:39:43 [INFO] [CURL 3] Attempt 18/30: Still waiting for agent...
+2025-10-18 17:39:43 [INFO] [CURL 3] Attempt 21/30: Still waiting for agent...
+2025-10-18 17:39:44 [INFO] [CURL 3] Attempt 24/30: Still waiting for agent...
+2025-10-18 17:39:45 [INFO] [CURL 3] Attempt 27/30: Still waiting for agent...
+2025-10-18 17:39:45 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 17:39:45 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 17:39:45 [ERROR] [generateResponse] ========================================
+
+2025-10-18 17:39:45 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:239:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:347:42)"
+}
+2025-10-18 17:39:45 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 17:39:45 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:39:45 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:39:45 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:39:45 [INFO] [generateResponse] Message: "test"
+2025-10-18 17:39:45 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:39:45 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:39:45 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:39:45 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "9183d652-b2cb-4f96-84b1-6fe669ca29e8" }
+2025-10-18 17:39:45 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:39:45 [INFO] [CURL 1] SessionId: b34f51d5-cc63-42c3-9d96-7ccefff445a3
+
+2025-10-18 17:39:45 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:39:45 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/b34f51d5-cc63-42c3-9d96-7ccefff445a3/messages
+2025-10-18 17:39:45 [INFO] [CURL 2] Body: { content: "test", userId: "9183d652-b2cb-4f96-84b1-6fe669ca29e8" }
+2025-10-18 17:39:45 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:39:45 [INFO] [CURL 2] MessageId: 7ed732fb-a19c-4256-ac42-ef2c1bcbcde9
+
+2025-10-18 17:39:45 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:39:45 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/b34f51d5-cc63-42c3-9d96-7ccefff445a3/messages
+2025-10-18 17:39:46 [INFO] [CURL 3] Attempt 3/30: Still waiting for agent...
+2025-10-18 17:39:47 [INFO] [CURL 3] Attempt 6/30: Still waiting for agent...
+2025-10-18 17:39:47 [INFO] [CURL 3] Attempt 9/30: Still waiting for agent...
+2025-10-18 17:39:48 [INFO] [CURL 3] Attempt 12/30: Still waiting for agent...
+2025-10-18 17:39:49 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 17:39:49 [INFO] [CURL 3] Attempt 18/30: Still waiting for agent...
+2025-10-18 17:39:50 [INFO] [CURL 3] Attempt 21/30: Still waiting for agent...
+2025-10-18 17:39:50 [INFO] [CURL 3] Attempt 24/30: Still waiting for agent...
+2025-10-18 17:39:51 [INFO] [CURL 3] Attempt 27/30: Still waiting for agent...
+2025-10-18 17:39:52 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 17:39:52 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 17:39:52 [ERROR] [generateResponse] ========================================
+
+2025-10-18 17:39:52 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:239:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:347:42)"
+}
+2025-10-18 17:44:10 [INFO] Starting XMTP Agent
+2025-10-18 17:44:10 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 17:44:13 [INFO] Connected to XMTP
+2025-10-18 17:44:15 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: roast my photo
+2025-10-18 17:44:15 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:44:15 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:44:15 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:44:15 [INFO] [generateResponse] Message: "roast my photo"
+2025-10-18 17:44:15 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:44:15 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:44:15 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:44:15 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "8336dca7-13b5-41c8-9ee9-d7c84fa1a091" }
+2025-10-18 17:44:15 [INFO] Listening for XMTP messages
+2025-10-18 17:44:15 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:44:15 [INFO] [CURL 1] SessionId: d2efef93-099d-4dfc-a7bd-0825e148cf22
+
+2025-10-18 17:44:15 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:44:15 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/d2efef93-099d-4dfc-a7bd-0825e148cf22/messages
+2025-10-18 17:44:15 [INFO] [CURL 2] Body: { content: "roast my photo", userId: "8336dca7-13b5-41c8-9ee9-d7c84fa1a091" }
+2025-10-18 17:44:15 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:44:15 [INFO] [CURL 2] MessageId: 450298e6-32aa-4120-bb0e-f073535126b3
+
+2025-10-18 17:44:15 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:44:15 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/d2efef93-099d-4dfc-a7bd-0825e148cf22/messages
+2025-10-18 17:44:15 [INFO] [CURL 3] Attempt 3/60: Still waiting for agent...
+2025-10-18 17:44:16 [INFO] [CURL 3] Attempt 6/60: Still waiting for agent...
+2025-10-18 17:44:16 [INFO] [CURL 3] Attempt 9/60: Still waiting for agent...
+2025-10-18 17:44:17 [INFO] [CURL 3] Attempt 12/60: Still waiting for agent...
+2025-10-18 17:44:18 [INFO] [CURL 3] Attempt 15/60: Still waiting for agent...
+2025-10-18 17:44:18 [INFO] [CURL 3] Attempt 18/60: Still waiting for agent...
+2025-10-18 17:44:19 [INFO] [CURL 3] Attempt 21/60: Still waiting for agent...
+2025-10-18 17:44:20 [INFO] [CURL 3] Attempt 24/60: Still waiting for agent...
+2025-10-18 17:44:20 [INFO] [CURL 3] Attempt 27/60: Still waiting for agent...
+2025-10-18 17:44:21 [INFO] [CURL 3] Attempt 30/60: Still waiting for agent...
+2025-10-18 17:44:21 [INFO] [CURL 3] Attempt 33/60: Still waiting for agent...
+2025-10-18 17:44:22 [INFO] [CURL 3] Attempt 36/60: Still waiting for agent...
+2025-10-18 17:44:23 [INFO] [CURL 3] Attempt 39/60: Still waiting for agent...
+2025-10-18 17:44:23 [INFO] [CURL 3] Attempt 42/60: Still waiting for agent...
+2025-10-18 17:44:24 [INFO] [CURL 3] Attempt 45/60: Still waiting for agent...
+2025-10-18 17:44:25 [INFO] [CURL 3] Attempt 48/60: Still waiting for agent...
+2025-10-18 17:44:25 [INFO] [CURL 3] Attempt 51/60: Still waiting for agent...
+2025-10-18 17:44:26 [INFO] [CURL 3] Attempt 54/60: Still waiting for agent...
+2025-10-18 17:44:27 [INFO] [CURL 3] Attempt 57/60: Still waiting for agent...
+2025-10-18 17:44:27 [INFO] [CURL 3] Attempt 60/60: Still waiting for agent...
+2025-10-18 17:44:27 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 60 polling attempts
+2025-10-18 17:44:27 [ERROR] [generateResponse] ========================================
+
+2025-10-18 17:44:27 [ERROR] HTTP error: No response from agent after 60 polling attempts
+{
+  "stack": "Error: No response from agent after 60 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:239:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:347:42)"
+}
+2025-10-18 17:44:47 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: roast this: https://example.com/photo.jpg
+2025-10-18 17:44:47 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:44:47 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:44:47 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:44:47 [INFO] [generateResponse] Message: "roast this: https://example.com/photo.jpg"
+2025-10-18 17:44:47 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:44:47 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:44:47 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:44:47 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "1b50447b-03f0-427e-935f-c5c7d5128db5" }
+2025-10-18 17:44:47 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:44:47 [INFO] [CURL 1] SessionId: 05f1d6c0-a837-493b-a59f-ce14c04f8e22
+
+2025-10-18 17:44:47 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:44:47 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/05f1d6c0-a837-493b-a59f-ce14c04f8e22/messages
+2025-10-18 17:44:47 [INFO] [CURL 2] Body: { content: "roast this: https://example.com/photo.jpg", userId: "1b50447b-03f0-427e-935f-c5c7d5128db5" }
+2025-10-18 17:44:47 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:44:47 [INFO] [CURL 2] MessageId: 7c2de998-cec7-4f61-81d3-b27d10b6bb58
+
+2025-10-18 17:44:47 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:44:47 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/05f1d6c0-a837-493b-a59f-ce14c04f8e22/messages
+2025-10-18 17:44:48 [INFO] [CURL 3] Attempt 3/60: Still waiting for agent...
+2025-10-18 17:44:48 [INFO] [CURL 3] Attempt 6/60: Still waiting for agent...
+2025-10-18 17:44:49 [INFO] [CURL 3] Attempt 9/60: Still waiting for agent...
+2025-10-18 17:44:50 [INFO] [CURL 3] Attempt 12/60: Still waiting for agent...
+2025-10-18 17:44:50 [INFO] [CURL 3] Attempt 15/60: Still waiting for agent...
+2025-10-18 17:44:51 [INFO] [CURL 3] Attempt 18/60: Still waiting for agent...
+2025-10-18 17:44:52 [INFO] [CURL 3] Attempt 21/60: Still waiting for agent...
+2025-10-18 17:44:52 [INFO] [CURL 3] Attempt 24/60: Still waiting for agent...
+2025-10-18 17:44:53 [INFO] [CURL 3] Attempt 27/60: Still waiting for agent...
+2025-10-18 17:44:53 [INFO] [CURL 3] Attempt 30/60: Still waiting for agent...
+2025-10-18 17:44:54 [INFO] [CURL 3] Attempt 33/60: Still waiting for agent...
+2025-10-18 17:44:55 [INFO] [CURL 3] Attempt 36/60: Still waiting for agent...
+2025-10-18 17:44:55 [INFO] [CURL 3] Attempt 39/60: Still waiting for agent...
+2025-10-18 17:44:56 [INFO] [CURL 3] Attempt 42/60: Still waiting for agent...
+2025-10-18 17:44:57 [INFO] [CURL 3] Attempt 45/60: Still waiting for agent...
+2025-10-18 17:44:57 [INFO] [CURL 3] Attempt 48/60: Still waiting for agent...
+2025-10-18 17:44:58 [INFO] [CURL 3] Attempt 51/60: Still waiting for agent...
+2025-10-18 17:44:58 [INFO] [CURL 3] Attempt 54/60: Still waiting for agent...
+2025-10-18 17:44:59 [INFO] [CURL 3] Attempt 57/60: Still waiting for agent...
+2025-10-18 17:45:00 [INFO] [CURL 3] Attempt 60/60: Still waiting for agent...
+2025-10-18 17:45:00 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 60 polling attempts
+2025-10-18 17:45:00 [ERROR] [generateResponse] ========================================
+
+2025-10-18 17:45:00 [ERROR] HTTP error: No response from agent after 60 polling attempts
+{
+  "stack": "Error: No response from agent after 60 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:239:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:347:42)"
+}
+2025-10-18 17:45:28 [INFO] Starting XMTP Agent
+2025-10-18 17:45:28 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 17:45:31 [INFO] Connected to XMTP
+2025-10-18 17:45:32 [INFO] Listening for XMTP messages
+2025-10-18 17:45:34 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: roast my photo
+2025-10-18 17:45:34 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:45:34 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:45:34 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:45:34 [INFO] [generateResponse] Message: "roast my photo"
+2025-10-18 17:45:34 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:45:34 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:45:34 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:45:34 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "d61f7bf0-caa1-4533-8048-282c239dd590" }
+2025-10-18 17:45:34 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:45:34 [INFO] [CURL 1] SessionId: 340b8bf6-52ed-4fdf-bbf4-66f1339de209
+
+2025-10-18 17:45:34 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:45:34 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/340b8bf6-52ed-4fdf-bbf4-66f1339de209/messages
+2025-10-18 17:45:34 [INFO] [CURL 2] Body: { content: "roast my photo", userId: "d61f7bf0-caa1-4533-8048-282c239dd590" }
+2025-10-18 17:45:34 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:45:34 [INFO] [CURL 2] MessageId: 22d5fdbc-091d-4820-919c-699c6ea4c4ba
+
+2025-10-18 17:45:34 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:45:34 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/340b8bf6-52ed-4fdf-bbf4-66f1339de209/messages
+2025-10-18 17:45:37 [INFO] [CURL 3] Attempt 5/120: Still waiting (backoff: 1.0s)...
+2025-10-18 17:45:46 [INFO] [CURL 3] Attempt 10/120: Still waiting (backoff: 2.0s)...
+2025-10-18 17:45:56 [INFO] [CURL 3] Attempt 15/120: Still waiting (backoff: 2.0s)...
+2025-10-18 17:46:02 [INFO] [CURL 3] ✅ Got agent response on attempt 18/120 (waited 2.0s)
+2025-10-18 17:46:02 [INFO] [CURL 3] Response length: 247 characters
+
+2025-10-18 17:46:02 [INFO] [generateResponse] ========================================
+2025-10-18 17:46:02 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 17:46:02 [INFO] [generateResponse] Response: "I can't roast what I can't see — drop the pic and I'll mercilessly clown it. Meanwhile, if it's a mi..."
+2025-10-18 17:46:02 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:46:15 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 17:46:15 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:46:15 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:46:15 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:46:15 [INFO] [generateResponse] Message: "test"
+2025-10-18 17:46:15 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:46:15 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:46:15 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:46:15 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "af9e32d8-35c3-4af2-846c-f810edf1129c" }
+2025-10-18 17:46:15 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:46:15 [INFO] [CURL 1] SessionId: 21f50bef-ad7d-4dac-8e6b-1d0028c427eb
+
+2025-10-18 17:46:15 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:46:15 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/21f50bef-ad7d-4dac-8e6b-1d0028c427eb/messages
+2025-10-18 17:46:15 [INFO] [CURL 2] Body: { content: "test", userId: "af9e32d8-35c3-4af2-846c-f810edf1129c" }
+2025-10-18 17:46:15 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:46:15 [INFO] [CURL 2] MessageId: 0a47d5e9-149c-4b96-85a5-2a1860e2e016
+
+2025-10-18 17:46:15 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:46:15 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/21f50bef-ad7d-4dac-8e6b-1d0028c427eb/messages
+2025-10-18 17:46:17 [INFO] [CURL 3] Attempt 5/120: Still waiting (backoff: 1.0s)...
+2025-10-18 17:46:27 [INFO] [CURL 3] Attempt 10/120: Still waiting (backoff: 2.0s)...
+2025-10-18 17:46:31 [INFO] [CURL 3] ✅ Got agent response on attempt 12/120 (waited 2.0s)
+2025-10-18 17:46:31 [INFO] [CURL 3] Response length: 161 characters
+
+2025-10-18 17:46:31 [INFO] [generateResponse] ========================================
+2025-10-18 17:46:31 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 17:46:31 [INFO] [generateResponse] Response: "Test? Bold move. That one-word thriller is giving "I was here for a millisecond and left" energy — i..."
+2025-10-18 17:46:31 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:47:22 [INFO] Starting XMTP Agent
+2025-10-18 17:47:22 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 17:47:26 [INFO] Connected to XMTP
+2025-10-18 17:47:27 [INFO] Listening for XMTP messages
+2025-10-18 17:47:28 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: roast my profile
+2025-10-18 17:47:28 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:47:28 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:47:28 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:47:28 [INFO] [generateResponse] Message: "roast my profile"
+2025-10-18 17:47:28 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:47:28 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:47:28 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:47:28 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "8a0c3eed-d421-4211-a384-1433c2e50010" }
+2025-10-18 17:47:28 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:47:28 [INFO] [CURL 1] SessionId: 7f8d673c-6bd3-4d3f-bb57-04d5245c8c72
+
+2025-10-18 17:47:28 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:47:28 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/7f8d673c-6bd3-4d3f-bb57-04d5245c8c72/messages
+2025-10-18 17:47:28 [INFO] [CURL 2] Body: { content: "roast my profile", userId: "8a0c3eed-d421-4211-a384-1433c2e50010" }
+2025-10-18 17:47:28 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:47:28 [INFO] [CURL 2] MessageId: fbe5d29f-fb70-4407-81a9-e9785d5af596
+
+2025-10-18 17:47:28 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:47:28 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/7f8d673c-6bd3-4d3f-bb57-04d5245c8c72/messages
+2025-10-18 17:47:34 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 17:47:39 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 17:47:43 [INFO] [CURL 3] ✅ Got agent response on attempt 14/30
+2025-10-18 17:47:43 [INFO] [CURL 3] Response length: 280 characters
+
+2025-10-18 17:47:43 [INFO] [generateResponse] ========================================
+2025-10-18 17:47:43 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 17:47:43 [INFO] [generateResponse] Response: "Warm-up roast: your profile is giving “I paused a movie at the best frame and called it a mood” — ha..."
+2025-10-18 17:47:43 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:48:43 [INFO] Starting XMTP Agent
+2025-10-18 17:48:43 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 17:48:46 [INFO] Connected to XMTP
+2025-10-18 17:48:48 [INFO] Listening for XMTP messages
+2025-10-18 17:48:48 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test roast
+2025-10-18 17:48:48 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:48:48 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:48:48 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:48:48 [INFO] [generateResponse] Message: "test roast"
+2025-10-18 17:48:48 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:48:48 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:48:48 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:48:48 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "6b188cb5-93b2-48b2-afd3-2c9856be55ba" }
+2025-10-18 17:48:48 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:48:48 [INFO] [CURL 1] SessionId: fd0412ea-103b-4107-a610-9beb9819eaef
+
+2025-10-18 17:48:48 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:48:48 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/fd0412ea-103b-4107-a610-9beb9819eaef/messages
+2025-10-18 17:48:48 [INFO] [CURL 2] Body: { content: "test roast", userId: "6b188cb5-93b2-48b2-afd3-2c9856be55ba" }
+2025-10-18 17:48:48 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:48:48 [INFO] [CURL 2] MessageId: 34da8ac6-cbfc-4554-855b-d8b30c633d03
+
+2025-10-18 17:48:48 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:48:48 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/fd0412ea-103b-4107-a610-9beb9819eaef/messages
+2025-10-18 17:48:55 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 17:49:00 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 17:49:03 [INFO] [CURL 3] ✅ Got agent response on attempt 13/30
+2025-10-18 17:49:03 [INFO] [CURL 3] Response length: 237 characters
+
+2025-10-18 17:49:03 [INFO] [generateResponse] ========================================
+2025-10-18 17:49:03 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 17:49:03 [INFO] [generateResponse] Response: "Test roast incoming: your outfit is doing its best impersonation of a clearance-rack miracle—bold, c..."
+2025-10-18 17:49:03 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:49:03 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: [REQUEST TO PROFILE-ROASTER] Please roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws
+2025-10-18 17:49:03 [INFO] [generateResponse] Using S3 URL directly: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760834941201-s524l-image-1760834940776.jpg
+2025-10-18 17:49:03 [INFO] [generateResponse] Image URL set, formatted message length: 183
+2025-10-18 17:49:03 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:49:03 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:49:03 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:49:03 [INFO] [generateResponse] Message: "[REQUEST TO PROFILE-ROASTER] Please roast this ima..."
+2025-10-18 17:49:03 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:49:03 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:49:03 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:49:03 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "9cddfaab-357a-4095-a222-148fc648ac1c" }
+2025-10-18 17:49:03 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:49:03 [INFO] [CURL 1] SessionId: fa4d425d-edaa-4a70-9df9-b09c0d779067
+
+2025-10-18 17:49:03 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:49:03 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/fa4d425d-edaa-4a70-9df9-b09c0d779067/messages
+2025-10-18 17:49:03 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "9cddfaab-357a-4095-a222-148fc648ac1c" }
+2025-10-18 17:49:03 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:49:03 [INFO] [CURL 2] MessageId: 87698474-d894-4be2-a047-03bd60301053
+
+2025-10-18 17:49:03 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:49:03 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/fa4d425d-edaa-4a70-9df9-b09c0d779067/messages
+2025-10-18 17:49:10 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 17:49:15 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 17:49:19 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 17:49:19 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:49:19 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:49:19 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:49:19 [INFO] [generateResponse] Message: "test"
+2025-10-18 17:49:19 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:49:19 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:49:19 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:49:19 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "bfc3677a-4e94-47f1-b092-f91db6ae5e38" }
+2025-10-18 17:49:19 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:49:19 [INFO] [CURL 1] SessionId: 48f01a29-a0ac-4783-b95e-102abab11777
+
+2025-10-18 17:49:19 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:49:19 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/48f01a29-a0ac-4783-b95e-102abab11777/messages
+2025-10-18 17:49:19 [INFO] [CURL 2] Body: { content: "test", userId: "bfc3677a-4e94-47f1-b092-f91db6ae5e38" }
+2025-10-18 17:49:19 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:49:19 [INFO] [CURL 2] MessageId: 20b00075-0f90-4eb4-926d-5cc9779a639c
+
+2025-10-18 17:49:19 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:49:19 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/48f01a29-a0ac-4783-b95e-102abab11777/messages
+2025-10-18 17:49:19 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 17:49:19 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:49:19 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:49:19 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:49:19 [INFO] [generateResponse] Message: "test"
+2025-10-18 17:49:19 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:49:19 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:49:19 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:49:19 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "e1d7a5ef-4a30-4361-9d55-3187df80fc96" }
+2025-10-18 17:49:19 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:49:19 [INFO] [CURL 1] SessionId: 2eb669a6-efdf-44e8-beab-db56a8daa5c7
+
+2025-10-18 17:49:19 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:49:19 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/2eb669a6-efdf-44e8-beab-db56a8daa5c7/messages
+2025-10-18 17:49:19 [INFO] [CURL 2] Body: { content: "test", userId: "e1d7a5ef-4a30-4361-9d55-3187df80fc96" }
+2025-10-18 17:49:19 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:49:19 [INFO] [CURL 2] MessageId: 9ed760fd-7fad-4e69-a5f8-ab676ba1f12a
+
+2025-10-18 17:49:19 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:49:19 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/2eb669a6-efdf-44e8-beab-db56a8daa5c7/messages
+2025-10-18 17:49:20 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 17:49:25 [INFO] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 17:49:26 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 17:49:26 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 17:49:30 [INFO] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 17:49:31 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 17:49:31 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 17:49:32 [INFO] [generateResponse] Agent: linkedin-roaster, Has image: true, Message preview: [REQUEST TO LINKEDIN-ROASTER] Please roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaw
+2025-10-18 17:49:32 [INFO] [generateResponse] Using S3 URL directly: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760834971372-jv18g9-image-1760834971176.png
+2025-10-18 17:49:32 [INFO] [generateResponse] Image URL set, formatted message length: 184
+2025-10-18 17:49:32 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:49:32 [INFO] [generateResponse] Starting ElizaOS session for: linkedin-roaster
+2025-10-18 17:49:32 [INFO] [generateResponse] Agent ID: 92faf961-5fbf-0593-9b91-d069872d4082
+2025-10-18 17:49:32 [INFO] [generateResponse] Message: "[REQUEST TO LINKEDIN-ROASTER] Please roast this im..."
+2025-10-18 17:49:32 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:49:32 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:49:32 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:49:32 [INFO] [CURL 1] Body: { agentId: "92faf961-5fbf-0593-9b91-d069872d4082", userId: "70919320-adeb-4580-8011-787f949f4523" }
+2025-10-18 17:49:32 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:49:32 [INFO] [CURL 1] SessionId: 4eb7b7e7-b1fe-4f1a-9155-a028c1c8e025
+
+2025-10-18 17:49:32 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:49:32 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/4eb7b7e7-b1fe-4f1a-9155-a028c1c8e025/messages
+2025-10-18 17:49:32 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "70919320-adeb-4580-8011-787f949f4523" }
+2025-10-18 17:49:32 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:49:32 [INFO] [CURL 2] MessageId: ce45122f-dd6e-4363-938a-e2f81c87f025
+
+2025-10-18 17:49:32 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:49:32 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/4eb7b7e7-b1fe-4f1a-9155-a028c1c8e025/messages
+2025-10-18 17:49:33 [INFO] [CURL 3] ✅ Got agent response on attempt 28/30
+2025-10-18 17:49:33 [INFO] [CURL 3] Response length: 305 characters
+
+2025-10-18 17:49:33 [INFO] [generateResponse] ========================================
+2025-10-18 17:49:33 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 17:49:33 [INFO] [generateResponse] Response: "Lighting's trying to give you a saint halo but landed on "interrogation-room chic" — very dramatic f..."
+2025-10-18 17:49:33 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:49:34 [INFO] [CURL 3] ✅ Got agent response on attempt 13/30
+2025-10-18 17:49:34 [INFO] [CURL 3] Response length: 199 characters
+
+2025-10-18 17:49:34 [INFO] [generateResponse] ========================================
+2025-10-18 17:49:34 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 17:49:34 [INFO] [generateResponse] Response: "Test received — profile-roaster online. Send me a photo and I’ll roast the outfit, pose, and backgro..."
+2025-10-18 17:49:34 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:49:36 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 17:49:39 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 17:49:41 [INFO] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 17:49:44 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 17:49:46 [INFO] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 17:49:49 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 17:49:51 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 17:49:51 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 17:49:51 [ERROR] [generateResponse] ========================================
+
+2025-10-18 17:49:51 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:244:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:352:42)"
+}
+2025-10-18 17:49:54 [INFO] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 17:49:59 [INFO] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 17:50:00 [INFO] [CURL 3] ✅ Got agent response on attempt 26/30
+2025-10-18 17:50:00 [INFO] [CURL 3] Response length: 276 characters
+
+2025-10-18 17:50:00 [INFO] [generateResponse] ========================================
+2025-10-18 17:50:00 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 17:50:00 [INFO] [generateResponse] Response: "That smile is a certified “my manager told me to look approachable” — pure stock-photo optimism with..."
+2025-10-18 17:50:00 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:56:52 [INFO] Starting XMTP Agent
+2025-10-18 17:56:52 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 17:56:55 [INFO] Connected to XMTP
+2025-10-18 17:56:56 [INFO] Listening for XMTP messages
+2025-10-18 17:57:01 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test roast
+2025-10-18 17:57:01 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:57:01 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:57:01 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:57:01 [INFO] [generateResponse] Message: "test roast"
+2025-10-18 17:57:01 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:57:01 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:57:01 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:57:01 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "676be043-42f1-4545-bd5b-e0f115d762f4" }
+2025-10-18 17:57:01 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:57:01 [INFO] [CURL 1] SessionId: b8dc52d5-f07f-4e86-b64b-503a7c1e4a3b
+
+2025-10-18 17:57:01 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:57:01 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/b8dc52d5-f07f-4e86-b64b-503a7c1e4a3b/messages
+2025-10-18 17:57:01 [INFO] [CURL 2] Body: { content: "test roast", userId: "676be043-42f1-4545-bd5b-e0f115d762f4" }
+2025-10-18 17:57:01 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:57:01 [INFO] [CURL 2] MessageId: 413782ec-49ef-4a91-a36c-d5be2967b5d0
+
+2025-10-18 17:57:01 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:57:01 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/b8dc52d5-f07f-4e86-b64b-503a7c1e4a3b/messages
+2025-10-18 17:57:16 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 17:57:29 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 17:57:39 [INFO] [CURL 3] ✅ Got agent response on attempt 14/30
+2025-10-18 17:57:39 [INFO] [CURL 3] Response length: 347 characters
+
+2025-10-18 17:57:39 [INFO] [generateResponse] ========================================
+2025-10-18 17:57:39 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 17:57:39 [INFO] [generateResponse] Response: "Nice test roast — your outfit is trying very hard to be "vintage influencer" but mostly just says "I..."
+2025-10-18 17:57:39 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:58:38 [INFO] Starting XMTP Agent
+2025-10-18 17:58:38 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 17:58:41 [INFO] Connected to XMTP
+2025-10-18 17:58:42 [INFO] Listening for XMTP messages
+2025-10-18 17:58:43 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: quick test
+2025-10-18 17:58:43 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:58:43 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:58:43 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:58:43 [INFO] [generateResponse] Message: "quick test"
+2025-10-18 17:58:43 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:58:43 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:58:43 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:58:43 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "d573fcd4-d41e-4553-9ed6-d9932ef8ffb2" }
+2025-10-18 17:58:43 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:58:43 [INFO] [CURL 1] SessionId: c8486b24-83f3-4d46-852a-9ed1990b19e3
+
+2025-10-18 17:58:43 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:58:43 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/c8486b24-83f3-4d46-852a-9ed1990b19e3/messages
+2025-10-18 17:58:43 [INFO] [CURL 2] Body: { content: "quick test", userId: "d573fcd4-d41e-4553-9ed6-d9932ef8ffb2" }
+2025-10-18 17:58:43 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:58:43 [INFO] [CURL 2] MessageId: 26c36499-92b7-42ae-bcb6-c976b23c08b0
+
+2025-10-18 17:58:43 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:58:43 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/c8486b24-83f3-4d46-852a-9ed1990b19e3/messages
+2025-10-18 17:58:48 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 17:58:48 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:58:48 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:58:48 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:58:48 [INFO] [generateResponse] Message: "test"
+2025-10-18 17:58:48 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:58:48 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:58:48 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:58:48 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "4a060306-b970-4a72-8d63-ffb5bc47b440" }
+2025-10-18 17:58:48 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:58:48 [INFO] [CURL 1] SessionId: 71f6c71b-8890-4c63-bf8d-b4a831a0b57b
+
+2025-10-18 17:58:48 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:58:48 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/71f6c71b-8890-4c63-bf8d-b4a831a0b57b/messages
+2025-10-18 17:58:48 [INFO] [CURL 2] Body: { content: "test", userId: "4a060306-b970-4a72-8d63-ffb5bc47b440" }
+2025-10-18 17:58:48 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:58:48 [INFO] [CURL 2] MessageId: e71d5028-2ecd-4c0c-b20e-4bc4cca855ef
+
+2025-10-18 17:58:48 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:58:48 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/71f6c71b-8890-4c63-bf8d-b4a831a0b57b/messages
+2025-10-18 17:58:48 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 17:58:48 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:58:48 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:58:48 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:58:48 [INFO] [generateResponse] Message: "test"
+2025-10-18 17:58:48 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:58:48 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:58:48 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:58:48 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "2acf5085-91ee-4629-8d0d-ead092341985" }
+2025-10-18 17:58:48 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:58:48 [INFO] [CURL 1] SessionId: 0d35a335-8d4a-4a74-9818-73a59d959b69
+
+2025-10-18 17:58:48 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:58:48 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/0d35a335-8d4a-4a74-9818-73a59d959b69/messages
+2025-10-18 17:58:48 [INFO] [CURL 2] Body: { content: "test", userId: "2acf5085-91ee-4629-8d0d-ead092341985" }
+2025-10-18 17:58:48 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:58:48 [INFO] [CURL 2] MessageId: 4bcbfdc7-9897-4a57-b608-9a8474246bf4
+
+2025-10-18 17:58:48 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:58:48 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/0d35a335-8d4a-4a74-9818-73a59d959b69/messages
+2025-10-18 17:58:58 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: Roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760835537327-0ew2qh-ima
+2025-10-18 17:58:58 [INFO] [generateResponse] Using S3 URL directly: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760835537327-0ew2qh-image-1760835537004.png
+2025-10-18 17:58:58 [INFO] [generateResponse] Image URL set, formatted message length: 184
+2025-10-18 17:58:58 [INFO] 
+[generateResponse] ========================================
+2025-10-18 17:58:58 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 17:58:58 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 17:58:58 [INFO] [generateResponse] Message: "Roast this image: https://irc-ai-roaster.s3.eu-sou..."
+2025-10-18 17:58:58 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:58:58 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 17:58:58 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 17:58:58 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "0632f14e-569f-4187-84a1-cc822e9b143a" }
+2025-10-18 17:58:58 [INFO] [CURL 1] ✅ Session created
+2025-10-18 17:58:58 [INFO] [CURL 1] SessionId: 5a9ee9b0-d2d8-4e6c-8a02-850edd0d918c
+
+2025-10-18 17:58:58 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 17:58:58 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/5a9ee9b0-d2d8-4e6c-8a02-850edd0d918c/messages
+2025-10-18 17:58:58 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "0632f14e-569f-4187-84a1-cc822e9b143a" }
+2025-10-18 17:58:58 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 17:58:58 [INFO] [CURL 2] MessageId: ce00aac8-984d-4d65-8d57-5309f404eead
+
+2025-10-18 17:58:58 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 17:58:58 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/5a9ee9b0-d2d8-4e6c-8a02-850edd0d918c/messages
+2025-10-18 17:59:08 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 17:59:08 [INFO] [CURL 3] Response length: 135 characters
+
+2025-10-18 17:59:08 [INFO] [generateResponse] ========================================
+2025-10-18 17:59:08 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 17:59:08 [INFO] [generateResponse] Response: "Test received — the roast engine is online and fully caffeinated. Drop a photo and I’ll turn your vi..."
+2025-10-18 17:59:08 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:59:13 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 17:59:18 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 17:59:25 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 17:59:28 [INFO] [CURL 3] ✅ Got agent response on attempt 5/30
+2025-10-18 17:59:28 [INFO] [CURL 3] Response length: 269 characters
+
+2025-10-18 17:59:28 [INFO] [generateResponse] ========================================
+2025-10-18 17:59:28 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 17:59:28 [INFO] [generateResponse] Response: "Nice try on the “effortless aesthetic” — you look like a thrift-store influencer who lost a bet to a..."
+2025-10-18 17:59:28 [INFO] [generateResponse] ========================================
+
+2025-10-18 17:59:31 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 17:59:38 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 17:59:43 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 17:59:50 [INFO] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 17:59:56 [INFO] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 18:00:03 [INFO] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 18:00:08 [INFO] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 18:00:15 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 18:00:15 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 18:00:15 [ERROR] [generateResponse] ========================================
+
+2025-10-18 18:00:15 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:244:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:352:42)"
+}
+2025-10-18 18:00:21 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 18:00:21 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 18:00:21 [ERROR] [generateResponse] ========================================
+
+2025-10-18 18:00:21 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:244:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:352:42)"
+}
+2025-10-18 18:01:06 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:01:06 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:01:06 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:01:06 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:01:06 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:01:06 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:01:06 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:01:06 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:01:06 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "30babb92-0145-4825-9444-a189ddcc296d" }
+2025-10-18 18:01:06 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:01:06 [INFO] [CURL 1] SessionId: 9dbf15a4-31b7-4ecf-9e2c-5a8ca2f85651
+
+2025-10-18 18:01:06 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:01:06 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/9dbf15a4-31b7-4ecf-9e2c-5a8ca2f85651/messages
+2025-10-18 18:01:06 [INFO] [CURL 2] Body: { content: "test", userId: "30babb92-0145-4825-9444-a189ddcc296d" }
+2025-10-18 18:01:06 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:01:06 [INFO] [CURL 2] MessageId: 06324bb9-5d47-4d61-845f-9f28c3a93b6b
+
+2025-10-18 18:01:06 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:01:06 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/9dbf15a4-31b7-4ecf-9e2c-5a8ca2f85651/messages
+2025-10-18 18:01:26 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:01:26 [INFO] [CURL 3] Response length: 162 characters
+
+2025-10-18 18:01:26 [INFO] [generateResponse] ========================================
+2025-10-18 18:01:26 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:01:26 [INFO] [generateResponse] Response: "Test received. If you were checking my roast-settings, congrats — they're set to "merciless charm"; ..."
+2025-10-18 18:01:26 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:02:31 [INFO] Starting XMTP Agent
+2025-10-18 18:02:31 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 18:02:35 [INFO] Connected to XMTP
+2025-10-18 18:02:36 [INFO] Listening for XMTP messages
+2025-10-18 18:02:36 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:02:36 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:02:36 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:02:36 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:02:36 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:02:36 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:02:36 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:02:36 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:02:36 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "7f08aa04-f55c-46fa-8390-3e9079845379" }
+2025-10-18 18:02:36 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:02:36 [INFO] [CURL 1] SessionId: 9d4b2d62-36fe-42ec-a719-b585cc2772c4
+
+2025-10-18 18:02:36 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:02:36 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/9d4b2d62-36fe-42ec-a719-b585cc2772c4/messages
+2025-10-18 18:02:36 [INFO] [CURL 2] Body: { content: "test", userId: "7f08aa04-f55c-46fa-8390-3e9079845379" }
+2025-10-18 18:02:37 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:02:37 [INFO] [CURL 2] MessageId: 08b7626a-ab4f-4f49-b6af-d466e2625f47
+
+2025-10-18 18:02:37 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:02:37 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/9d4b2d62-36fe-42ec-a719-b585cc2772c4/messages
+2025-10-18 18:02:46 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: [REQUEST TO PROFILE-ROASTER] Please roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws
+2025-10-18 18:02:46 [INFO] [generateResponse] Using S3 URL directly: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760835765409-4qane-image-1760835764929.png
+2025-10-18 18:02:46 [INFO] [generateResponse] Image URL set, formatted message length: 183
+2025-10-18 18:02:46 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:02:46 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:02:46 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:02:46 [INFO] [generateResponse] Message: "[REQUEST TO PROFILE-ROASTER] Please roast this ima..."
+2025-10-18 18:02:46 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:02:46 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:02:46 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:02:46 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "a6d2e4a7-c6c4-46bc-9d40-1c7d00cb5556" }
+2025-10-18 18:02:46 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:02:46 [INFO] [CURL 1] SessionId: f545695d-3a1b-40c9-85f5-88dc266e21e6
+
+2025-10-18 18:02:46 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:02:46 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/f545695d-3a1b-40c9-85f5-88dc266e21e6/messages
+2025-10-18 18:02:46 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "a6d2e4a7-c6c4-46bc-9d40-1c7d00cb5556" }
+2025-10-18 18:02:46 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:02:46 [INFO] [CURL 2] MessageId: b52a0028-af4e-4f06-8e47-ce039cbcdd93
+
+2025-10-18 18:02:46 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:02:46 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/f545695d-3a1b-40c9-85f5-88dc266e21e6/messages
+2025-10-18 18:02:57 [INFO] [CURL 3] ✅ Got agent response on attempt 3/30
+2025-10-18 18:02:57 [INFO] [CURL 3] Response length: 124 characters
+
+2025-10-18 18:02:57 [INFO] [generateResponse] ========================================
+2025-10-18 18:02:57 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:02:57 [INFO] [generateResponse] Response: "Test received — Profile Roaster online. Send a photo and I’ll roast your outfit, pose, and backgroun..."
+2025-10-18 18:02:57 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:02:59 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:02:59 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:02:59 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:02:59 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:02:59 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:02:59 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:02:59 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:02:59 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:02:59 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "3d3c20dd-1650-4649-b784-687fac2c8223" }
+2025-10-18 18:02:59 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:02:59 [INFO] [CURL 1] SessionId: 1a999ced-a8a1-4b56-831f-075c6f77a3ca
+
+2025-10-18 18:02:59 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:02:59 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/1a999ced-a8a1-4b56-831f-075c6f77a3ca/messages
+2025-10-18 18:02:59 [INFO] [CURL 2] Body: { content: "test", userId: "3d3c20dd-1650-4649-b784-687fac2c8223" }
+2025-10-18 18:02:59 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:02:59 [INFO] [CURL 2] MessageId: ee87d408-114a-4dea-9acd-277714ae4b2d
+
+2025-10-18 18:02:59 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:02:59 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/1a999ced-a8a1-4b56-831f-075c6f77a3ca/messages
+2025-10-18 18:02:59 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:02:59 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:02:59 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:02:59 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:02:59 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:02:59 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:02:59 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:02:59 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:02:59 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "2c100c49-10a2-45c1-9e6e-df97be8debc5" }
+2025-10-18 18:02:59 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:02:59 [INFO] [CURL 1] SessionId: dc0c63e0-8373-4482-a7b5-faeba855949b
+
+2025-10-18 18:02:59 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:02:59 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/dc0c63e0-8373-4482-a7b5-faeba855949b/messages
+2025-10-18 18:02:59 [INFO] [CURL 2] Body: { content: "test", userId: "2c100c49-10a2-45c1-9e6e-df97be8debc5" }
+2025-10-18 18:02:59 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:02:59 [INFO] [CURL 2] MessageId: ec38f87b-0544-492e-a9b0-a59d87151363
+
+2025-10-18 18:02:59 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:02:59 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/dc0c63e0-8373-4482-a7b5-faeba855949b/messages
+2025-10-18 18:03:11 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 18:03:14 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:03:14 [INFO] [CURL 3] Response length: 213 characters
+
+2025-10-18 18:03:14 [INFO] [generateResponse] ========================================
+2025-10-18 18:03:14 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:03:14 [INFO] [generateResponse] Response: "Test received. I'm the profile-roaster — send a photo and I'll roast your outfit, pose, and backgrou..."
+2025-10-18 18:03:14 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:03:14 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:03:14 [INFO] [CURL 3] Response length: 208 characters
+
+2025-10-18 18:03:14 [INFO] [generateResponse] ========================================
+2025-10-18 18:03:14 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:03:14 [INFO] [generateResponse] Response: "Test received. I'm the profile-roaster — drop a photo and I'll roast the outfit, pose, and backgroun..."
+2025-10-18 18:03:14 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:03:16 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: [REQUEST TO PROFILE-ROASTER] Please roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws
+2025-10-18 18:03:16 [INFO] [generateResponse] Using S3 URL directly: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760835794702-wqih2-image-1760835794517.jpg
+2025-10-18 18:03:16 [INFO] [generateResponse] Image URL set, formatted message length: 183
+2025-10-18 18:03:16 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:03:16 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:03:16 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:03:16 [INFO] [generateResponse] Message: "[REQUEST TO PROFILE-ROASTER] Please roast this ima..."
+2025-10-18 18:03:16 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:03:16 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:03:16 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:03:16 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "4f42d512-2723-4393-a93c-31e3fa33b83a" }
+2025-10-18 18:03:16 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:03:16 [INFO] [CURL 1] SessionId: dbff3a1d-1ca3-4659-a7b3-2930b623ce03
+
+2025-10-18 18:03:16 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:03:16 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/dbff3a1d-1ca3-4659-a7b3-2930b623ce03/messages
+2025-10-18 18:03:16 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "4f42d512-2723-4393-a93c-31e3fa33b83a" }
+2025-10-18 18:03:16 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:03:16 [INFO] [CURL 2] MessageId: 0a1194b9-e095-4017-907e-7bac48235f91
+
+2025-10-18 18:03:16 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:03:16 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/dbff3a1d-1ca3-4659-a7b3-2930b623ce03/messages
+2025-10-18 18:03:21 [INFO] [CURL 3] ✅ Got agent response on attempt 9/30
+2025-10-18 18:03:21 [INFO] [CURL 3] Response length: 389 characters
+
+2025-10-18 18:03:21 [INFO] [generateResponse] ========================================
+2025-10-18 18:03:21 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:03:21 [INFO] [generateResponse] Response: "Nice outfit — it’s trying really hard to be “effortlessly cool” and accidentally landed on “I ironed..."
+2025-10-18 18:03:21 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:03:41 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 18:03:46 [INFO] [CURL 3] ✅ Got agent response on attempt 7/30
+2025-10-18 18:03:46 [INFO] [CURL 3] Response length: 366 characters
+
+2025-10-18 18:03:46 [INFO] [generateResponse] ========================================
+2025-10-18 18:03:46 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:03:46 [INFO] [generateResponse] Response: "Hey — I can't open external links here, could you upload the photo directly so I can roast it proper..."
+2025-10-18 18:03:46 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:06:55 [INFO] Starting XMTP Agent
+2025-10-18 18:06:55 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 18:06:58 [INFO] Connected to XMTP
+2025-10-18 18:06:59 [INFO] Listening for XMTP messages
+2025-10-18 18:07:01 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: roast this: https://example.com/test.jpg
+2025-10-18 18:07:01 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:07:01 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:07:01 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:07:01 [INFO] [generateResponse] Message: "roast this: https://example.com/test.jpg"
+2025-10-18 18:07:01 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:07:01 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:07:01 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:07:01 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "62f78b8c-ef16-4633-976c-c02c8a9ab110" }
+2025-10-18 18:07:01 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:07:01 [INFO] [CURL 1] SessionId: e11949c8-aaa8-4d2e-a9fe-c666d92833ee
+
+2025-10-18 18:07:01 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:07:01 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/e11949c8-aaa8-4d2e-a9fe-c666d92833ee/messages
+2025-10-18 18:07:01 [INFO] [CURL 2] Body: { content: "roast this: https://example.com/test.jpg", userId: "62f78b8c-ef16-4633-976c-c02c8a9ab110" }
+2025-10-18 18:07:01 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:07:01 [INFO] [CURL 2] MessageId: 881a724b-8ae5-4afe-8500-2876ef78d380
+
+2025-10-18 18:07:01 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:07:01 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/e11949c8-aaa8-4d2e-a9fe-c666d92833ee/messages
+2025-10-18 18:07:18 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:07:18 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:07:18 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:07:18 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:07:18 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:07:18 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:07:18 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:07:18 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:07:18 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "1565fc61-3bb3-4704-a6bb-23c63bcd0ee4" }
+2025-10-18 18:07:18 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:07:18 [INFO] [CURL 1] SessionId: c32dc0b9-dedc-4b17-98e1-ff1cb993bc75
+
+2025-10-18 18:07:18 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:07:18 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/c32dc0b9-dedc-4b17-98e1-ff1cb993bc75/messages
+2025-10-18 18:07:18 [INFO] [CURL 2] Body: { content: "test", userId: "1565fc61-3bb3-4704-a6bb-23c63bcd0ee4" }
+2025-10-18 18:07:18 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:07:18 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:07:18 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:07:18 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:07:18 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:07:18 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:07:18 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:07:18 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:07:18 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "c245cc37-8f8e-459b-b8df-c2496f924f1d" }
+2025-10-18 18:07:18 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:07:18 [INFO] [CURL 2] MessageId: deb0a302-edbd-440a-af50-5455b0e7a67c
+
+2025-10-18 18:07:18 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:07:18 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/c32dc0b9-dedc-4b17-98e1-ff1cb993bc75/messages
+2025-10-18 18:07:18 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:07:18 [INFO] [CURL 1] SessionId: 02f7be03-205a-4665-8ba2-bf622bb1223a
+
+2025-10-18 18:07:18 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:07:18 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/02f7be03-205a-4665-8ba2-bf622bb1223a/messages
+2025-10-18 18:07:18 [INFO] [CURL 2] Body: { content: "test", userId: "c245cc37-8f8e-459b-b8df-c2496f924f1d" }
+2025-10-18 18:07:18 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:07:18 [INFO] [CURL 2] MessageId: 6a51eb07-e4fc-4430-bb46-53a90cec7eee
+
+2025-10-18 18:07:18 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:07:18 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/02f7be03-205a-4665-8ba2-bf622bb1223a/messages
+2025-10-18 18:07:26 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 18:07:33 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: Roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760836045755-l47b4w-ima
+2025-10-18 18:07:33 [INFO] [generateResponse] S3 image detected, downloading and uploading to ElizaOS: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760836045755-l47b4w-image-1760836045561.jpg
+2025-10-18 18:07:33 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:07:33 [INFO] [CURL 3] Response length: 244 characters
+
+2025-10-18 18:07:33 [INFO] [generateResponse] ========================================
+2025-10-18 18:07:33 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:07:33 [INFO] [generateResponse] Response: "Test received. I’m Profile Roaster — drop a photo (LinkedIn headshot, dating pic, or the classic cer..."
+2025-10-18 18:07:33 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:07:34 [INFO] [CURL 3] ✅ Got agent response on attempt 8/30
+2025-10-18 18:07:34 [INFO] [CURL 3] Response length: 292 characters
+
+2025-10-18 18:07:34 [INFO] [generateResponse] ========================================
+2025-10-18 18:07:34 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:07:34 [INFO] [generateResponse] Response: "I can't open external links — please upload the photo here or paste it so I can roast it properly. B..."
+2025-10-18 18:07:34 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:07:36 [INFO] [Media] Uploading to ElizaOS for agent 6bb0e88e-ec59-00f3-b411-84e72ef35003, size: 2544707 bytes
+2025-10-18 18:07:36 [INFO] [CURL 3] ✅ Got agent response on attempt 2/30
+2025-10-18 18:07:36 [INFO] [CURL 3] Response length: 141 characters
+
+2025-10-18 18:07:36 [INFO] [generateResponse] ========================================
+2025-10-18 18:07:36 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:07:36 [INFO] [generateResponse] Response: "Test? Cute. That’s giving "mic check in an empty club" energy — drop a photo and I’ll roast your vib..."
+2025-10-18 18:07:36 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:07:36 [ERROR] [Media] ❌ Upload failed: ElizaOS media upload returned 404
+2025-10-18 18:07:36 [ERROR] [generateResponse] Failed to process S3 image: ElizaOS media upload returned 404
+{
+  "stack": "Error: ElizaOS media upload returned 404\n    at uploadMediaToElizaOS (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:48:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:160:28)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:371:42)"
+}
+2025-10-18 18:07:36 [ERROR] HTTP error: ElizaOS media upload returned 404
+{
+  "stack": "Error: ElizaOS media upload returned 404\n    at uploadMediaToElizaOS (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:48:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:160:28)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:371:42)"
+}
+2025-10-18 18:21:45 [INFO] Starting XMTP Agent
+2025-10-18 18:21:45 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 18:21:48 [INFO] Connected to XMTP
+2025-10-18 18:21:49 [INFO] Listening for XMTP messages
+2025-10-18 18:22:48 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: Please roast this image: https://picsum.photos/200/200
+2025-10-18 18:22:48 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:22:48 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:22:48 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:22:48 [INFO] [generateResponse] Message: "Please roast this image: https://picsum.photos/200..."
+2025-10-18 18:22:48 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:22:48 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:22:48 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:22:48 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "c8b9d7b7-deba-4a1f-8686-3472d0fb441f" }
+2025-10-18 18:22:48 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:22:48 [INFO] [CURL 1] SessionId: 26204e28-219e-4533-b6e4-f921806d951b
+
+2025-10-18 18:22:48 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:22:48 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/26204e28-219e-4533-b6e4-f921806d951b/messages
+2025-10-18 18:22:48 [INFO] [CURL 2] Body: { content: "Please roast this image: https://picsum.photos/200...", userId: "c8b9d7b7-deba-4a1f-8686-3472d0fb441f" }
+2025-10-18 18:22:48 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:22:48 [INFO] [CURL 2] MessageId: 6088aeb8-e05f-4025-ac1f-2b7162f235ef
+
+2025-10-18 18:22:48 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:22:48 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/26204e28-219e-4533-b6e4-f921806d951b/messages
+2025-10-18 18:23:13 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 18:23:21 [INFO] [CURL 3] ✅ Got agent response on attempt 8/30
+2025-10-18 18:23:21 [INFO] [CURL 3] Response length: 347 characters
+
+2025-10-18 18:23:21 [INFO] [generateResponse] ========================================
+2025-10-18 18:23:21 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:23:21 [INFO] [generateResponse] Response: "This 200x200 is serving peak “mystery stock photo” energy — blurry enough to hide any fashion risks,..."
+2025-10-18 18:23:21 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:24:46 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:24:46 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:24:46 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:24:46 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:24:46 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:24:46 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:24:46 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:24:46 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:24:46 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "6bb1c9a8-5753-4380-9098-0c1d66d92002" }
+2025-10-18 18:24:46 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:24:46 [INFO] [CURL 1] SessionId: f4c9e9db-2893-48ec-a22f-88bbc33f8fbf
+
+2025-10-18 18:24:46 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:24:46 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/f4c9e9db-2893-48ec-a22f-88bbc33f8fbf/messages
+2025-10-18 18:24:46 [INFO] [CURL 2] Body: { content: "test", userId: "6bb1c9a8-5753-4380-9098-0c1d66d92002" }
+2025-10-18 18:24:46 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:24:46 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:24:46 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:24:46 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:24:46 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:24:46 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:24:46 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:24:46 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:24:46 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "8784a130-23d4-4297-98ef-435ecdd9396b" }
+2025-10-18 18:24:46 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:24:46 [INFO] [CURL 2] MessageId: f23f12fd-947f-4b71-92b6-db4c605015d3
+
+2025-10-18 18:24:46 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:24:46 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/f4c9e9db-2893-48ec-a22f-88bbc33f8fbf/messages
+2025-10-18 18:24:46 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:24:46 [INFO] [CURL 1] SessionId: 35d177f8-4866-4eea-9ea7-650bb39703c3
+
+2025-10-18 18:24:46 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:24:46 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/35d177f8-4866-4eea-9ea7-650bb39703c3/messages
+2025-10-18 18:24:46 [INFO] [CURL 2] Body: { content: "test", userId: "8784a130-23d4-4297-98ef-435ecdd9396b" }
+2025-10-18 18:24:46 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:24:46 [INFO] [CURL 2] MessageId: 0d5989f1-48dc-41af-9ed9-5f8a2e423edd
+
+2025-10-18 18:24:46 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:24:46 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/35d177f8-4866-4eea-9ea7-650bb39703c3/messages
+2025-10-18 18:24:59 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: [REQUEST TO PROFILE-ROASTER] Please roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws
+2025-10-18 18:24:59 [INFO] [generateResponse] S3 image detected, downloading for agent: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760837097429-qzos3q-image-1760837097038.jpg
+2025-10-18 18:25:00 [INFO] [generateResponse] S3 image converted to base64 (1945992 bytes)
+2025-10-18 18:25:00 [INFO] [generateResponse] Image URL set, formatted message length: 1946097
+2025-10-18 18:25:00 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:25:00 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:25:00 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:25:00 [INFO] [generateResponse] Message: "[REQUEST TO PROFILE-ROASTER] Please roast this ima..."
+2025-10-18 18:25:00 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:25:00 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:25:00 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:25:00 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "44ec5bf3-833e-4e97-a34a-ec3aaaf4ccd1" }
+2025-10-18 18:25:00 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:25:00 [INFO] [CURL 1] SessionId: ad1f6965-c931-4ad8-bf39-5d4828a97cd8
+
+2025-10-18 18:25:00 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:25:00 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/ad1f6965-c931-4ad8-bf39-5d4828a97cd8/messages
+2025-10-18 18:25:00 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "44ec5bf3-833e-4e97-a34a-ec3aaaf4ccd1" }
+2025-10-18 18:25:00 [ERROR] 
+[generateResponse] ❌ ERROR: Error: Failed to send message to session: 400 - {"error":{"code":"VALIDATION_ERROR","message":"Invalid content: Content exceeds maximum length of 4000 characters","timestamp":"2025-10-19T01:25:00.780Z","details":{"reason":"Content exceeds maximum length of 4000 characters"},"stack":"InvalidContentError: Invalid content: Content exceeds maximum length of 4000 characters\n    at validateContent (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27319:15)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27452:5)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27438:68)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27325:21)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/route.js:157:13)\n    at dispatch (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/route.js:117:3)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:435:11)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:295:15)\n    at processParams (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:664:3)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:26098:5)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:26078:5)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:26019:5)\n    at processTicksAndRejections (native:7:39)"}}
+2025-10-18 18:25:00 [ERROR] [generateResponse] ========================================
+
+2025-10-18 18:25:00 [ERROR] HTTP error: Failed to send message to session: 400 - {"error":{"code":"VALIDATION_ERROR","message":"Invalid content: Content exceeds maximum length of 4000 characters","timestamp":"2025-10-19T01:25:00.780Z","details":{"reason":"Content exceeds maximum length of 4000 characters"},"stack":"InvalidContentError: Invalid content: Content exceeds maximum length of 4000 characters\n    at validateContent (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27319:15)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27452:5)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27438:68)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27325:21)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/route.js:157:13)\n    at dispatch (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/route.js:117:3)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:435:11)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:295:15)\n    at processParams (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:664:3)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:26098:5)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:26078:5)\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:26019:5)\n    at processTicksAndRejections (native:7:39)"}}
+{
+  "stack": "Error: Failed to send message to session: 400 - {\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Invalid content: Content exceeds maximum length of 4000 characters\",\"timestamp\":\"2025-10-19T01:25:00.780Z\",\"details\":{\"reason\":\"Content exceeds maximum length of 4000 characters\"},\"stack\":\"InvalidContentError: Invalid content: Content exceeds maximum length of 4000 characters\\n    at validateContent (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27319:15)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27452:5)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27438:68)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:27325:21)\\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/route.js:157:13)\\n    at dispatch (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/route.js:117:3)\\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:435:11)\\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:295:15)\\n    at processParams (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:664:3)\\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\\n    at handle (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:186:3)\\n    at router (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:60:12)\\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:26098:5)\\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:26078:5)\\n    at handleRequest (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/lib/layer.js:152:17)\\n    at trimPrefix (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:342:13)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:297:9)\\n    at next (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/router/index.js:291:5)\\n    at <anonymous> (/Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/agent-marketplace/node_modules/@elizaos/server/dist/index.js:26019:5)\\n    at processTicksAndRejections (native:7:39)\"}}\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:217:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:369:42)"
+}
+2025-10-18 18:25:01 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:25:01 [INFO] [CURL 3] Response length: 179 characters
+
+2025-10-18 18:25:01 [INFO] [generateResponse] ========================================
+2025-10-18 18:25:01 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:25:01 [INFO] [generateResponse] Response: "Nice test — that one-word message is giving "tapping the mic" energy. Drop a photo or your cringey d..."
+2025-10-18 18:25:01 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:25:01 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:25:01 [INFO] [CURL 3] Response length: 179 characters
+
+2025-10-18 18:25:01 [INFO] [generateResponse] ========================================
+2025-10-18 18:25:01 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:25:01 [INFO] [generateResponse] Response: "Test? Cute. I pass tests with sass and a side of shade — drop a photo or say "roast me" and I'll tur..."
+2025-10-18 18:25:01 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:27:18 [INFO] Starting XMTP Agent
+2025-10-18 18:27:18 [INFO] HTTP API server listening on http://localhost:3003
+2025-10-18 18:27:21 [INFO] Connected to XMTP
+2025-10-18 18:27:22 [INFO] Listening for XMTP messages
+2025-10-18 18:27:24 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: roast this: https://picsum.photos/300/300
+2025-10-18 18:27:24 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:27:24 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:27:24 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:27:24 [INFO] [generateResponse] Message: "roast this: https://picsum.photos/300/300"
+2025-10-18 18:27:24 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:27:24 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:27:24 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:27:24 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "7006afeb-6601-4a08-946e-06322338c787" }
+2025-10-18 18:27:24 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:27:24 [INFO] [CURL 1] SessionId: 755da89f-6c18-43c6-a902-fbcf17e12bad
+
+2025-10-18 18:27:24 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:27:24 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/755da89f-6c18-43c6-a902-fbcf17e12bad/messages
+2025-10-18 18:27:24 [INFO] [CURL 2] Body: { content: "roast this: https://picsum.photos/300/300", userId: "7006afeb-6601-4a08-946e-06322338c787" }
+2025-10-18 18:27:24 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:27:24 [INFO] [CURL 2] MessageId: 9020cb2c-38c4-45b4-9a8f-31278ddfc47e
+
+2025-10-18 18:27:24 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:27:24 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/755da89f-6c18-43c6-a902-fbcf17e12bad/messages
+2025-10-18 18:27:31 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: [REQUEST TO PROFILE-ROASTER] Please roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws
+2025-10-18 18:27:31 [INFO] [generateResponse] Image URL detected: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760837249868-4nkrb-image-1760837249549.jp...
+2025-10-18 18:27:31 [INFO] [generateResponse] Image set, formatted message length: 183
+2025-10-18 18:27:31 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:27:31 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:27:31 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:27:31 [INFO] [generateResponse] Message: "[REQUEST TO PROFILE-ROASTER] Please roast this ima..."
+2025-10-18 18:27:31 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:27:31 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:27:31 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:27:31 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "027e08f2-90af-4479-a376-8f13ef871fde" }
+2025-10-18 18:27:31 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:27:31 [INFO] [CURL 1] SessionId: b62dffa2-fedc-487d-9fe4-2263cbd5aee2
+
+2025-10-18 18:27:31 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:27:31 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/b62dffa2-fedc-487d-9fe4-2263cbd5aee2/messages
+2025-10-18 18:27:31 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "027e08f2-90af-4479-a376-8f13ef871fde" }
+2025-10-18 18:27:31 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:27:31 [INFO] [CURL 2] MessageId: ede8cf73-632d-42d1-8681-63f088b66f3b
+
+2025-10-18 18:27:31 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:27:31 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/b62dffa2-fedc-487d-9fe4-2263cbd5aee2/messages
+2025-10-18 18:27:46 [INFO] [CURL 3] ✅ Got agent response on attempt 4/30
+2025-10-18 18:27:46 [INFO] [CURL 3] Response length: 267 characters
+
+2025-10-18 18:27:46 [INFO] [generateResponse] ========================================
+2025-10-18 18:27:46 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:27:46 [INFO] [generateResponse] Response: "This looks like the official audition photo for "mysterious influencer who loves oat milk" — all moo..."
+2025-10-18 18:27:46 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:27:56 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 18:27:59 [INFO] [CURL 3] ✅ Got agent response on attempt 6/30
+2025-10-18 18:27:59 [INFO] [CURL 3] Response length: 347 characters
+
+2025-10-18 18:27:59 [INFO] [generateResponse] ========================================
+2025-10-18 18:27:59 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:27:59 [INFO] [generateResponse] Response: "This is peak "I opened my front camera and declared a mood" — the lighting's trying to sell you as a..."
+2025-10-18 18:27:59 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:46:18 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:46:18 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:46:18 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:46:18 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:46:18 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:46:18 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:46:18 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:46:18 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:46:18 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "4585c7a0-253e-4588-866f-9eff9135b733" }
+2025-10-18 18:46:19 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:46:19 [INFO] [CURL 1] SessionId: 5ebf69e5-d52d-4867-a03f-6927c02f4b1c
+
+2025-10-18 18:46:19 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:46:19 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/5ebf69e5-d52d-4867-a03f-6927c02f4b1c/messages
+2025-10-18 18:46:19 [INFO] [CURL 2] Body: { content: "test", userId: "4585c7a0-253e-4588-866f-9eff9135b733" }
+2025-10-18 18:46:19 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:46:19 [INFO] [CURL 2] MessageId: 722de23e-00da-4c3f-a485-c697dac91c52
+
+2025-10-18 18:46:19 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:46:19 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/5ebf69e5-d52d-4867-a03f-6927c02f4b1c/messages
+2025-10-18 18:46:19 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:46:19 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:46:19 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:46:19 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:46:19 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:46:19 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:46:19 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:46:19 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:46:19 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "980b8733-50a0-4e70-964a-a32caf72a638" }
+2025-10-18 18:46:19 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:46:19 [INFO] [CURL 1] SessionId: ba6c76db-859a-45e1-afa8-be1bda97e72f
+
+2025-10-18 18:46:19 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:46:19 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/ba6c76db-859a-45e1-afa8-be1bda97e72f/messages
+2025-10-18 18:46:19 [INFO] [CURL 2] Body: { content: "test", userId: "980b8733-50a0-4e70-964a-a32caf72a638" }
+2025-10-18 18:46:19 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:46:19 [INFO] [CURL 2] MessageId: 6d2ca533-87e2-42ff-ad1c-78ec277a8ef8
+
+2025-10-18 18:46:19 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:46:19 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/ba6c76db-859a-45e1-afa8-be1bda97e72f/messages
+2025-10-18 18:46:28 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: Roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760838385822-3rzuq5-ima
+2025-10-18 18:46:28 [INFO] [generateResponse] Image URL detected: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760838385822-3rzuq5-image-1760838385321.j...
+2025-10-18 18:46:28 [INFO] [generateResponse] Image set, formatted message length: 184
+2025-10-18 18:46:28 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:46:28 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:46:28 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:46:28 [INFO] [generateResponse] Message: "Roast this image: https://irc-ai-roaster.s3.eu-sou..."
+2025-10-18 18:46:28 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:46:28 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:46:28 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:46:28 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "ff1ec053-e861-42a4-8aa7-c67b14da6703" }
+2025-10-18 18:46:28 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:46:28 [INFO] [CURL 1] SessionId: 588162ad-4393-4df6-a717-a1b4e0daec04
+
+2025-10-18 18:46:28 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:46:28 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/588162ad-4393-4df6-a717-a1b4e0daec04/messages
+2025-10-18 18:46:28 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "ff1ec053-e861-42a4-8aa7-c67b14da6703" }
+2025-10-18 18:46:28 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:46:28 [INFO] [CURL 2] MessageId: d259d54d-4493-4215-9808-cf0ed2c24494
+
+2025-10-18 18:46:28 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:46:28 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/588162ad-4393-4df6-a717-a1b4e0daec04/messages
+2025-10-18 18:46:39 [INFO] [CURL 3] ✅ Got agent response on attempt 3/30
+2025-10-18 18:46:39 [INFO] [CURL 3] Response length: 187 characters
+
+2025-10-18 18:46:39 [INFO] [generateResponse] ========================================
+2025-10-18 18:46:39 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:46:39 [INFO] [generateResponse] Response: "Test received — I'm online and ready to roast. Send a photo and I'll surgically dismantle the outfit..."
+2025-10-18 18:46:39 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:46:44 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 18:46:53 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 18:46:56 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 18:47:00 [INFO] [CURL 3] ✅ Got agent response on attempt 8/30
+2025-10-18 18:47:00 [INFO] [CURL 3] Response length: 327 characters
+
+2025-10-18 18:47:00 [INFO] [generateResponse] ========================================
+2025-10-18 18:47:00 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:47:00 [INFO] [generateResponse] Response: "Trying for "effortless chic," but the lighting and pose are screaming "I practiced this in the bathr..."
+2025-10-18 18:47:00 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:47:09 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 18:47:21 [INFO] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 18:47:34 [INFO] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 18:47:46 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 18:47:46 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 18:47:46 [ERROR] [generateResponse] ========================================
+
+2025-10-18 18:47:46 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:238:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:346:42)"
+}
+2025-10-18 18:51:24 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:51:24 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:51:24 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:51:24 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:51:24 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:51:24 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:24 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:51:24 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:51:24 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "6d98b2ad-113c-4871-9bd4-227c6fa91b92" }
+2025-10-18 18:51:24 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:51:24 [INFO] [CURL 1] SessionId: 4b71d5c8-7027-4b1f-8df5-c8d5458e136f
+
+2025-10-18 18:51:24 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:51:24 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/4b71d5c8-7027-4b1f-8df5-c8d5458e136f/messages
+2025-10-18 18:51:24 [INFO] [CURL 2] Body: { content: "test", userId: "6d98b2ad-113c-4871-9bd4-227c6fa91b92" }
+2025-10-18 18:51:24 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:51:24 [INFO] [CURL 2] MessageId: edcfa859-240c-4fb5-94ec-5ef8533f2dd5
+
+2025-10-18 18:51:24 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:51:24 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/4b71d5c8-7027-4b1f-8df5-c8d5458e136f/messages
+2025-10-18 18:51:24 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:51:24 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:51:24 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:51:24 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:51:24 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:51:24 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:24 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:51:24 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:51:24 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "00702899-ca00-40e2-8092-8e24cef00d78" }
+2025-10-18 18:51:24 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:51:24 [INFO] [CURL 1] SessionId: 639f9417-692c-445e-9937-ece477dcd9e0
+
+2025-10-18 18:51:24 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:51:24 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/639f9417-692c-445e-9937-ece477dcd9e0/messages
+2025-10-18 18:51:24 [INFO] [CURL 2] Body: { content: "test", userId: "00702899-ca00-40e2-8092-8e24cef00d78" }
+2025-10-18 18:51:24 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:51:24 [INFO] [CURL 2] MessageId: 5fd87dcd-b735-4b14-84be-e9437291773f
+
+2025-10-18 18:51:24 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:51:24 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/639f9417-692c-445e-9937-ece477dcd9e0/messages
+2025-10-18 18:51:34 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:51:34 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:51:34 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:51:34 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:51:34 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:51:34 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:34 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:51:34 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:51:34 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "9d82cbef-1955-4205-a824-61ff7f8d2721" }
+2025-10-18 18:51:34 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:51:34 [INFO] [CURL 1] SessionId: 261b0aad-810b-4094-b783-bdff4b97b1a8
+
+2025-10-18 18:51:34 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:51:34 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/261b0aad-810b-4094-b783-bdff4b97b1a8/messages
+2025-10-18 18:51:34 [INFO] [CURL 2] Body: { content: "test", userId: "9d82cbef-1955-4205-a824-61ff7f8d2721" }
+2025-10-18 18:51:34 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:51:34 [INFO] [CURL 2] MessageId: 931d53f7-1299-4905-86cc-af920e17edbb
+
+2025-10-18 18:51:34 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:51:34 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/261b0aad-810b-4094-b783-bdff4b97b1a8/messages
+2025-10-18 18:51:34 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:51:34 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:51:34 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:51:34 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:51:34 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:51:34 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:34 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:51:34 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:51:34 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "61d5e84d-dba4-4a10-b836-e73a246b99a2" }
+2025-10-18 18:51:34 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:51:34 [INFO] [CURL 1] SessionId: 5524ec80-d175-4a05-9aa7-cbd883287501
+
+2025-10-18 18:51:34 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:51:34 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/5524ec80-d175-4a05-9aa7-cbd883287501/messages
+2025-10-18 18:51:34 [INFO] [CURL 2] Body: { content: "test", userId: "61d5e84d-dba4-4a10-b836-e73a246b99a2" }
+2025-10-18 18:51:34 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:51:34 [INFO] [CURL 2] MessageId: 5001b09a-e8c2-41ca-9b65-6cec512985cd
+
+2025-10-18 18:51:34 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:51:34 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/5524ec80-d175-4a05-9aa7-cbd883287501/messages
+2025-10-18 18:51:39 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:51:39 [INFO] [CURL 3] Response length: 110 characters
+
+2025-10-18 18:51:39 [INFO] [generateResponse] ========================================
+2025-10-18 18:51:39 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:51:39 [INFO] [generateResponse] Response: "Test received. Send a photo and I’ll roast your vibe so clean even your mirror will ask for a makeup..."
+2025-10-18 18:51:39 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:39 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:51:39 [INFO] [CURL 3] Response length: 219 characters
+
+2025-10-18 18:51:39 [INFO] [generateResponse] ========================================
+2025-10-18 18:51:39 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:51:39 [INFO] [generateResponse] Response: "Test received. Profile Roaster reporting for duty — warmed up like a ring light and ready to mercile..."
+2025-10-18 18:51:39 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:45 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:51:45 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:51:45 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:51:45 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:51:45 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:51:45 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:45 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:51:45 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:51:45 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "bbf8dd87-ebe0-41a6-b7d2-a0864be79d7b" }
+2025-10-18 18:51:45 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:51:45 [INFO] [CURL 1] SessionId: 111ff3de-b09e-47fc-ac9b-2dca372d867c
+
+2025-10-18 18:51:45 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:51:45 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/111ff3de-b09e-47fc-ac9b-2dca372d867c/messages
+2025-10-18 18:51:45 [INFO] [CURL 2] Body: { content: "test", userId: "bbf8dd87-ebe0-41a6-b7d2-a0864be79d7b" }
+2025-10-18 18:51:45 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:51:45 [INFO] [CURL 2] MessageId: f65bda35-3bfc-45a6-a4e5-c92f2842ce2c
+
+2025-10-18 18:51:45 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:51:45 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/111ff3de-b09e-47fc-ac9b-2dca372d867c/messages
+2025-10-18 18:51:45 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:51:45 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:51:45 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:51:45 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:51:45 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:51:45 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:45 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:51:45 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:51:45 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "d67f7c86-f042-4412-af99-00cbbc5d1653" }
+2025-10-18 18:51:45 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:51:45 [INFO] [CURL 1] SessionId: f73d1943-dcbe-4013-9300-e85185a5656e
+
+2025-10-18 18:51:45 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:51:45 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/f73d1943-dcbe-4013-9300-e85185a5656e/messages
+2025-10-18 18:51:45 [INFO] [CURL 2] Body: { content: "test", userId: "d67f7c86-f042-4412-af99-00cbbc5d1653" }
+2025-10-18 18:51:45 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:51:45 [INFO] [CURL 2] MessageId: 8e47f293-397e-4eab-99eb-2a13d93c625c
+
+2025-10-18 18:51:45 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:51:45 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/f73d1943-dcbe-4013-9300-e85185a5656e/messages
+2025-10-18 18:51:50 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:51:50 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:51:50 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:51:50 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:51:50 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:51:50 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:50 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:51:50 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:51:50 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "b21b444e-8c7c-4766-9884-59f358a88caa" }
+2025-10-18 18:51:50 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:51:50 [INFO] [CURL 1] SessionId: 3c0271a5-287c-47f9-b9c1-4440e6126445
+
+2025-10-18 18:51:50 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:51:50 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/3c0271a5-287c-47f9-b9c1-4440e6126445/messages
+2025-10-18 18:51:50 [INFO] [CURL 2] Body: { content: "test", userId: "b21b444e-8c7c-4766-9884-59f358a88caa" }
+2025-10-18 18:51:50 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:51:50 [INFO] [CURL 2] MessageId: f82b2c41-3969-444d-8e7a-353eb7419b5b
+
+2025-10-18 18:51:50 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:51:50 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/3c0271a5-287c-47f9-b9c1-4440e6126445/messages
+2025-10-18 18:51:50 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:51:50 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:51:50 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:51:50 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:51:50 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:51:50 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:50 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:51:50 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:51:50 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "4ac0de1b-91f1-4a9d-9fc6-5764e669e896" }
+2025-10-18 18:51:50 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:51:50 [INFO] [CURL 1] SessionId: 7165ca54-cffa-49c9-9fde-f17d081d2275
+
+2025-10-18 18:51:50 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:51:50 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/7165ca54-cffa-49c9-9fde-f17d081d2275/messages
+2025-10-18 18:51:50 [INFO] [CURL 2] Body: { content: "test", userId: "4ac0de1b-91f1-4a9d-9fc6-5764e669e896" }
+2025-10-18 18:51:50 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:51:50 [INFO] [CURL 2] MessageId: 158230f6-815d-4884-a811-06858cf58aed
+
+2025-10-18 18:51:50 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:51:50 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/7165ca54-cffa-49c9-9fde-f17d081d2275/messages
+2025-10-18 18:51:51 [INFO] [CURL 3] ✅ Got agent response on attempt 2/30
+2025-10-18 18:51:51 [INFO] [CURL 3] Response length: 163 characters
+
+2025-10-18 18:51:51 [INFO] [generateResponse] ========================================
+2025-10-18 18:51:51 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:51:51 [INFO] [generateResponse] Response: "“Test”? That’s giving “I opened the app and forgot why” energy — very relatable. Drop a photo or con..."
+2025-10-18 18:51:51 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:51:54 [INFO] [CURL 3] ✅ Got agent response on attempt 3/30
+2025-10-18 18:51:54 [INFO] [CURL 3] Response length: 179 characters
+
+2025-10-18 18:51:54 [INFO] [generateResponse] ========================================
+2025-10-18 18:51:54 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:51:54 [INFO] [generateResponse] Response: "Test received. That one-word masterpiece is giving "mysterious DM that says nothing" energy — enigma..."
+2025-10-18 18:51:54 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:52:00 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:52:00 [INFO] [CURL 3] Response length: 148 characters
+
+2025-10-18 18:52:00 [INFO] [generateResponse] ========================================
+2025-10-18 18:52:00 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:52:00 [INFO] [generateResponse] Response: "Test received — system's online and already judging. Send a photo and I’ll roast the outfit, pose, a..."
+2025-10-18 18:52:00 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:52:00 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:52:00 [INFO] [CURL 3] Response length: 192 characters
+
+2025-10-18 18:52:00 [INFO] [generateResponse] ========================================
+2025-10-18 18:52:00 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:52:00 [INFO] [generateResponse] Response: ""Test"? Bold one-word confidence — I respect it. Mic's hot and my roast engine's primed: send a phot..."
+2025-10-18 18:52:00 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:52:10 [INFO] [CURL 3] ✅ Got agent response on attempt 3/30
+2025-10-18 18:52:10 [INFO] [CURL 3] Response length: 152 characters
+
+2025-10-18 18:52:10 [INFO] [generateResponse] ========================================
+2025-10-18 18:52:10 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:52:10 [INFO] [generateResponse] Response: "Test received. This "test" is serving placeholder-profile energy — send a photo and I'll dissect the..."
+2025-10-18 18:52:10 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:52:15 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 18:52:27 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 18:52:36 [INFO] [generateResponse] Agent: vibe-roaster, Has image: true, Message preview: [REQUEST TO VIBE-ROASTER] Please roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws.co
+2025-10-18 18:52:36 [INFO] [generateResponse] Image URL detected: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760838755019-ohh5zq-image-1760838754596.j...
+2025-10-18 18:52:36 [INFO] [generateResponse] Image set, formatted message length: 184
+2025-10-18 18:52:36 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:52:36 [INFO] [generateResponse] Starting ElizaOS session for: vibe-roaster
+2025-10-18 18:52:36 [INFO] [generateResponse] Agent ID: f7b032ca-cd10-023b-84fa-4ed33652d551
+2025-10-18 18:52:36 [INFO] [generateResponse] Message: "[REQUEST TO VIBE-ROASTER] Please roast this image:..."
+2025-10-18 18:52:36 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:52:36 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:52:36 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:52:36 [INFO] [CURL 1] Body: { agentId: "f7b032ca-cd10-023b-84fa-4ed33652d551", userId: "4390840b-e3af-43ff-ae99-d923304061aa" }
+2025-10-18 18:52:36 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:52:36 [INFO] [CURL 1] SessionId: 85b4470c-2524-43cd-ad8c-653cfb39aef8
+
+2025-10-18 18:52:36 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:52:36 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/85b4470c-2524-43cd-ad8c-653cfb39aef8/messages
+2025-10-18 18:52:36 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "4390840b-e3af-43ff-ae99-d923304061aa" }
+2025-10-18 18:52:36 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:52:36 [INFO] [CURL 2] MessageId: 09b3e918-c7e7-4062-a9e9-c69646b955f1
+
+2025-10-18 18:52:36 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:52:36 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/85b4470c-2524-43cd-ad8c-653cfb39aef8/messages
+2025-10-18 18:52:40 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 18:52:52 [INFO] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 18:53:01 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 18:53:05 [INFO] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 18:53:14 [INFO] [CURL 3] ✅ Got agent response on attempt 10/30
+2025-10-18 18:53:14 [INFO] [CURL 3] Response length: 296 characters
+
+2025-10-18 18:53:14 [INFO] [generateResponse] ========================================
+2025-10-18 18:53:14 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:53:14 [INFO] [generateResponse] Response: "Peak "I grabbed three trends and called it a personality" energy — thrift-store 90s flirting with fi..."
+2025-10-18 18:53:14 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:53:17 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 18:53:17 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 18:53:17 [ERROR] [generateResponse] ========================================
+
+2025-10-18 18:53:17 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:238:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:346:42)"
+}
+2025-10-18 18:56:49 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: [REQUEST TO PROFILE-ROASTER] Please roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws
+2025-10-18 18:56:49 [INFO] [generateResponse] Image URL detected: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760839008011-ho06yj-image-1760839007234.j...
+2025-10-18 18:56:49 [INFO] [generateResponse] Image set, formatted message length: 184
+2025-10-18 18:56:49 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:56:49 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:56:49 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:56:49 [INFO] [generateResponse] Message: "[REQUEST TO PROFILE-ROASTER] Please roast this ima..."
+2025-10-18 18:56:49 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:56:49 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:56:49 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:56:49 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "33056896-d730-4418-92b1-172d3d90db96" }
+2025-10-18 18:56:49 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:56:49 [INFO] [CURL 1] SessionId: 08ba5f43-207e-4e0d-b469-4f700afbcd21
+
+2025-10-18 18:56:49 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:56:49 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/08ba5f43-207e-4e0d-b469-4f700afbcd21/messages
+2025-10-18 18:56:49 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "33056896-d730-4418-92b1-172d3d90db96" }
+2025-10-18 18:56:49 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:56:49 [INFO] [CURL 2] MessageId: fb769c75-bc7f-4b29-9d89-34b9de2b4ce3
+
+2025-10-18 18:56:49 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:56:49 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/08ba5f43-207e-4e0d-b469-4f700afbcd21/messages
+2025-10-18 18:57:14 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 18:57:17 [INFO] [CURL 3] ✅ Got agent response on attempt 6/30
+2025-10-18 18:57:17 [INFO] [CURL 3] Response length: 250 characters
+
+2025-10-18 18:57:17 [INFO] [generateResponse] ========================================
+2025-10-18 18:57:17 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:57:17 [INFO] [generateResponse] Response: "This looks like a LinkedIn headshot that sneaked into a thrift-store photoshoot — the lighting paid ..."
+2025-10-18 18:57:17 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:58:42 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:58:42 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:58:42 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:58:42 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:58:42 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:58:42 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:58:42 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:58:42 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:58:42 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "8083c6f7-8cca-45e9-ae4d-80fc2d0f9f5f" }
+2025-10-18 18:58:42 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:58:42 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:58:42 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:58:42 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:58:42 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:58:42 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:58:42 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:58:42 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:58:42 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "e8bb1537-dcc8-4188-948a-f3e2453e7c6c" }
+2025-10-18 18:58:42 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:58:42 [INFO] [CURL 1] SessionId: 5efa0fc3-1b95-48c7-8852-81a98ab23d76
+
+2025-10-18 18:58:42 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:58:42 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/5efa0fc3-1b95-48c7-8852-81a98ab23d76/messages
+2025-10-18 18:58:42 [INFO] [CURL 2] Body: { content: "test", userId: "8083c6f7-8cca-45e9-ae4d-80fc2d0f9f5f" }
+2025-10-18 18:58:42 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:58:42 [INFO] [CURL 1] SessionId: a16c432c-fe2b-4b2f-a355-42f3297e5786
+
+2025-10-18 18:58:42 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:58:42 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/a16c432c-fe2b-4b2f-a355-42f3297e5786/messages
+2025-10-18 18:58:42 [INFO] [CURL 2] Body: { content: "test", userId: "e8bb1537-dcc8-4188-948a-f3e2453e7c6c" }
+2025-10-18 18:58:42 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:58:42 [INFO] [CURL 2] MessageId: e95f8c22-14ce-483d-8f94-12ff8fa2b913
+
+2025-10-18 18:58:42 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:58:42 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/5efa0fc3-1b95-48c7-8852-81a98ab23d76/messages
+2025-10-18 18:58:42 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:58:42 [INFO] [CURL 2] MessageId: 4be6da1d-d2f7-4088-a1dd-b9ee750e42f2
+
+2025-10-18 18:58:42 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:58:42 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/a16c432c-fe2b-4b2f-a355-42f3297e5786/messages
+2025-10-18 18:58:57 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 18:58:57 [INFO] [CURL 3] Response length: 212 characters
+
+2025-10-18 18:58:57 [INFO] [generateResponse] ========================================
+2025-10-18 18:58:57 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:58:57 [INFO] [generateResponse] Response: "Test received. That one-word flex is giving "I paid for premium Wi‑Fi and got minimal effort" energy..."
+2025-10-18 18:58:57 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:58:59 [INFO] [generateResponse] Agent: profile-roaster, Has image: true, Message preview: [REQUEST TO PROFILE-ROASTER] Please roast this image: https://irc-ai-roaster.s3.eu-south-1.amazonaws
+2025-10-18 18:58:59 [INFO] [generateResponse] Image URL detected: https://irc-ai-roaster.s3.eu-south-1.amazonaws.com/roasts/1760839138392-3c5ay2-image-1760839138102.j...
+2025-10-18 18:58:59 [INFO] [generateResponse] Image set, formatted message length: 184
+2025-10-18 18:58:59 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:58:59 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:58:59 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:58:59 [INFO] [generateResponse] Message: "[REQUEST TO PROFILE-ROASTER] Please roast this ima..."
+2025-10-18 18:58:59 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:58:59 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:58:59 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:58:59 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "b7b1e953-91e3-4f4a-bda6-0fc38a8b6568" }
+2025-10-18 18:58:59 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:58:59 [INFO] [CURL 1] SessionId: 046befb8-2934-47ef-a5d7-2368c7495f8a
+
+2025-10-18 18:58:59 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:58:59 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/046befb8-2934-47ef-a5d7-2368c7495f8a/messages
+2025-10-18 18:58:59 [INFO] [CURL 2] Body: { content: "Please analyze this image and provide a hilarious,...", userId: "b7b1e953-91e3-4f4a-bda6-0fc38a8b6568" }
+2025-10-18 18:58:59 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:58:59 [INFO] [CURL 2] MessageId: 6fae06f1-b274-4ef9-bd9e-944dc506881e
+
+2025-10-18 18:58:59 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:58:59 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/046befb8-2934-47ef-a5d7-2368c7495f8a/messages
+2025-10-18 18:59:02 [INFO] [CURL 3] ✅ Got agent response on attempt 3/30
+2025-10-18 18:59:02 [INFO] [CURL 3] Response length: 180 characters
+
+2025-10-18 18:59:02 [INFO] [generateResponse] ========================================
+2025-10-18 18:59:02 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:59:02 [INFO] [generateResponse] Response: ""Test" — thrilling commitment to one-word messages. If you meant to test my roast power, it's at 7/1..."
+2025-10-18 18:59:02 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:59:24 [INFO] [CURL 3] ✅ Got agent response on attempt 5/30
+2025-10-18 18:59:24 [INFO] [CURL 3] Response length: 272 characters
+
+2025-10-18 18:59:24 [INFO] [generateResponse] ========================================
+2025-10-18 18:59:24 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 18:59:24 [INFO] [generateResponse] Response: "This is full “influencer audition tape in a one-bedroom set” energy — the ring light is doing therap..."
+2025-10-18 18:59:24 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:59:47 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:59:47 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:59:47 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:59:47 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:59:47 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:59:47 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:59:47 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:59:47 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:59:47 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "1c2b39fe-62f1-4f64-81b4-b904ab494e3a" }
+2025-10-18 18:59:47 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:59:47 [INFO] [CURL 1] SessionId: 52b90aca-4276-40f4-9e84-338068fc76ab
+
+2025-10-18 18:59:47 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:59:47 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/52b90aca-4276-40f4-9e84-338068fc76ab/messages
+2025-10-18 18:59:47 [INFO] [CURL 2] Body: { content: "test", userId: "1c2b39fe-62f1-4f64-81b4-b904ab494e3a" }
+2025-10-18 18:59:47 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:59:47 [INFO] [CURL 2] MessageId: f2e83b89-9da4-4673-8b29-3db14d2ee953
+
+2025-10-18 18:59:47 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:59:47 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/52b90aca-4276-40f4-9e84-338068fc76ab/messages
+2025-10-18 18:59:47 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 18:59:47 [INFO] 
+[generateResponse] ========================================
+2025-10-18 18:59:47 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 18:59:47 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 18:59:47 [INFO] [generateResponse] Message: "test"
+2025-10-18 18:59:47 [INFO] [generateResponse] ========================================
+
+2025-10-18 18:59:47 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 18:59:47 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 18:59:47 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "ade5e906-4c20-4da0-b7fa-e23a7605e11d" }
+2025-10-18 18:59:47 [INFO] [CURL 1] ✅ Session created
+2025-10-18 18:59:47 [INFO] [CURL 1] SessionId: a36f3664-8b7b-4f90-a5bc-4cbbb73d44a8
+
+2025-10-18 18:59:47 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 18:59:47 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/a36f3664-8b7b-4f90-a5bc-4cbbb73d44a8/messages
+2025-10-18 18:59:47 [INFO] [CURL 2] Body: { content: "test", userId: "ade5e906-4c20-4da0-b7fa-e23a7605e11d" }
+2025-10-18 18:59:47 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 18:59:47 [INFO] [CURL 2] MessageId: a44697a7-ea1c-4100-9b0f-2d00b850e5bc
+
+2025-10-18 18:59:47 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 18:59:47 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/a36f3664-8b7b-4f90-a5bc-4cbbb73d44a8/messages
+2025-10-18 19:00:02 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 19:00:02 [INFO] [CURL 3] Response length: 161 characters
+
+2025-10-18 19:00:02 [INFO] [generateResponse] ========================================
+2025-10-18 19:00:02 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 19:00:02 [INFO] [generateResponse] Response: "Test received. Send a photo and I’ll roast the outfit, pose, and background harder than Simon Cowell..."
+2025-10-18 19:00:02 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:00:04 [INFO] [CURL 3] ✅ Got agent response on attempt 2/30
+2025-10-18 19:00:04 [INFO] [CURL 3] Response length: 237 characters
+
+2025-10-18 19:00:04 [INFO] [generateResponse] ========================================
+2025-10-18 19:00:04 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 19:00:04 [INFO] [generateResponse] Response: "“Test”? That’s giving full minimalist mood board — mysterious, edgy, and slightly passive-aggressive..."
+2025-10-18 19:00:04 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:24:43 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 19:24:43 [INFO] 
+[generateResponse] ========================================
+2025-10-18 19:24:43 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 19:24:43 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 19:24:43 [INFO] [generateResponse] Message: "test"
+2025-10-18 19:24:43 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:24:43 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 19:24:43 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 19:24:43 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "5b19f4d4-a962-4875-947a-c1bdb1fa0602" }
+2025-10-18 19:24:43 [INFO] [CURL 1] ✅ Session created
+2025-10-18 19:24:43 [INFO] [CURL 1] SessionId: e011ff83-7d23-4257-bdd7-f811e5f37154
+
+2025-10-18 19:24:43 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 19:24:43 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/e011ff83-7d23-4257-bdd7-f811e5f37154/messages
+2025-10-18 19:24:43 [INFO] [CURL 2] Body: { content: "test", userId: "5b19f4d4-a962-4875-947a-c1bdb1fa0602" }
+2025-10-18 19:24:43 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 19:24:43 [INFO] [CURL 2] MessageId: 1c31b3f8-74cf-45e7-85e5-c375d1df6068
+
+2025-10-18 19:24:43 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 19:24:43 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/e011ff83-7d23-4257-bdd7-f811e5f37154/messages
+2025-10-18 19:24:43 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 19:24:43 [INFO] 
+[generateResponse] ========================================
+2025-10-18 19:24:43 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 19:24:43 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 19:24:43 [INFO] [generateResponse] Message: "test"
+2025-10-18 19:24:43 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:24:43 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 19:24:43 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 19:24:43 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "3d7fa015-4d38-4429-abd3-358a5519cd0a" }
+2025-10-18 19:24:43 [INFO] [CURL 1] ✅ Session created
+2025-10-18 19:24:43 [INFO] [CURL 1] SessionId: ab456a4e-b7a9-440e-b733-a155ba32cfa2
+
+2025-10-18 19:24:43 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 19:24:43 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/ab456a4e-b7a9-440e-b733-a155ba32cfa2/messages
+2025-10-18 19:24:43 [INFO] [CURL 2] Body: { content: "test", userId: "3d7fa015-4d38-4429-abd3-358a5519cd0a" }
+2025-10-18 19:24:43 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 19:24:43 [INFO] [CURL 2] MessageId: 83781537-8da2-492e-8a66-785d6d7426ee
+
+2025-10-18 19:24:43 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 19:24:43 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/ab456a4e-b7a9-440e-b733-a155ba32cfa2/messages
+2025-10-18 19:25:01 [INFO] [CURL 3] ✅ Got agent response on attempt 2/30
+2025-10-18 19:25:01 [INFO] [CURL 3] Response length: 159 characters
+
+2025-10-18 19:25:01 [INFO] [generateResponse] ========================================
+2025-10-18 19:25:01 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 19:25:01 [INFO] [generateResponse] Response: "“Test?” Bold move — you just submitted a vibe-check in monosyllables. It’s giving mysterious placeho..."
+2025-10-18 19:25:01 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:25:08 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 19:25:21 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 19:25:34 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 19:25:46 [INFO] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 19:25:59 [INFO] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 19:26:11 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 19:26:11 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 19:26:11 [ERROR] [generateResponse] ========================================
+
+2025-10-18 19:26:11 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:238:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:346:42)"
+}
+2025-10-18 19:31:29 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 19:31:29 [INFO] 
+[generateResponse] ========================================
+2025-10-18 19:31:29 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 19:31:29 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 19:31:29 [INFO] [generateResponse] Message: "test"
+2025-10-18 19:31:29 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:31:29 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 19:31:29 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 19:31:29 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "4895bf27-3a09-4fdf-8bf6-4cb80b179a2f" }
+2025-10-18 19:31:29 [INFO] [CURL 1] ✅ Session created
+2025-10-18 19:31:29 [INFO] [CURL 1] SessionId: 02f426ed-d211-481f-9454-d7b694ed024e
+
+2025-10-18 19:31:29 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 19:31:29 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/02f426ed-d211-481f-9454-d7b694ed024e/messages
+2025-10-18 19:31:29 [INFO] [CURL 2] Body: { content: "test", userId: "4895bf27-3a09-4fdf-8bf6-4cb80b179a2f" }
+2025-10-18 19:31:29 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 19:31:29 [INFO] [CURL 2] MessageId: 7c3970c7-b11d-48f1-abc5-3fcb2f7443df
+
+2025-10-18 19:31:29 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 19:31:29 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/02f426ed-d211-481f-9454-d7b694ed024e/messages
+2025-10-18 19:31:29 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 19:31:29 [INFO] 
+[generateResponse] ========================================
+2025-10-18 19:31:29 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 19:31:29 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 19:31:29 [INFO] [generateResponse] Message: "test"
+2025-10-18 19:31:29 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:31:29 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 19:31:29 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 19:31:29 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "a64334d0-f46b-426a-b4a1-00507f2da8bd" }
+2025-10-18 19:31:29 [INFO] [CURL 1] ✅ Session created
+2025-10-18 19:31:29 [INFO] [CURL 1] SessionId: 9e3a5c93-4f96-415f-b529-d58ddce322d4
+
+2025-10-18 19:31:29 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 19:31:29 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/9e3a5c93-4f96-415f-b529-d58ddce322d4/messages
+2025-10-18 19:31:29 [INFO] [CURL 2] Body: { content: "test", userId: "a64334d0-f46b-426a-b4a1-00507f2da8bd" }
+2025-10-18 19:31:29 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 19:31:29 [INFO] [CURL 2] MessageId: 758c07c6-ad87-4e3f-b9aa-591fed0cb5d2
+
+2025-10-18 19:31:29 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 19:31:29 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/9e3a5c93-4f96-415f-b529-d58ddce322d4/messages
+2025-10-18 19:31:44 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 19:31:44 [INFO] [CURL 3] Response length: 209 characters
+
+2025-10-18 19:31:44 [INFO] [generateResponse] ========================================
+2025-10-18 19:31:44 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 19:31:44 [INFO] [generateResponse] Response: "Profile-roaster reporting for duty — message received. This "test" is giving loading-bar personality..."
+2025-10-18 19:31:44 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:31:54 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 19:32:06 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 19:32:19 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 19:32:31 [INFO] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 19:32:44 [INFO] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 19:32:56 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 19:32:56 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 19:32:56 [ERROR] [generateResponse] ========================================
+
+2025-10-18 19:32:56 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:238:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:346:42)"
+}
+2025-10-18 19:38:40 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 19:38:40 [INFO] 
+[generateResponse] ========================================
+2025-10-18 19:38:40 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 19:38:40 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 19:38:40 [INFO] [generateResponse] Message: "test"
+2025-10-18 19:38:40 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:38:40 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 19:38:40 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 19:38:40 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "cbf14c4e-1cd0-4e34-811f-d1b53bb7a3f1" }
+2025-10-18 19:38:40 [INFO] [CURL 1] ✅ Session created
+2025-10-18 19:38:40 [INFO] [CURL 1] SessionId: 4943a753-d06c-457a-b03e-d256ae8ac5b0
+
+2025-10-18 19:38:40 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 19:38:40 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/4943a753-d06c-457a-b03e-d256ae8ac5b0/messages
+2025-10-18 19:38:40 [INFO] [CURL 2] Body: { content: "test", userId: "cbf14c4e-1cd0-4e34-811f-d1b53bb7a3f1" }
+2025-10-18 19:38:40 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 19:38:40 [INFO] [CURL 2] MessageId: c2e3c91d-ed9a-4c9b-8b09-2998ef88e205
+
+2025-10-18 19:38:40 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 19:38:40 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/4943a753-d06c-457a-b03e-d256ae8ac5b0/messages
+2025-10-18 19:38:42 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 19:38:42 [INFO] 
+[generateResponse] ========================================
+2025-10-18 19:38:42 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 19:38:42 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 19:38:42 [INFO] [generateResponse] Message: "test"
+2025-10-18 19:38:42 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:38:42 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 19:38:42 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 19:38:42 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "1ed2e1ef-8a8b-4044-b699-1dc61ecd6c4f" }
+2025-10-18 19:38:42 [INFO] [CURL 1] ✅ Session created
+2025-10-18 19:38:42 [INFO] [CURL 1] SessionId: 4de6dfae-cd96-47b4-a381-c3a67e95a66d
+
+2025-10-18 19:38:42 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 19:38:42 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/4de6dfae-cd96-47b4-a381-c3a67e95a66d/messages
+2025-10-18 19:38:42 [INFO] [CURL 2] Body: { content: "test", userId: "1ed2e1ef-8a8b-4044-b699-1dc61ecd6c4f" }
+2025-10-18 19:38:42 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 19:38:42 [INFO] [CURL 2] MessageId: 12f00be3-1ee7-4881-90f0-da4484e778ee
+
+2025-10-18 19:38:42 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 19:38:42 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/4de6dfae-cd96-47b4-a381-c3a67e95a66d/messages
+2025-10-18 19:39:00 [INFO] [CURL 3] ✅ Got agent response on attempt 3/30
+2025-10-18 19:39:00 [INFO] [CURL 3] Response length: 146 characters
+
+2025-10-18 19:39:00 [INFO] [generateResponse] ========================================
+2025-10-18 19:39:00 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 19:39:00 [INFO] [generateResponse] Response: "Test received — roast engine online and fully caffeinated. Send a pic and I’ll politely roast your v..."
+2025-10-18 19:39:00 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:39:07 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 19:39:19 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 19:39:20 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 19:39:20 [INFO] 
+[generateResponse] ========================================
+2025-10-18 19:39:20 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 19:39:20 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 19:39:20 [INFO] [generateResponse] Message: "test"
+2025-10-18 19:39:20 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:39:20 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 19:39:20 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 19:39:20 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "e9d6347f-8ea7-4540-bbcf-13830dd13a43" }
+2025-10-18 19:39:20 [INFO] [CURL 1] ✅ Session created
+2025-10-18 19:39:20 [INFO] [CURL 1] SessionId: 498f512a-9131-460d-a310-7a30ced80871
+
+2025-10-18 19:39:20 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 19:39:20 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/498f512a-9131-460d-a310-7a30ced80871/messages
+2025-10-18 19:39:20 [INFO] [CURL 2] Body: { content: "test", userId: "e9d6347f-8ea7-4540-bbcf-13830dd13a43" }
+2025-10-18 19:39:20 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 19:39:20 [INFO] [CURL 2] MessageId: 3cc65fa9-d3d4-4563-bb31-3943e93a50d3
+
+2025-10-18 19:39:20 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 19:39:20 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/498f512a-9131-460d-a310-7a30ced80871/messages
+2025-10-18 19:39:20 [INFO] [generateResponse] Agent: profile-roaster, Has image: false, Message preview: test
+2025-10-18 19:39:20 [INFO] 
+[generateResponse] ========================================
+2025-10-18 19:39:20 [INFO] [generateResponse] Starting ElizaOS session for: profile-roaster
+2025-10-18 19:39:20 [INFO] [generateResponse] Agent ID: 6bb0e88e-ec59-00f3-b411-84e72ef35003
+2025-10-18 19:39:20 [INFO] [generateResponse] Message: "test"
+2025-10-18 19:39:20 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:39:20 [INFO] [CURL 1] Creating ElizaOS session...
+2025-10-18 19:39:20 [INFO] [CURL 1] POST http://localhost:3002/api/messaging/sessions
+2025-10-18 19:39:20 [INFO] [CURL 1] Body: { agentId: "6bb0e88e-ec59-00f3-b411-84e72ef35003", userId: "c06ef771-6e8e-45cc-abde-66d576cd924e" }
+2025-10-18 19:39:20 [INFO] [CURL 1] ✅ Session created
+2025-10-18 19:39:20 [INFO] [CURL 1] SessionId: 27eeea23-28de-44dc-99ba-25db70cfdd33
+
+2025-10-18 19:39:20 [INFO] [CURL 2] Sending message to ElizaOS session...
+2025-10-18 19:39:20 [INFO] [CURL 2] POST http://localhost:3002/api/messaging/sessions/27eeea23-28de-44dc-99ba-25db70cfdd33/messages
+2025-10-18 19:39:20 [INFO] [CURL 2] Body: { content: "test", userId: "c06ef771-6e8e-45cc-abde-66d576cd924e" }
+2025-10-18 19:39:20 [INFO] [CURL 2] ✅ Message sent
+2025-10-18 19:39:20 [INFO] [CURL 2] MessageId: e4402801-f665-4034-8782-4870c57e5ce9
+
+2025-10-18 19:39:20 [INFO] [CURL 3] Polling for agent response...
+2025-10-18 19:39:20 [INFO] [CURL 3] GET http://localhost:3002/api/messaging/sessions/27eeea23-28de-44dc-99ba-25db70cfdd33/messages
+2025-10-18 19:39:32 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 19:39:35 [INFO] [CURL 3] ✅ Got agent response on attempt 1/30
+2025-10-18 19:39:35 [INFO] [CURL 3] Response length: 169 characters
+
+2025-10-18 19:39:35 [INFO] [generateResponse] ========================================
+2025-10-18 19:39:35 [INFO] [generateResponse] ✅ Complete!
+2025-10-18 19:39:35 [INFO] [generateResponse] Response: "Test received. This chat's energy is currently set to "loading..."; send a photo and I'll roast it h..."
+2025-10-18 19:39:35 [INFO] [generateResponse] ========================================
+
+2025-10-18 19:39:45 [INFO] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 19:39:45 [INFO] [CURL 3] Attempt 5/30: Still waiting for agent...
+2025-10-18 19:39:57 [INFO] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 19:39:58 [INFO] [CURL 3] Attempt 10/30: Still waiting for agent...
+2025-10-18 19:40:10 [INFO] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 19:40:10 [ERROR] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 19:40:10 [ERROR] [generateResponse] ========================================
+
+2025-10-18 19:40:10 [ERROR] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:238:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:346:42)"
+}
+2025-10-18 19:40:10 [INFO] [CURL 3] Attempt 15/30: Still waiting for agent...

@@ -1,0 +1,1 @@
+{"version":3,"file":"LoadingDialog.d.ts","sourceRoot":"","sources":["LoadingDialog.tsx"],"names":[],"mappings":"AAAA,OAAO,KAA8B,MAAM,OAAO,CAAC;AAEnD,UAAU,kBAAkB;IAC1B,MAAM,EAAE,OAAO,CAAC;IAChB,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,iBAAiB,CAAC,EAAE,OAAO,CAAC;CAC7B;AAcD,eAAO,MAAM,aAAa,EAAE,KAAK,CAAC,EAAE,CAAC,kBAAkB,CAoCtD,CAAC"}
