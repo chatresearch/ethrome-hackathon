@@ -25,7 +25,7 @@ export const minikitConfig = {
     homeUrl: ROOT_URL,
     webhookUrl: `${ROOT_URL}/api/webhook`,
     primaryCategory: 'entertainment',
-    tags: ['ai', 'gaming', 'web3', 'social', 'entertainment'],
+    tags: ['ai', 'gaming', 'web3', 'social'],
     heroImageUrl: `${ROOT_URL}/banner.png`,
     tagline: 'Brutally hilarious AI roasts powered by GPT-4o',
     ogTitle: 'AI Roast Generator - Get Roasted on Base',
