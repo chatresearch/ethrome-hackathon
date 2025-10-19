@@ -181,15 +181,25 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     // Use ElizaOS Sessions API (from https://docs.elizaos.ai/api-reference)
     const elizaosPort = process.env.ELIZAOS_PORT || "3002";
     
-    console.log(`[generateResponse] Creating ElizaOS session for ${agent}...`);
+    console.log(`\n[generateResponse] ========================================`);
+    console.log(`[generateResponse] Starting ElizaOS session for: ${agent}`);
+    console.log(`[generateResponse] Agent ID: ${agentId}`);
+    console.log(`[generateResponse] Message: "${message.substring(0, 50)}${message.length > 50 ? '...' : ''}"`);
+    console.log(`[generateResponse] ========================================\n`);
     
     // Step 1: Create a session (POST /api/messaging/sessions)
+    const userId = generateUUID();
+    
+    console.log(`[CURL 1] Creating ElizaOS session...`);
+    console.log(`[CURL 1] POST http://localhost:${elizaosPort}/api/messaging/sessions`);
+    console.log(`[CURL 1] Body: { agentId: "${agentId}", userId: "${userId}" }`);
+    
     const sessionResp = await fetch(`http://localhost:${elizaosPort}/api/messaging/sessions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         agentId: agentId,
-        userId: generateUUID(),
+        userId: userId,
       }),
     });
     
@@ -205,17 +215,20 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       throw new Error('No session ID returned from ElizaOS');
     }
     
-    console.log(`[generateResponse] Session created: ${sessionId}`);
+    console.log(`[CURL 1] ✅ Session created`);
+    console.log(`[CURL 1] SessionId: ${sessionId}\n`);
     
     // Step 2: Send message to session (POST /api/messaging/sessions/{sessionId}/messages)
-    console.log(`[generateResponse] Sending message to ${agent} via session...`);
+    console.log(`[CURL 2] Sending message to ElizaOS session...`);
+    console.log(`[CURL 2] POST http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`);
+    console.log(`[CURL 2] Body: { content: "${formattedMessage.substring(0, 50)}${formattedMessage.length > 50 ? '...' : ''}", userId: "${userId}" }`);
     
     const messageResp = await fetch(`http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         content: formattedMessage,
-        userId: generateUUID(),
+        userId: userId,
       }),
     });
     
@@ -224,8 +237,15 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       throw new Error(`Failed to send message to session: ${messageResp.status} - ${errorText}`);
     }
     
+    const messageData = await messageResp.json() as { id?: string };
+    const messageId = messageData.id;
+    
+    console.log(`[CURL 2] ✅ Message sent`);
+    console.log(`[CURL 2] MessageId: ${messageId}\n`);
+    
     // Step 3: Poll for agent response (GET /api/messaging/sessions/{sessionId}/messages)
-    console.log(`[generateResponse] Polling for agent response...`);
+    console.log(`[CURL 3] Polling for agent response...`);
+    console.log(`[CURL 3] GET http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`);
     
     let response = "";
     let pollAttempts = 0;
@@ -234,11 +254,12 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     while (!response && pollAttempts < maxAttempts) {
       await new Promise(resolve => setTimeout(resolve, 200)); // Wait 200ms between polls
       
+      pollAttempts++;
+      
       const messagesResp = await fetch(`http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`);
       
       if (!messagesResp.ok) {
-        console.warn(`[generateResponse] Poll attempt ${pollAttempts + 1}: Failed to fetch messages (${messagesResp.status})`);
-        pollAttempts++;
+        console.log(`[CURL 3] Attempt ${pollAttempts}/${maxAttempts}: Failed to fetch (${messagesResp.status})`);
         continue;
       }
       
@@ -247,24 +268,34 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       
       // Find the most recent agent response (isAgent: true)
       const agentMessages = messages.filter((msg: any) => msg.isAgent === true);
+      
       if (agentMessages.length > 0) {
         const latestAgentMessage = agentMessages[agentMessages.length - 1];
         response = latestAgentMessage.content;
-        console.log(`[generateResponse] ✅ Got agent response on attempt ${pollAttempts + 1}`);
+        console.log(`[CURL 3] ✅ Got agent response on attempt ${pollAttempts}/${maxAttempts}`);
+        console.log(`[CURL 3] Response length: ${response.length} characters\n`);
         break;
+      } else {
+        // Show progress without spamming too much
+        if (pollAttempts % 3 === 0) {
+          console.log(`[CURL 3] Attempt ${pollAttempts}/${maxAttempts}: Still waiting for agent...`);
+        }
       }
-      
-      pollAttempts++;
     }
     
     if (!response) {
       throw new Error(`No response from agent after ${maxAttempts} polling attempts`);
     }
     
-    console.log(`[generateResponse] ✅ Got response from ${agent}: ${response.substring(0, 100)}`);
+    console.log(`[generateResponse] ========================================`);
+    console.log(`[generateResponse] ✅ Complete!`);
+    console.log(`[generateResponse] Response: "${response.substring(0, 100)}${response.length > 100 ? '...' : ''}"`);
+    console.log(`[generateResponse] ========================================\n`);
+    
     return response;
   } catch (error) {
-    console.error(`[generateResponse] Error: ${error}`);
+    console.error(`\n[generateResponse] ❌ ERROR: ${error}`);
+    console.error(`[generateResponse] ========================================\n`);
     throw error;
   }
 }
