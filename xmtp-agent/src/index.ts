@@ -224,8 +224,42 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       throw new Error(`Failed to send message to session: ${messageResp.status} - ${errorText}`);
     }
     
-    const messageData = await messageResp.json() as { text?: string; response?: string; messages?: any[] };
-    const response = messageData.text || messageData.response || messageData.messages?.[0]?.text || "No response from agent";
+    // Step 3: Poll for agent response (GET /api/messaging/sessions/{sessionId}/messages)
+    console.log(`[generateResponse] Polling for agent response...`);
+    
+    let response = "";
+    let pollAttempts = 0;
+    const maxAttempts = 30; // 30 attempts * 200ms = 6 seconds max wait
+    
+    while (!response && pollAttempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 200)); // Wait 200ms between polls
+      
+      const messagesResp = await fetch(`http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`);
+      
+      if (!messagesResp.ok) {
+        console.warn(`[generateResponse] Poll attempt ${pollAttempts + 1}: Failed to fetch messages (${messagesResp.status})`);
+        pollAttempts++;
+        continue;
+      }
+      
+      const messagesData = await messagesResp.json() as { messages?: any[] };
+      const messages = messagesData.messages || [];
+      
+      // Find the most recent agent response (isAgent: true)
+      const agentMessages = messages.filter((msg: any) => msg.isAgent === true);
+      if (agentMessages.length > 0) {
+        const latestAgentMessage = agentMessages[agentMessages.length - 1];
+        response = latestAgentMessage.content;
+        console.log(`[generateResponse] ✅ Got agent response on attempt ${pollAttempts + 1}`);
+        break;
+      }
+      
+      pollAttempts++;
+    }
+    
+    if (!response) {
+      throw new Error(`No response from agent after ${maxAttempts} polling attempts`);
+    }
     
     console.log(`[generateResponse] ✅ Got response from ${agent}: ${response.substring(0, 100)}`);
     return response;
