@@ -1,0 +1,67 @@
+{
+  "name": "AI Roast Generator",
+  "version": "1.0.0",
+  "description": "Get brutally hilarious AI-powered roasts on Base. Upload a photo and let GPT-4o vision roast your vibe. Vote on roasts on-chain and share to Twitter/Farcaster.",
+  "shortDescription": "AI roasts powered by GPT-4o on Base blockchain",
+  "icon": "https://ai-roast-generator-ivory.vercel.app/icon.png",
+  "logo": "https://ai-roast-generator-ivory.vercel.app/logo.png",
+  "banner": "https://ai-roast-generator-ivory.vercel.app/banner.png",
+  "url": "https://ai-roast-generator-ivory.vercel.app",
+  "developer": {
+    "name": "ethrome-hackathon",
+    "url": "https://github.com/ballew/ethrome-hackathon"
+  },
+  "chain": "base",
+  "chainId": 84532,
+  "category": "entertainment",
+  "tags": ["ai", "web3", "social", "gaming", "entertainment"],
+  "features": [
+    "AI Image Analysis with GPT-4o",
+    "On-Chain Voting & Leaderboard",
+    "Social Sharing (Twitter/Farcaster)",
+    "MetaMask Integration",
+    "Real-time Agent Routing via XMTP"
+  ],
+  "smartContract": {
+    "address": "0x5b73C5498c1E3b4dbA84de0F1833c4a029d90519",
+    "network": "base-sepolia",
+    "name": "AgentRegistry",
+    "functions": [
+      "recordRoast",
+      "voteRoast",
+      "getTopRoasts",
+      "withdrawPlatformBalance"
+    ]
+  },
+  "agents": [
+    {
+      "name": "profile-roaster",
+      "description": "Roasts dating profiles and selfies with surgical sarcasm"
+    },
+    {
+      "name": "linkedin-roaster",
+      "description": "Critiques professional photos and LinkedIn vibes"
+    },
+    {
+      "name": "vibe-roaster",
+      "description": "Analyzes aesthetic and overall life choices visible in photos"
+    }
+  ],
+  "techStack": [
+    "React",
+    "TypeScript",
+    "Wagmi",
+    "RainbowKit",
+    "Solidity",
+    "ElizaOS",
+    "XMTP",
+    "GPT-4o Vision"
+  ],
+  "links": {
+    "github": "https://github.com/ballew/ethrome-hackathon",
+    "twitter": "https://x.com",
+    "discord": "https://discord.gg"
+  },
+  "testnet": true,
+  "production": false
+}
