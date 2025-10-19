@@ -14,7 +14,6 @@ interface ResultsDisplayProps {
 
 export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3ImageUrl }) => {
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
-  const [expandedIdx, setExpandedIdx] = useState<Set<number>>(new Set());
 
   const handleCopy = (text: string, idx: number) => {
     navigator.clipboard.writeText(text);
@@ -52,16 +51,6 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
     const text = `Just got roasted by ${agentName}! 🔥\n"${shortRoast}..."\n\nTry AI Roast Generator at ${fullShareUrl}`;
     const url = `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}`;
     window.open(url, 'farcaster-share', 'width=550,height=420');
-  };
-
-  const toggleExpand = (idx: number) => {
-    const newExpanded = new Set(expandedIdx);
-    if (newExpanded.has(idx)) {
-      newExpanded.delete(idx);
-    } else {
-      newExpanded.add(idx);
-    }
-    setExpandedIdx(newExpanded);
   };
 
   const getAgentIcon = (agentName: string): string => {
