@@ -4,6 +4,7 @@ import * as http from "http";
 import { routeByCapabilities, formatResponseWithCapabilities, resolveAgentCapabilities } from "./ens-resolver.js";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import logger from "./logger.js";
 
 dotenv.config();
 
@@ -45,7 +46,7 @@ async function uploadMediaToElizaOS(agentId: string, base64: string): Promise<st
     const formData = new FormData();
     formData.append('file', blob, `roast-${Date.now()}.${mimeType.split('/')[1]}`);
     
-    console.log(`[Media] Uploading to ElizaOS for agent ${agentId}, size: ${blob.size} bytes`);
+    logger.info(`[Media] Uploading to ElizaOS for agent ${agentId}, size: ${blob.size} bytes`);
     
     const response = await fetch(`http://localhost:${elizaosPort}/api/media/${agentId}/upload-media`, {
       method: 'POST',
@@ -61,11 +62,11 @@ async function uploadMediaToElizaOS(agentId: string, base64: string): Promise<st
       throw new Error('No media URL returned from ElizaOS');
     }
     
-    console.log(`[Media] ✅ Uploaded to ElizaOS: ${mediaData.url}`);
+    logger.info(`[Media] ✅ Uploaded to ElizaOS: ${mediaData.url}`);
     return mediaData.url;
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
-    console.error(`[Media] ❌ Upload failed: ${msg}`);
+    logger.error(`[Media] ❌ Upload failed: ${msg}`);
     throw error;
   }
 }
@@ -75,11 +76,11 @@ function compressBase64Image(base64: string, maxSizeKB: number = 200): string {
   // If already small enough, return as-is
   const sizeInKB = base64.length / 1024;
   if (sizeInKB <= maxSizeKB) {
-    console.log(`[Image] Size ${sizeInKB.toFixed(1)}KB - no compression needed`);
+    logger.info(`[Image] Size ${sizeInKB.toFixed(1)}KB - no compression needed`);
     return base64;
   }
 
-  console.log(`[Image] Compressing from ${sizeInKB.toFixed(1)}KB to ~${maxSizeKB}KB`);
+  logger.info(`[Image] Compressing from ${sizeInKB.toFixed(1)}KB to ~${maxSizeKB}KB`);
   
   // Extract header and data
   const parts = base64.split(',');
@@ -96,7 +97,7 @@ function compressBase64Image(base64: string, maxSizeKB: number = 200): string {
   const compressed = data.substring(0, targetChars);
   const result = `${header},${compressed}`;
   
-  console.log(`[Image] Compressed to ${(result.length / 1024).toFixed(1)}KB`);
+  logger.info(`[Image] Compressed to ${(result.length / 1024).toFixed(1)}KB`);
   return result;
 }
 
@@ -114,11 +115,11 @@ async function generatePresignedUrl(filename: string, contentType: string = 'ima
     });
     
     const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1 hour expiry
-    console.log(`[S3] Generated presigned URL for ${key}`);
+    logger.info(`[S3] Generated presigned URL for ${key}`);
     return url;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error(`[S3] Failed to generate presigned URL:`, message);
+    logger.error(`[S3] Failed to generate presigned URL:`, message);
     throw new Error(`Failed to generate presigned URL: ${message}`);
   }
 }
@@ -144,7 +145,7 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
   // Detect if message contains image data (base64) - can be anywhere in the message
   const isImage = message.includes("data:image/") || message.includes("base64,") || message.includes(".s3.");
   
-  console.log(`[generateResponse] Agent: ${agent}, Has image: ${isImage}, Message preview: ${message.substring(0, 100)}`);
+  logger.info(`[generateResponse] Agent: ${agent}, Has image: ${isImage}, Message preview: ${message.substring(0, 100)}`);
   
   // Format message for vision agents if it's an image
   let formattedMessage = message;
@@ -158,22 +159,22 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     // If we have base64 data, upload it to ElizaOS media API
     if (imageMatch) {
       try {
-        console.log(`[generateResponse] Base64 image detected, uploading to ElizaOS media API...`);
+        logger.info(`[generateResponse] Base64 image detected, uploading to ElizaOS media API...`);
         imageUrl = await uploadMediaToElizaOS(agentId, imageMatch[1]);
       } catch (error) {
-        console.error(`[generateResponse] Failed to upload base64 to ElizaOS:`, error);
+        logger.error(`[generateResponse] Failed to upload base64 to ElizaOS:`, error);
         throw error;
       }
     }
     // If we have an S3 URL, use it directly (ElizaOS can fetch it)
     else if (s3Match) {
       imageUrl = s3Match[1];
-      console.log(`[generateResponse] Using S3 URL directly: ${imageUrl}`);
+      logger.info(`[generateResponse] Using S3 URL directly: ${imageUrl}`);
     }
     
     if (imageUrl) {
       formattedMessage = `Please analyze this image and provide a hilarious, witty roast. Here's the image: ${imageUrl}`;
-      console.log(`[generateResponse] Image URL set, formatted message length: ${formattedMessage.length}`);
+      logger.info(`[generateResponse] Image URL set, formatted message length: ${formattedMessage.length}`);
     }
   }
   
@@ -181,18 +182,18 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     // Use ElizaOS Sessions API (from https://docs.elizaos.ai/api-reference)
     const elizaosPort = process.env.ELIZAOS_PORT || "3002";
     
-    console.log(`\n[generateResponse] ========================================`);
-    console.log(`[generateResponse] Starting ElizaOS session for: ${agent}`);
-    console.log(`[generateResponse] Agent ID: ${agentId}`);
-    console.log(`[generateResponse] Message: "${message.substring(0, 50)}${message.length > 50 ? '...' : ''}"`);
-    console.log(`[generateResponse] ========================================\n`);
+    logger.info(`\n[generateResponse] ========================================`);
+    logger.info(`[generateResponse] Starting ElizaOS session for: ${agent}`);
+    logger.info(`[generateResponse] Agent ID: ${agentId}`);
+    logger.info(`[generateResponse] Message: "${message.substring(0, 50)}${message.length > 50 ? '...' : ''}"`);
+    logger.info(`[generateResponse] ========================================\n`);
     
     // Step 1: Create a session (POST /api/messaging/sessions)
     const userId = generateUUID();
     
-    console.log(`[CURL 1] Creating ElizaOS session...`);
-    console.log(`[CURL 1] POST http://localhost:${elizaosPort}/api/messaging/sessions`);
-    console.log(`[CURL 1] Body: { agentId: "${agentId}", userId: "${userId}" }`);
+    logger.info(`[CURL 1] Creating ElizaOS session...`);
+    logger.info(`[CURL 1] POST http://localhost:${elizaosPort}/api/messaging/sessions`);
+    logger.info(`[CURL 1] Body: { agentId: "${agentId}", userId: "${userId}" }`);
     
     const sessionResp = await fetch(`http://localhost:${elizaosPort}/api/messaging/sessions`, {
       method: "POST",
@@ -215,13 +216,13 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       throw new Error('No session ID returned from ElizaOS');
     }
     
-    console.log(`[CURL 1] ✅ Session created`);
-    console.log(`[CURL 1] SessionId: ${sessionId}\n`);
+    logger.info(`[CURL 1] ✅ Session created`);
+    logger.info(`[CURL 1] SessionId: ${sessionId}\n`);
     
     // Step 2: Send message to session (POST /api/messaging/sessions/{sessionId}/messages)
-    console.log(`[CURL 2] Sending message to ElizaOS session...`);
-    console.log(`[CURL 2] POST http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`);
-    console.log(`[CURL 2] Body: { content: "${formattedMessage.substring(0, 50)}${formattedMessage.length > 50 ? '...' : ''}", userId: "${userId}" }`);
+    logger.info(`[CURL 2] Sending message to ElizaOS session...`);
+    logger.info(`[CURL 2] POST http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`);
+    logger.info(`[CURL 2] Body: { content: "${formattedMessage.substring(0, 50)}${formattedMessage.length > 50 ? '...' : ''}", userId: "${userId}" }`);
     
     const messageResp = await fetch(`http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`, {
       method: "POST",
@@ -240,12 +241,12 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     const messageData = await messageResp.json() as { id?: string };
     const messageId = messageData.id;
     
-    console.log(`[CURL 2] ✅ Message sent`);
-    console.log(`[CURL 2] MessageId: ${messageId}\n`);
+    logger.info(`[CURL 2] ✅ Message sent`);
+    logger.info(`[CURL 2] MessageId: ${messageId}\n`);
     
     // Step 3: Poll for agent response (GET /api/messaging/sessions/{sessionId}/messages)
-    console.log(`[CURL 3] Polling for agent response...`);
-    console.log(`[CURL 3] GET http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`);
+    logger.info(`[CURL 3] Polling for agent response...`);
+    logger.info(`[CURL 3] GET http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`);
     
     let response = "";
     let pollAttempts = 0;
@@ -259,7 +260,7 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       const messagesResp = await fetch(`http://localhost:${elizaosPort}/api/messaging/sessions/${sessionId}/messages`);
       
       if (!messagesResp.ok) {
-        console.log(`[CURL 3] Attempt ${pollAttempts}/${maxAttempts}: Failed to fetch (${messagesResp.status})`);
+        logger.info(`[CURL 3] Attempt ${pollAttempts}/${maxAttempts}: Failed to fetch (${messagesResp.status})`);
         continue;
       }
       
@@ -272,13 +273,13 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       if (agentMessages.length > 0) {
         const latestAgentMessage = agentMessages[agentMessages.length - 1];
         response = latestAgentMessage.content;
-        console.log(`[CURL 3] ✅ Got agent response on attempt ${pollAttempts}/${maxAttempts}`);
-        console.log(`[CURL 3] Response length: ${response.length} characters\n`);
+        logger.info(`[CURL 3] ✅ Got agent response on attempt ${pollAttempts}/${maxAttempts}`);
+        logger.info(`[CURL 3] Response length: ${response.length} characters\n`);
         break;
       } else {
         // Show progress without spamming too much
         if (pollAttempts % 3 === 0) {
-          console.log(`[CURL 3] Attempt ${pollAttempts}/${maxAttempts}: Still waiting for agent...`);
+          logger.info(`[CURL 3] Attempt ${pollAttempts}/${maxAttempts}: Still waiting for agent...`);
         }
       }
     }
@@ -287,15 +288,15 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       throw new Error(`No response from agent after ${maxAttempts} polling attempts`);
     }
     
-    console.log(`[generateResponse] ========================================`);
-    console.log(`[generateResponse] ✅ Complete!`);
-    console.log(`[generateResponse] Response: "${response.substring(0, 100)}${response.length > 100 ? '...' : ''}"`);
-    console.log(`[generateResponse] ========================================\n`);
+    logger.info(`[generateResponse] ========================================`);
+    logger.info(`[generateResponse] ✅ Complete!`);
+    logger.info(`[generateResponse] Response: "${response.substring(0, 100)}${response.length > 100 ? '...' : ''}"`);
+    logger.info(`[generateResponse] ========================================\n`);
     
     return response;
   } catch (error) {
-    console.error(`\n[generateResponse] ❌ ERROR: ${error}`);
-    console.error(`[generateResponse] ========================================\n`);
+    logger.error(`\n[generateResponse] ❌ ERROR: ${error}`);
+    logger.error(`[generateResponse] ========================================\n`);
     throw error;
   }
 }
@@ -304,7 +305,7 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
 let lastAgentResponse = "";
 
 async function startAgent() {
-  console.log("Starting XMTP Agent");
+  logger.info("Starting XMTP Agent");
 
   try {
     // Use Agent.createFromEnv() as per Base App documentation
@@ -312,15 +313,15 @@ async function startAgent() {
       env: process.env.XMTP_ENV as "dev" | "production" || "production",
     });
 
-    console.log(`Connected to XMTP`);
+    logger.info(`Connected to XMTP`);
 
     agent.on("text", async (ctx: any) => {
       const userMessage = ctx.message.content;
-      console.log(`[XMTP] Received: ${userMessage}`);
+      logger.info(`[XMTP] Received: ${userMessage}`);
 
       try {
         const agentType = (await routeByCapabilities(userMessage)) as AgentType;
-        console.log(`[Route] ${agentType}`);
+        logger.info(`[Route] ${agentType}`);
 
         const baseResponse = await generateResponse(agentType, userMessage);
         const responseWithCapabilities = await formatResponseWithCapabilities(agentType, baseResponse);
@@ -329,19 +330,19 @@ async function startAgent() {
         lastAgentResponse = responseWithCapabilities;
       } catch (error) {
         const errorMsg = `Error processing message: ${error instanceof Error ? error.message : String(error)}`;
-        console.error(errorMsg);
+        logger.error(errorMsg);
         await ctx.sendText(errorMsg);
       }
     });
 
     agent.on("start", () => {
-      console.log(`Listening for XMTP messages`);
+      logger.info(`Listening for XMTP messages`);
     });
 
     await agent.start();
   } catch (error) {
-    console.error("Agent startup error:", error);
-    console.error("Note: Ensure XMTP_WALLET_KEY, XMTP_DB_ENCRYPTION_KEY are set in .env");
+    logger.error("Agent startup error:", error);
+    logger.error("Note: Ensure XMTP_WALLET_KEY, XMTP_DB_ENCRYPTION_KEY are set in .env");
     process.exit(1);
   }
 }
@@ -376,7 +377,7 @@ function startHttpServer() {
         const filename = queryParams.searchParams.get('filename') || 'image.png';
         const contentType = queryParams.searchParams.get('contentType') || 'image/png';
         
-        console.log(`[S3] Presigned URL request for ${filename}`);
+        logger.info(`[S3] Presigned URL request for ${filename}`);
         const presignedUrl = await generatePresignedUrl(filename, contentType);
         
         res.writeHead(200, { "Content-Type": "application/json" });
@@ -385,7 +386,7 @@ function startHttpServer() {
           expiresIn: 3600 
         }));
       } catch (error) {
-        console.error("[S3] Error generating presigned URL:", error);
+        logger.error("[S3] Error generating presigned URL:", error);
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ 
           error: error instanceof Error ? error.message : "Failed to generate presigned URL" 
@@ -422,7 +423,7 @@ function startHttpServer() {
             }],
           }));
         } catch (error) {
-          console.error("HTTP error:", error);
+          logger.error("HTTP error:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
           res.end(JSON.stringify({
             error: error instanceof Error ? error.message : "Internal server error",
@@ -437,7 +438,7 @@ function startHttpServer() {
   });
 
   server.listen(parseInt(port as string), () => {
-    console.log(`HTTP API server listening on http://localhost:${port}`);
+    logger.info(`HTTP API server listening on http://localhost:${port}`);
   });
 }
 
@@ -457,6 +458,6 @@ async function start() {
 }
 
 start().catch((error) => {
-  console.error("Fatal error:", error);
+  logger.error("Fatal error:", error);
   process.exit(1);
 });
