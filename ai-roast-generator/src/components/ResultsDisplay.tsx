@@ -74,9 +74,24 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
   };
 
   const cleanRoastText = (text: string) => {
-    // Remove the [AGENT-NAME] Capabilities line header
-    // Matches: [UPPERCASE-TEXT]\nCapabilities: ... until the double newline
-    return text.replace(/^\[[\w\-]+\]\s*\n\s*Capabilities:[^\n]*\n\s*\n/, '').trim();
+    // Remove only the first line [AGENT-NAME] and the Capabilities line
+    // Split by first double newline to separate header from content
+    const lines = text.split('\n');
+    
+    // Find where the actual roast content starts (after capabilities line)
+    let startIdx = 0;
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].includes('Capabilities:')) {
+        startIdx = i + 1;
+        // Skip empty lines after capabilities
+        while (startIdx < lines.length && lines[startIdx].trim() === '') {
+          startIdx++;
+        }
+        break;
+      }
+    }
+    
+    return lines.slice(startIdx).join('\n').trim();
   };
 
   if (results.length === 0) {
