@@ -1,5 +1,5 @@
 import { minikitConfig } from '../../../minikit.config';
 
 export function GET() {
-  return Response.json(minikitConfig.miniapp);
+  return Response.json(minikitConfig);
 }
