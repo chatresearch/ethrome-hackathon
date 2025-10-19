@@ -4,12 +4,11 @@
     "payload": "eyJkb21haW4iOiJhaS1yb2FzdC1nZW5lcmF0b3ItaXZvcnkudmVyY2VsLmFwcCJ9",
     "signature": "M+4kPHzyr7H9MdrzkMJS1AeiL7oENrwIGuFyiiy4JjsemuhJcswJxVgrrRrqsXvgPtKzzO2IYWoEzhhEA3aUjBw="
   },
-  "name": "AI Roast Generator",
+  "name": "AI Roast",
   "homeUrl": "https://ai-roast-generator-ivory.vercel.app",
-  "iconUrl": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/vibe-roaster.png",
-  "splashImageUrl": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/roaster-banner.png",
-  "splashBackgroundColor": "#1a1a1a",
-  "primaryCategory": "entertainment",
-  "tags": ["ai", "roast", "gaming", "web3", "social"],
-  "_cache_bust": "2025-10-19-001"
+  "iconUrl": "https://img.placeholder.com/1024x1024.png",
+  "splashImageUrl": "https://img.placeholder.com/200x200.png",
+  "splashBackgroundColor": "#000000",
+  "primaryCategory": "games",
+  "tags": ["ai", "gaming"]
 }
