@@ -287,13 +287,11 @@ contract AgentRegistry {
     /**
      * @dev Vote on a roast (increment vote count)
      */
-    function voteRoast(uint256 _roastId) public payable {
+    function voteRoast(uint256 _roastId) public {
         require(_roastId < roasts.length, "Roast does not exist");
-        require(msg.value >= 0.001 ether, "Insufficient payment for vote"); // Require a small payment per vote
         
         roasts[_roastId].votes += 1;
         roastVotes[_roastId] += 1;
-        platformBalance += msg.value; // Track platform earnings
         
         emit RoastVoted(_roastId, msg.sender, roasts[_roastId].votes);
     }
