@@ -21,10 +21,23 @@ contract AgentRegistry {
         uint256 registeredAt;
     }
 
+    struct Roast {
+        uint256 id;
+        string agentName;
+        string roastText;
+        string imageUrl;
+        address creator;
+        uint256 votes;
+        uint256 timestamp;
+    }
+
     // State Variables
     mapping(bytes32 => Agent) public agents; // ensNameHash => Agent
     bytes32[] public agentHashes;
     mapping(address => bytes32[]) public agentsByOwner;
+    
+    Roast[] public roasts;
+    mapping(uint256 => uint256) public roastVotes; // roastId => vote count
     
     address public platformOwner;
 
@@ -58,6 +71,19 @@ contract AgentRegistry {
         bytes32 indexed ensNameHash,
         string ensName,
         address indexed owner
+    );
+
+    event RoastRecorded(
+        uint256 indexed roastId,
+        string indexed agentName,
+        address indexed creator,
+        string imageUrl
+    );
+
+    event RoastVoted(
+        uint256 indexed roastId,
+        address indexed voter,
+        uint256 totalVotes
     );
 
     constructor() {
@@ -228,6 +254,97 @@ contract AgentRegistry {
 
     function getTotalAgents() public view returns (uint256) {
         return agentHashes.length;
+    }
+
+    // ============ Roast Leaderboard Functions ============
+
+    /**
+     * @dev Record a roast on-chain for leaderboard
+     */
+    function recordRoast(
+        string memory _agentName,
+        string memory _roastText,
+        string memory _imageUrl
+    ) public {
+        uint256 roastId = roasts.length;
+        
+        Roast memory newRoast = Roast({
+            id: roastId,
+            agentName: _agentName,
+            roastText: _roastText,
+            imageUrl: _imageUrl,
+            creator: msg.sender,
+            votes: 0,
+            timestamp: block.timestamp
+        });
+        
+        roasts.push(newRoast);
+        console.log("Roast recorded:", _agentName);
+        emit RoastRecorded(roastId, _agentName, msg.sender, _imageUrl);
+    }
+
+    /**
+     * @dev Vote on a roast (increment vote count)
+     */
+    function voteRoast(uint256 _roastId) public {
+        require(_roastId < roasts.length, "Roast does not exist");
+        
+        roasts[_roastId].votes += 1;
+        roastVotes[_roastId] += 1;
+        
+        emit RoastVoted(_roastId, msg.sender, roasts[_roastId].votes);
+    }
+
+    /**
+     * @dev Get top roasts by vote count
+     */
+    function getTopRoasts(uint256 _limit) public view returns (Roast[] memory) {
+        require(_limit > 0, "Limit must be > 0");
+        
+        uint256 count = _limit < roasts.length ? _limit : roasts.length;
+        Roast[] memory topRoasts = new Roast[](count);
+        
+        // Simple sorting: find top N by votes
+        Roast[] memory temp = new Roast[](roasts.length);
+        uint256[] memory indices = new uint256[](roasts.length);
+        
+        // Initialize indices
+        for (uint256 i = 0; i < roasts.length; i++) {
+            indices[i] = i;
+        }
+        
+        // Bubble sort by votes (descending)
+        for (uint256 i = 0; i < roasts.length; i++) {
+            for (uint256 j = i + 1; j < roasts.length; j++) {
+                if (roasts[indices[j]].votes > roasts[indices[i]].votes) {
+                    uint256 temp_idx = indices[i];
+                    indices[i] = indices[j];
+                    indices[j] = temp_idx;
+                }
+            }
+        }
+        
+        // Return top N
+        for (uint256 i = 0; i < count; i++) {
+            topRoasts[i] = roasts[indices[i]];
+        }
+        
+        return topRoasts;
+    }
+
+    /**
+     * @dev Get total roasts count
+     */
+    function getTotalRoasts() public view returns (uint256) {
+        return roasts.length;
+    }
+
+    /**
+     * @dev Get specific roast
+     */
+    function getRoast(uint256 _roastId) public view returns (Roast memory) {
+        require(_roastId < roasts.length, "Roast does not exist");
+        return roasts[_roastId];
     }
 
     receive() external payable {}
