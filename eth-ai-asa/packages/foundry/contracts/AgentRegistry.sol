@@ -347,5 +347,17 @@ contract AgentRegistry {
         return roasts[_roastId];
     }
 
+    /**
+     * @dev Platform owner withdraws contract balance
+     */
+    function withdrawPlatformBalance() public {
+        require(msg.sender == platformOwner, "Only platform owner can withdraw");
+        uint256 balance = address(this).balance;
+        require(balance > 0, "No balance to withdraw");
+        
+        payable(msg.sender).transfer(balance);
+        console.log("Platform owner withdrew:", balance);
+    }
+
     receive() external payable {}
 }
