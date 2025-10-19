@@ -51,9 +51,8 @@ const AGENT_REGISTRY_ABI = [
   },
 ] as const;
 
-// Contract address - update after deployment
-const AGENT_REGISTRY_ADDRESS = process.env.REACT_APP_AGENT_REGISTRY_ADDRESS || 
-  '0x0000000000000000000000000000000000000000'; // Placeholder
+// Contract address - deployed to Base Sepolia
+const AGENT_REGISTRY_ADDRESS = '0x5b73C5498c1E3b4dbA84de0F1833c4a029d90519';
 
 export function useAgentRegistry() {
   const recordRoastAsync = useCallback(
