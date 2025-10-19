@@ -10,5 +10,6 @@
   "splashImageUrl": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/roaster-banner.png",
   "splashBackgroundColor": "#1a1a1a",
   "primaryCategory": "entertainment",
-  "tags": ["ai", "roast", "gaming", "web3", "social"]
+  "tags": ["ai", "roast", "gaming", "web3", "social"],
+  "_cache_bust": "2025-10-19-001"
 }
