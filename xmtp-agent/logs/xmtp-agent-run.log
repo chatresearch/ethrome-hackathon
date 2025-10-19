@@ -978,3 +978,14 @@
   "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:238:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:346:42)"
 }
 2025-10-18 19:40:10 [[32MINFO[39M] [CURL 3] Attempt 15/30: Still waiting for agent...
+2025-10-18 19:40:23 [[32MINFO[39M] [CURL 3] Attempt 20/30: Still waiting for agent...
+2025-10-18 19:40:35 [[32MINFO[39M] [CURL 3] Attempt 25/30: Still waiting for agent...
+2025-10-18 19:40:48 [[32MINFO[39M] [CURL 3] Attempt 30/30: Still waiting for agent...
+2025-10-18 19:40:48 [[31MERROR[39M] 
+[generateResponse] ❌ ERROR: Error: No response from agent after 30 polling attempts
+2025-10-18 19:40:48 [[31MERROR[39M] [generateResponse] ========================================
+
+2025-10-18 19:40:48 [[31MERROR[39M] HTTP error: No response from agent after 30 polling attempts
+{
+  "stack": "Error: No response from agent after 30 polling attempts\n    at generateResponse (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:238:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IncomingMessage.<anonymous> (file:///Users/ballew/Documents/repos/chatresearch/ethrome-hackathon/xmtp-agent/dist/index.js:346:42)"
+}

@@ -1,6 +1,6 @@
 import { minikitConfig } from '../../../minikit.config';
 
-// Force cache bust: serving complete minikit config with accountAssociation
+// Serve the complete minikit config including accountAssociation and all metadata
 export function GET() {
   return Response.json(minikitConfig);
 }
