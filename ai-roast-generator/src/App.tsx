@@ -11,7 +11,7 @@ import { useXMTP } from './hooks/useXMTP';
 import { useAgentPayment, fetchAgentPrice, fetchAgentAvatar } from './hooks/useAgentPayment';
 import { useS3Upload } from './hooks/useS3Upload';
 import { wagmiConfig } from './hooks/wagmiConfig';
-import { recordVote } from './lib/scoring';
+import { recordVote, recordRoast, voteRoast } from './lib/scoring';
 import './styles/App.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import { useHealthCheck } from './hooks/useHealthCheck';
@@ -132,6 +132,7 @@ const AppContent: React.FC = () => {
   const [s3ImageUrl, setS3ImageUrl] = useState<string | null>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [votes, setVotes] = useState<Record<number, number>>({});
+  const [roastIds, setRoastIds] = useState<Record<number, string>>({}); // Track roast IDs for voting
   const [leaderboardRefresh, setLeaderboardRefresh] = useState(0);
   const [preloadError, setPreloadError] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -308,6 +309,18 @@ const AppContent: React.FC = () => {
           response: agentResponse.response,
           timestamp: Date.now(),
         }));
+        
+        // Record each roast and track their IDs
+        const newRoastIds: Record<number, string> = { ...roastIds };
+        const currentIdx = results.length;
+        
+        newResults.forEach((result, idx) => {
+          const roastId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+          recordRoast(result.agent, result.response, s3ImageUrl || undefined);
+          newRoastIds[currentIdx + idx] = roastId;
+        });
+        
+        setRoastIds(newRoastIds);
         setResults((prev) => [...prev, ...newResults]);
       }
     } catch (error) {
