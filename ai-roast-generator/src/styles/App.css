@@ -736,9 +736,9 @@ body {
   line-height: 1.6;
   margin-bottom: 10px;
   color: var(--text);
-  max-height: 150px;
-  overflow: hidden;
   transition: max-height 0.3s ease-out;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .response-text.expanded {

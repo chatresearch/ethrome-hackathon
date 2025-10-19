@@ -156,18 +156,10 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
           </div>
 
           <div className="response-text">
-            {expandedIdx.has(idx) ? cleanRoastText(result.response) : `${cleanRoastText(result.response).substring(0, 200)}...`}
+            {cleanRoastText(result.response)}
           </div>
 
           <div className="response-container">
-            {cleanRoastText(result.response).length > 300 && (
-              <button
-                className="expand-btn"
-                onClick={() => toggleExpand(idx)}
-              >
-                {expandedIdx.has(idx) ? '↑ Show less' : '↓ Show more'}
-              </button>
-            )}
           </div>
 
           <div className="result-footer">
