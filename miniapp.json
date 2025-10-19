@@ -1,17 +1,22 @@
 {
-  "name": "AI Roast Generator",
+  "name": "AI Roast",
   "homeUrl": "https://ai-roast-generator-ivory.vercel.app",
   "iconUrl": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/vibe-roaster.png",
   "splashImageUrl": "https://raw.githubusercontent.com/chatresearch/ethrome-hackathon/main/eth-ai-asa/agent-capabilities/roaster-banner.png",
   "splashBackgroundColor": "#1a1a1a",
   "primaryCategory": "entertainment",
-  "tags": ["ai", "roast", "gaming", "web3", "social"],
-  "description": "Get brutally hilarious AI-powered roasts on Base. Upload a photo and let GPT-4o vision roast your vibe. Vote on roasts on-chain and share to Twitter/Farcaster.",
+  "tags": ["ai", "gaming", "web3"],
+  "accountAssociation": {
+    "header": "eyJmaWQiOjEzNzIyOTksInR5cGUiOiJhdXRoIiwia2V5IjoiMHhBMzk3OUQ4QzE2YmJhOTJDY0ZmNUY5YzVmNzc5OUFBNjdjNTdjRWNlIn0",
+    "payload": "eyJkb21haW4iOiJhaS1yb2FzdC1nZW5lcmF0b3ItaXZvcnkudmVyY2VsLmFwcCJ9",
+    "signature": "M+4kPHzyr7H9MdrzkMJS1AeiL7oENrwIGuFyiiy4JjsemuhJcswJxVgrrRrqsXvgPtKzzO2IYWoEzhhEA3aUjBw="
+  },
+  "description": "Get brutally hilarious AI-powered roasts on Base. Upload a photo and let GPT-4o roast your vibe.",
   "version": "1.0.0",
-  "shortDescription": "AI roasts powered by GPT-4o on Base blockchain",
+  "shortDescription": "AI roasts powered by GPT-4o on Base",
   "developer": {
     "name": "ethrome-hackathon",
-    "url": "https://github.com/ballew/ethrome-hackathon"
+    "url": "https://github.com/chatresearch/ethrome-hackathon"
   },
   "chain": "base",
   "chainId": 84532,
@@ -36,15 +41,15 @@
   "agents": [
     {
       "name": "profile-roaster",
-      "description": "Roasts dating profiles and selfies with surgical sarcasm"
+      "description": "Roasts dating profiles and selfies"
     },
     {
       "name": "linkedin-roaster",
-      "description": "Critiques professional photos and LinkedIn vibes"
+      "description": "Critiques professional photos"
     },
     {
       "name": "vibe-roaster",
-      "description": "Analyzes aesthetic and overall life choices visible in photos"
+      "description": "Analyzes aesthetic and life choices"
     }
   ],
   "techStack": [
@@ -58,7 +63,7 @@
     "GPT-4o Vision"
   ],
   "links": {
-    "github": "https://github.com/ballew/ethrome-hackathon",
+    "github": "https://github.com/chatresearch/ethrome-hackathon",
     "twitter": "https://x.com",
     "discord": "https://discord.gg"
   },
