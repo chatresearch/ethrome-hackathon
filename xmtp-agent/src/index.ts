@@ -254,9 +254,9 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     let initialWait = true;
     
     while (!response && pollAttempts < maxAttempts) {
-      // First wait: 20 seconds before first poll (GPT-4o needs time to process images)
+      // First wait: 15 seconds before first poll (balances fast and slow GPT-4o responses)
       // Subsequent waits: 2.5 seconds between polls
-      const delayMs = initialWait ? 20000 : 2500;
+      const delayMs = initialWait ? 15000 : 2500;
       await new Promise(resolve => setTimeout(resolve, delayMs));
       initialWait = false;
       
