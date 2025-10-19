@@ -39,7 +39,7 @@ export const Leaderboard: React.FC<{ refreshTrigger?: number }> = ({ refreshTrig
         <tbody>
           {entries.map((entry, idx) => {
             const shareableUrl = entry.imageUrl 
-              ? `/api/roast?image=${encodeURIComponent(entry.imageUrl)}&agent=${encodeURIComponent(entry.agent)}&text=${encodeURIComponent(entry.roastText)}`
+              ? `/roast?image=${encodeURIComponent(entry.imageUrl)}&agent=${encodeURIComponent(entry.agent)}&text=${encodeURIComponent(entry.roastText)}`
               : '#';
             return (
               <tr key={entry.id} className={idx < 3 ? `top-${idx + 1}` : ''}>

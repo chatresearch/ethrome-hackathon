@@ -24,7 +24,7 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
 
   const handleShare = (agentName: string, roastText: string, idx: number) => {
     const shortRoast = roastText.substring(0, 200);
-    const shareableUrl = `/api/roast?image=${encodeURIComponent(s3ImageUrl || '')}&agent=${encodeURIComponent(agentName)}&text=${encodeURIComponent(roastText)}`;
+    const shareableUrl = `/roast?image=${encodeURIComponent(s3ImageUrl || '')}&agent=${encodeURIComponent(agentName)}&text=${encodeURIComponent(roastText)}`;
     const fullShareUrl = `${window.location.origin}${shareableUrl}`;
     
     const shareText = `Just got roasted by ${agentName}! 🔥\n\n"${shortRoast}..."\n\n${fullShareUrl}`;
@@ -33,7 +33,7 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
 
   const handleTwitterShare = (agentName: string, roastText: string) => {
     const shortRoast = roastText.substring(0, 100);
-    const shareableUrl = `/api/roast?image=${encodeURIComponent(s3ImageUrl || '')}&agent=${encodeURIComponent(agentName)}&text=${encodeURIComponent(roastText)}`;
+    const shareableUrl = `/roast?image=${encodeURIComponent(s3ImageUrl || '')}&agent=${encodeURIComponent(agentName)}&text=${encodeURIComponent(roastText)}`;
     const fullShareUrl = `${window.location.origin}${shareableUrl}`;
     
     const text = `Just got roasted by ${agentName}! 🔥\n"${shortRoast}..."\n\nTry AI Roast Generator`;
@@ -43,7 +43,7 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
 
   const handleFarcasterShare = (agentName: string, roastText: string) => {
     const shortRoast = roastText.substring(0, 100);
-    const shareableUrl = `/api/roast?image=${encodeURIComponent(s3ImageUrl || '')}&agent=${encodeURIComponent(agentName)}&text=${encodeURIComponent(roastText)}`;
+    const shareableUrl = `/roast?image=${encodeURIComponent(s3ImageUrl || '')}&agent=${encodeURIComponent(agentName)}&text=${encodeURIComponent(roastText)}`;
     const fullShareUrl = `${window.location.origin}${shareableUrl}`;
     
     const text = `Just got roasted by ${agentName}! 🔥\n"${shortRoast}..."\n\nTry AI Roast Generator at ${fullShareUrl}`;
