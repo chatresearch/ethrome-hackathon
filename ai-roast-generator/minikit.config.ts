@@ -12,13 +12,6 @@ export const minikitConfig = {
     name: 'AI Roast Generator',
     subtitle: 'Get roasted by GPT-4o on Base',
     description: 'Upload a photo and let AI roast your vibe. Vote on-chain and share to Twitter/Farcaster.',
-    screenshotUrls: [
-      `${ROOT_URL}/screenshots/1-upload.png`,
-      `${ROOT_URL}/screenshots/2-agent-select.png`,
-      `${ROOT_URL}/screenshots/3-roast-result.png`,
-      `${ROOT_URL}/screenshots/4-voting.png`,
-      `${ROOT_URL}/screenshots/5-share.png`,
-    ],
     iconUrl: `${ROOT_URL}/icon.png`,
     splashImageUrl: `${ROOT_URL}/banner.png`,
     splashBackgroundColor: '#1a1a1a',
