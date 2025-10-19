@@ -6,6 +6,7 @@ import { QueryBuilder } from './components/QueryBuilder';
 import { ResultsDisplay } from './components/ResultsDisplay';
 import { Leaderboard } from './components/Leaderboard';
 import { WalletConnect } from './components/WalletConnect';
+import { LoadingDialog } from './components/LoadingDialog';
 import { useXMTP } from './hooks/useXMTP';
 import { useAgentPayment, fetchAgentPrice, fetchAgentAvatar } from './hooks/useAgentPayment';
 import { useS3Upload } from './hooks/useS3Upload';
@@ -29,12 +30,6 @@ interface AgentResponse {
   response: string;
   timestamp: number;
 }
-
-const AGENT_PRICES: Record<string, string> = {
-  'profile-roaster': '0.00001',
-  'linkedin-roaster': '0.00001',
-  'vibe-roaster': '0.00001',
-};
 
 const getCurrentUserId = () => {
   let userId = localStorage.getItem('roast-generator-user-id');
@@ -133,6 +128,9 @@ const AppContent: React.FC = () => {
   const xmtpHealth = useHealthCheck();
   const [results, setResults] = useState<AgentResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isImageProcessing, setIsImageProcessing] = useState(false);
+  const [s3ImageUrl, setS3ImageUrl] = useState<string | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [votes, setVotes] = useState<Record<number, number>>({});
   const [leaderboardRefresh, setLeaderboardRefresh] = useState(0);
   const [preloadError, setPreloadError] = useState<string | null>(null);
@@ -147,12 +145,10 @@ const AppContent: React.FC = () => {
     }
     return false;
   });
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
-  const [s3ImageUrl, setS3ImageUrl] = useState<string | null>(null);
-  const [livePrices, setLivePrices] = useState<Record<string, string>>(AGENT_PRICES);
-  const [agentAvatars, setAgentAvatars] = useState<Record<string, string>>({});
   const [isAnimatedTagline, setIsAnimatedTagline] = useState(false);
   const [confettiTrigger, setConfettiTrigger] = useState(0);
+  const [livePrices, setLivePrices] = useState<Record<string, string>>({});
+  const [agentAvatars, setAgentAvatars] = useState<Record<string, string>>({});
   const userId = getCurrentUserId();
 
   // Fetch live agent prices and avatars on mount
@@ -250,6 +246,7 @@ const AppContent: React.FC = () => {
     setUploadedImage(imageBase64);
     setS3ImageUrl(null);
     setIsLoading(true);
+    setIsImageProcessing(true);  // Show loading dialog for image processing
     
     try {
       // Parse agents - can be comma-separated or single agent
@@ -316,6 +313,7 @@ const AppContent: React.FC = () => {
       alert(`❌ ${errorMsg}`);
     } finally {
       setIsLoading(false);
+      setIsImageProcessing(false);
     }
   };
 
@@ -443,6 +441,11 @@ const AppContent: React.FC = () => {
           <Leaderboard refreshTrigger={leaderboardRefresh} />
         </section>
       </main>
+      <LoadingDialog 
+        isOpen={isImageProcessing}
+        message={isImageProcessing ? "Processing your roast..." : "Processing your roast..."}
+        isImageProcessing={isImageProcessing}
+      />
       <Confetti trigger={confettiTrigger} />
     </div>
   );
