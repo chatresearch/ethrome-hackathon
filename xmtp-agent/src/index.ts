@@ -250,12 +250,15 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
     
     let response = "";
     let pollAttempts = 0;
-    const maxAttempts = 120; // 120 attempts with backoff = ~30 seconds max wait
-    let backoffMs = 200; // Start with 200ms
-    const maxBackoffMs = 2000; // Cap at 2 seconds
+    const maxAttempts = 30; // 30 attempts = ~32 seconds max wait (2s initial + 29s polling)
+    let initialWait = true;
     
     while (!response && pollAttempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, backoffMs));
+      // First wait: 2 seconds before first poll
+      // Subsequent waits: 1 second between polls
+      const delayMs = initialWait ? 2000 : 1000;
+      await new Promise(resolve => setTimeout(resolve, delayMs));
+      initialWait = false;
       
       pollAttempts++;
       
@@ -263,7 +266,6 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       
       if (!messagesResp.ok) {
         logger.info(`[CURL 3] Attempt ${pollAttempts}/${maxAttempts}: Failed to fetch (${messagesResp.status})`);
-        backoffMs = Math.min(backoffMs * 1.5, maxBackoffMs); // Exponential backoff with cap
         continue;
       }
       
@@ -276,16 +278,14 @@ async function generateResponse(agent: AgentType, message: string): Promise<stri
       if (agentMessages.length > 0) {
         const latestAgentMessage = agentMessages[agentMessages.length - 1];
         response = latestAgentMessage.content;
-        logger.info(`[CURL 3] ✅ Got agent response on attempt ${pollAttempts}/${maxAttempts} (waited ${(backoffMs / 1000).toFixed(1)}s)`);
+        logger.info(`[CURL 3] ✅ Got agent response on attempt ${pollAttempts}/${maxAttempts}`);
         logger.info(`[CURL 3] Response length: ${response.length} characters\n`);
         break;
       } else {
-        // Show progress without spamming too much
+        // Show progress every 5 attempts
         if (pollAttempts % 5 === 0) {
-          logger.info(`[CURL 3] Attempt ${pollAttempts}/${maxAttempts}: Still waiting (backoff: ${(backoffMs / 1000).toFixed(1)}s)...`);
+          logger.info(`[CURL 3] Attempt ${pollAttempts}/${maxAttempts}: Still waiting for agent...`);
         }
-        // Increase backoff for next attempt
-        backoffMs = Math.min(backoffMs * 1.5, maxBackoffMs);
       }
     }
     
