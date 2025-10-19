@@ -70,6 +70,11 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
     return '😈';
   };
 
+  const cleanRoastText = (text: string) => {
+    // Remove the [AGENT-NAME] Capabilities line
+    return text.replace(/^[A-Z]+\sCapabilities:\s/, '');
+  };
+
   if (results.length === 0) {
     return <div className="results-empty">Submit a query to see agent analysis</div>;
   }
@@ -86,7 +91,7 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
             <div className="result-actions">
               <button
                 className="copy-btn"
-                onClick={() => handleCopy(result.response, idx)}
+                onClick={() => handleCopy(cleanRoastText(result.response), idx)}
                 title="Copy response"
                 aria-label="Copy response to clipboard"
               >
@@ -96,7 +101,7 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
                 <>
                   <button
                     className="share-btn"
-                    onClick={() => handleTwitterShare(result.agent, result.response)}
+                    onClick={() => handleTwitterShare(result.agent, cleanRoastText(result.response))}
                     title="Share on Twitter/X"
                     aria-label="Share on Twitter"
                   >
@@ -104,7 +109,7 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
                   </button>
                   <button
                     className="share-btn"
-                    onClick={() => handleFarcasterShare(result.agent, result.response)}
+                    onClick={() => handleFarcasterShare(result.agent, cleanRoastText(result.response))}
                     title="Share on Farcaster"
                     aria-label="Share on Farcaster"
                   >
@@ -112,7 +117,7 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
                   </button>
                   <button
                     className="share-btn"
-                    onClick={() => handleShare(result.agent, result.response, idx)}
+                    onClick={() => handleShare(result.agent, cleanRoastText(result.response), idx)}
                     title="Copy shareable text"
                     aria-label="Copy shareable text"
                   >
@@ -124,22 +129,19 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, s3Image
           </div>
 
           <div className="capabilities">
-            {result.capabilities.length > 0 ? (
-              result.capabilities.map((cap, i) => (
-                <span key={i} className="capability-badge">
-                  {cap}
-                </span>
-              ))
-            ) : (
-              <span className="capability-badge">General AI Analysis</span>
-            )}
+            {result.capabilities.map((cap, capIdx) => (
+              <span key={capIdx} className="capability-badge">
+                {cap}
+              </span>
+            ))}
+          </div>
+
+          <div className="response-text">
+            {expandedIdx.has(idx) ? cleanRoastText(result.response) : `${cleanRoastText(result.response).substring(0, 200)}...`}
           </div>
 
           <div className="response-container">
-            <p className={`response-text ${expandedIdx.has(idx) ? 'expanded' : 'collapsed'}`}>
-              {result.response}
-            </p>
-            {result.response.length > 300 && (
+            {cleanRoastText(result.response).length > 300 && (
               <button
                 className="expand-btn"
                 onClick={() => toggleExpand(idx)}
