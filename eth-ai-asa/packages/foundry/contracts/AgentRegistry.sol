@@ -40,6 +40,7 @@ contract AgentRegistry {
     mapping(uint256 => uint256) public roastVotes; // roastId => vote count
     
     address public platformOwner;
+    uint256 public platformBalance; // Track platform earnings from votes
 
     // Events
     event AgentRegistered(
@@ -286,11 +287,13 @@ contract AgentRegistry {
     /**
      * @dev Vote on a roast (increment vote count)
      */
-    function voteRoast(uint256 _roastId) public {
+    function voteRoast(uint256 _roastId) public payable {
         require(_roastId < roasts.length, "Roast does not exist");
+        require(msg.value >= 0.001 ether, "Insufficient payment for vote"); // Require a small payment per vote
         
         roasts[_roastId].votes += 1;
         roastVotes[_roastId] += 1;
+        platformBalance += msg.value; // Track platform earnings
         
         emit RoastVoted(_roastId, msg.sender, roasts[_roastId].votes);
     }
@@ -352,9 +355,10 @@ contract AgentRegistry {
      */
     function withdrawPlatformBalance() public {
         require(msg.sender == platformOwner, "Only platform owner can withdraw");
-        uint256 balance = address(this).balance;
+        uint256 balance = platformBalance;
         require(balance > 0, "No balance to withdraw");
         
+        platformBalance = 0; // Reset balance after withdrawal
         payable(msg.sender).transfer(balance);
         console.log("Platform owner withdrew:", balance);
     }

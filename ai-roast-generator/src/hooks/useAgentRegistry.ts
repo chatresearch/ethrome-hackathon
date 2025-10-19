@@ -37,6 +37,7 @@ export function useAgentRegistry() {
           abi: AGENT_REGISTRY_ABI,
           functionName: 'voteRoast',
           args: [BigInt(roastId)],
+          value: BigInt('1000000000000000'), // 0.001 ETH in wei
         });
         
         console.log('[AgentRegistry] ✅ Vote recorded on-chain:', txHash);
