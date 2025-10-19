@@ -26,6 +26,12 @@ export interface RoastData {
   timestamp: number;
 }
 
+export interface AgentStats {
+  agent: string;
+  totalVotes: number;
+  totalRoasts: number;
+}
+
 const STORAGE_KEY = 'ai-roast-generator-votes';
 const USERS_KEY = 'ai-roast-generator-users';
 const ROASTS_KEY = 'ai-roast-generator-roasts';
@@ -68,6 +74,28 @@ export function voteRoast(roastId: string): void {
 export function getTopRoasts(limit: number = 10): RoastData[] {
   return getRoasts()
     .sort((a, b) => b.votes - a.votes)
+    .slice(0, limit);
+}
+
+export function getAgentLeaderboard(limit: number = 10): AgentStats[] {
+  const roasts = getRoasts();
+  const agentStats = new Map<string, { totalVotes: number; totalRoasts: number }>();
+  
+  roasts.forEach(roast => {
+    if (!agentStats.has(roast.agent)) {
+      agentStats.set(roast.agent, { totalVotes: 0, totalRoasts: 0 });
+    }
+    const stats = agentStats.get(roast.agent)!;
+    stats.totalVotes += roast.votes;
+    stats.totalRoasts += 1;
+  });
+  
+  return Array.from(agentStats.entries())
+    .map(([agent, stats]) => ({
+      agent,
+      ...stats,
+    }))
+    .sort((a, b) => b.totalVotes - a.totalVotes)
     .slice(0, limit);
 }
 

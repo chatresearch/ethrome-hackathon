@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getTopRoasts, RoastData } from '../lib/scoring';
+import { getAgentLeaderboard, AgentStats } from '../lib/scoring';
 
 export const Leaderboard: React.FC<{ refreshTrigger?: number }> = ({ refreshTrigger = 0 }) => {
-  const [entries, setEntries] = useState<RoastData[]>([]);
+  const [entries, setEntries] = useState<AgentStats[]>([]);
 
   useEffect(() => {
-    setEntries(getTopRoasts(10));
+    setEntries(getAgentLeaderboard(10));
   }, [refreshTrigger]);
 
   if (entries.length === 0) {
@@ -27,38 +27,33 @@ export const Leaderboard: React.FC<{ refreshTrigger?: number }> = ({ refreshTrig
 
   return (
     <div className="leaderboard">
+      <div className="leaderboard-header">
+        <h3>Funniest Roasts</h3>
+        <p className="leaderboard-subtitle">Community's favorite roasts</p>
+      </div>
       <table className="leaderboard-table">
         <thead>
           <tr>
             <th className="rank-col">Rank</th>
-            <th className="agent-col">Agent</th>
-            <th className="roast-col">Roast</th>
-            <th className="votes-col">Votes</th>
+            <th className="agent-col">Roaster</th>
+            <th className="roasts-col">Roasts</th>
+            <th className="votes-col">Total Votes</th>
           </tr>
         </thead>
         <tbody>
-          {entries.map((entry, idx) => {
-            const shareableUrl = entry.imageUrl 
-              ? `/roast?image=${encodeURIComponent(entry.imageUrl)}&agent=${encodeURIComponent(entry.agent)}&text=${encodeURIComponent(entry.roastText)}`
-              : '#';
-            return (
-              <tr key={entry.id} className={idx < 3 ? `top-${idx + 1}` : ''}>
-                <td className="rank-col">
-                  <span className="rank-badge">#{idx + 1}</span>
-                </td>
-                <td className="agent-col">
-                  <span className="agent-icon">{getAgentIcon(entry.agent)}</span>
-                  {entry.agent}
-                </td>
-                <td className="roast-col">
-                  <a href={shareableUrl} target="_blank" rel="noopener noreferrer" className="roast-link">
-                    {entry.roastText.substring(0, 50)}...
-                  </a>
-                </td>
-                <td className="votes-col">⭐ {entry.votes}</td>
-              </tr>
-            );
-          })}
+          {entries.map((entry, idx) => (
+            <tr key={entry.agent} className={idx < 3 ? `top-${idx + 1}` : ''}>
+              <td className="rank-col">
+                <span className="rank-badge">#{idx + 1}</span>
+              </td>
+              <td className="agent-col">
+                <span className="agent-icon">{getAgentIcon(entry.agent)}</span>
+                {entry.agent}
+              </td>
+              <td className="roasts-col">{entry.totalRoasts}</td>
+              <td className="votes-col">⭐ {entry.totalVotes}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
